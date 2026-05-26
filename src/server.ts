@@ -1,112 +1,256 @@
 #!/usr/bin/env node
 // SPDX-License-Identifier: Apache-2.0
 //
-// Reference MCP server bootstrap (stdio). Thin wiring only: load the project,
-// build the tool context, register each tool with a strict input schema, and
-// connect over stdio. All work is delegated to the pure handlers.
+// Mosvera MCP stdio bootstrap. The server exposes a small, user-facing
+// aesthetic tool surface over the TypeScript runtime and a local project
+// registry.
 
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
-import { existsSync } from "node:fs";
-import { fileURLToPath } from "node:url";
 import { z } from "zod";
-import { createValidator, deriveStrategies } from "@mosvera/runtime";
-import { fluxAdapter } from "@mosvera/provider-flux";
-import { openaiAdapter } from "@mosvera/provider-openai";
-import { sdxlAdapter } from "@mosvera/provider-sdxl";
-import { loadRegistry } from "./registry/loader.ts";
-import { composeStrategies } from "./registry/strategies.ts";
-import { runListTemplates } from "./tools/list-templates.ts";
-import { runResolveComposition } from "./tools/resolve-composition.ts";
-import { runGetPalette } from "./tools/get-palette.ts";
-import { runValidateSchema } from "./tools/validate-schema.ts";
-import { runCompileGeneration } from "./tools/compile-generation.ts";
+import { buildContext, parseCliOptions, SERVER_VERSION } from "./context.ts";
+import {
+  documentKinds,
+  runCompileDesignTokens,
+  runCompileProviderPayload,
+  runDeleteRegistryDocument,
+  runDraftAesthetic,
+  runGetRegistryDocument,
+  runListAesthetics,
+  runResolveAesthetic,
+  runSaveAesthetic,
+  runSaveRegistryDocument,
+  runServerStatus,
+  runValidateDocument,
+  runValidateRegistry,
+  runWriteMergeStrategies,
+} from "./tools/aesthetic.ts";
 import type { ToolContext } from "./types.ts";
 
-/** Load a project directory into a fully-formed tool context. */
-export function buildContext(registryDir: string): ToolContext {
-  const validator = createValidator();
-  const project = loadRegistry(registryDir, validator);
-  const baseStrategies = composeStrategies(deriveStrategies(), project.strategies);
-  return {
-    project,
-    validator,
-    baseStrategies,
-    adapters: {
-      [openaiAdapter.id]: openaiAdapter,
-      [fluxAdapter.id]: fluxAdapter,
-      [sdxlAdapter.id]: sdxlAdapter,
-    },
-  };
-}
-
-function parseRegistryFlag(argv: string[]): string {
-  const i = argv.indexOf("--registry");
-  if (i !== -1 && argv[i + 1] !== undefined) return argv[i + 1]!;
-  const packaged = fileURLToPath(new URL("./examples/cinematic-editorial", import.meta.url));
-  if (existsSync(packaged)) return packaged;
-  return fileURLToPath(new URL("../examples/cinematic-editorial", import.meta.url));
-}
-
 const docArg = z.union([z.string(), z.record(z.any())]);
-const registryArg = z.record(z.any()).optional();
-const ok = (data: unknown) => ({ content: [{ type: "text" as const, text: JSON.stringify(data) }] });
+const strategiesArg = z.record(z.object({
+  strategy: z.enum(["replace", "append", "merge_by"]),
+  key: z.string().optional(),
+}));
+const criticalityArg = z.record(z.enum(["required", "optional"]));
+const documentKindArg = z.enum(documentKinds);
+const registryDocumentKindArg = z.enum(documentKinds);
+const outputSchema = z.object({ ok: z.boolean(), message: z.string() }).passthrough();
+
+const readAnnotations = {
+  readOnlyHint: true,
+  destructiveHint: false,
+  openWorldHint: false,
+} as const;
+
+const writeAnnotations = {
+  readOnlyHint: false,
+  destructiveHint: false,
+  idempotentHint: true,
+  openWorldHint: false,
+} as const;
+
+const destructiveAnnotations = {
+  readOnlyHint: false,
+  destructiveHint: true,
+  idempotentHint: true,
+  openWorldHint: false,
+} as const;
+
+export { buildContext };
 
 export function createServer(ctx: ToolContext): McpServer {
-  const server = new McpServer({ name: "mosvera-mcp", version: "0.1.0" });
+  const server = new McpServer({
+    name: "mosvera-mcp",
+    title: "Mosvera MCP",
+    version: SERVER_VERSION,
+  });
 
   server.registerTool(
-    "list_templates",
-    { description: "Enumerate templates in the loaded aesthetic-system registry.", inputSchema: { registry: registryArg } },
-    async (args) => ok(runListTemplates(ctx, args as never)),
-  );
-
-  server.registerTool(
-    "resolve_composition",
+    "server_status",
     {
-      description: "Resolve a composition (base + ordered modifiers + overrides) to its canonical aesthetic model.",
-      inputSchema: { composition: docArg, registry: registryArg, merge_strategies: z.record(z.any()).optional() },
+      title: "Server Status",
+      description: "Show the active Mosvera registry path, write mode, versions, document counts, and diagnostics.",
+      inputSchema: {},
+      outputSchema,
+      annotations: readAnnotations,
     },
-    async (args) => ok(runResolveComposition(ctx, args as never)),
+    async () => runServerStatus(ctx),
   );
 
   server.registerTool(
-    "get_palette",
-    { description: "Return a named palette's roles. Palette inheritance is unresolved at v0.1 (flagged in the response).", inputSchema: { name: z.string(), registry: registryArg } },
-    async (args) => ok(runGetPalette(ctx, args as never)),
-  );
-
-  server.registerTool(
-    "validate_schema",
+    "list_aesthetics",
     {
-      description: "Validate a document against a Mosvera schema kind.",
-      inputSchema: { document: docArg, kind: z.enum(["composition", "template", "modifier", "palette", "capability-manifest"]) },
+      title: "List Aesthetics",
+      description: "List named aesthetics available in the active local Mosvera registry.",
+      inputSchema: {},
+      outputSchema,
+      annotations: readAnnotations,
     },
-    async (args) => ok(runValidateSchema(ctx.validator, args as never)),
+    async () => runListAesthetics(ctx),
   );
 
   server.registerTool(
-    "compile_generation",
+    "get_registry_document",
     {
-      description: "Resolve a composition then apply the MEP-0003 compilation contract against a provider capability manifest. With emit=true, returns the deterministic provider payload; no provider HTTP call is made.",
+      title: "Get Registry Document",
+      description: "Fetch a template, modifier, palette, composition, or capability manifest from the active registry.",
+      inputSchema: { kind: registryDocumentKindArg, id: z.string() },
+      outputSchema,
+      annotations: readAnnotations,
+    },
+    async (args) => runGetRegistryDocument(ctx, args),
+  );
+
+  server.registerTool(
+    "validate_document",
+    {
+      title: "Validate Document",
+      description: "Validate one Mosvera document against a schema kind. Invalid documents return valid=false, not a thrown protocol error.",
+      inputSchema: { document: docArg, kind: documentKindArg },
+      outputSchema,
+      annotations: readAnnotations,
+    },
+    async (args) => runValidateDocument(ctx, args),
+  );
+
+  server.registerTool(
+    "validate_registry",
+    {
+      title: "Validate Registry",
+      description: "Validate the active local registry and return Mosvera diagnostics.",
+      inputSchema: {},
+      outputSchema,
+      annotations: readAnnotations,
+    },
+    async () => runValidateRegistry(ctx),
+  );
+
+  server.registerTool(
+    "resolve_aesthetic",
+    {
+      title: "Resolve Aesthetic",
+      description: "Resolve a named or inline aesthetic composition into the canonical Mosvera model.",
+      inputSchema: { aesthetic: z.union([z.string(), z.record(z.any())]), merge_strategies: strategiesArg.optional() },
+      outputSchema,
+      annotations: readAnnotations,
+    },
+    async (args) => runResolveAesthetic(ctx, args as Parameters<typeof runResolveAesthetic>[1]),
+  );
+
+  server.registerTool(
+    "compile_design_tokens",
+    {
+      title: "Compile Design Tokens",
+      description: "Compile a named/inline aesthetic or canonical model into portable design tokens and CSS variables.",
       inputSchema: {
-        composition: docArg,
-        provider: z.string(),
-        registry: registryArg,
-        manifest: z.record(z.any()).optional(),
-        criticality: z.record(z.enum(["required", "optional"])).optional(),
-        merge_strategies: z.record(z.any()).optional(),
-        emit: z.boolean().optional(),
+        aesthetic: z.union([z.string(), z.record(z.any())]).optional(),
+        canonical: docArg.optional(),
+        merge_strategies: strategiesArg.optional(),
+        css_prefix: z.string().optional(),
+        preserve_unknown: z.boolean().optional(),
       },
+      outputSchema,
+      annotations: readAnnotations,
     },
-    async (args) => ok(runCompileGeneration(ctx, args as never)),
+    async (args) => runCompileDesignTokens(ctx, args as Parameters<typeof runCompileDesignTokens>[1]),
   );
+
+  server.registerTool(
+    "compile_provider_payload",
+    {
+      title: "Compile Provider Payload",
+      description: "Advanced: deterministically compile a named/inline aesthetic into a provider payload. No provider HTTP call is made.",
+      inputSchema: {
+        aesthetic: z.union([z.string(), z.record(z.any())]),
+        provider: z.string(),
+        criticality: criticalityArg.optional(),
+        merge_strategies: strategiesArg.optional(),
+      },
+      outputSchema,
+      annotations: readAnnotations,
+    },
+    async (args) => runCompileProviderPayload(ctx, args as Parameters<typeof runCompileProviderPayload>[1]),
+  );
+
+  server.registerTool(
+    "draft_aesthetic",
+    {
+      title: "Draft Aesthetic",
+      description: "Draft a valid composition document without saving it to disk.",
+      inputSchema: {
+        id: z.string(),
+        base: z.string(),
+        modifiers: z.array(z.string()).optional(),
+        overrides: docArg.optional(),
+      },
+      outputSchema,
+      annotations: readAnnotations,
+    },
+    async (args) => runDraftAesthetic(ctx, args as Parameters<typeof runDraftAesthetic>[1]),
+  );
+
+  if (ctx.registryWritable && !ctx.readOnlyMode) {
+    server.registerTool(
+      "save_aesthetic",
+      {
+        title: "Save Aesthetic",
+        description: "Create or update a named aesthetic composition in the active local registry.",
+        inputSchema: {
+          id: z.string(),
+          base: z.string(),
+          modifiers: z.array(z.string()).optional(),
+          overrides: docArg.optional(),
+        },
+        outputSchema,
+        annotations: writeAnnotations,
+      },
+      async (args) => runSaveAesthetic(ctx, args as Parameters<typeof runSaveAesthetic>[1]),
+    );
+
+    server.registerTool(
+      "save_registry_document",
+      {
+        title: "Save Registry Document",
+        description: "Advanced: create or update a template, modifier, palette, composition, or capability manifest in the active local registry.",
+        inputSchema: { kind: registryDocumentKindArg, document: docArg },
+        outputSchema,
+        annotations: writeAnnotations,
+      },
+      async (args) => runSaveRegistryDocument(ctx, args),
+    );
+
+    server.registerTool(
+      "delete_registry_document",
+      {
+        title: "Delete Registry Document",
+        description: "Delete a registry document from the active local registry.",
+        inputSchema: { kind: registryDocumentKindArg, id: z.string() },
+        outputSchema,
+        annotations: destructiveAnnotations,
+      },
+      async (args) => runDeleteRegistryDocument(ctx, args),
+    );
+
+    server.registerTool(
+      "write_merge_strategies",
+      {
+        title: "Write Merge Strategies",
+        description: "Advanced: replace the active registry's merge-strategies.json with deterministic JSON.",
+        inputSchema: { merge_strategies: strategiesArg },
+        outputSchema,
+        annotations: writeAnnotations,
+      },
+      async (args) => runWriteMergeStrategies(ctx, args as Parameters<typeof runWriteMergeStrategies>[1]),
+    );
+  }
 
   return server;
 }
 
 async function main(): Promise<void> {
-  const ctx = buildContext(parseRegistryFlag(process.argv.slice(2)));
+  const options = parseCliOptions(process.argv.slice(2));
+  const ctx = buildContext(options);
   const server = createServer(ctx);
   await server.connect(new StdioServerTransport());
 }

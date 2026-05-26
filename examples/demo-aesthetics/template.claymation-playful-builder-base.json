@@ -1,0 +1,45 @@
+{
+  "$schema": "https://mosvera.io/schema/0.1/template",
+  "id": "claymation-playful-builder-base",
+  "imagery": {
+    "alt": "Tactile clay-like Mosvera tesserae under warm builder-table light.",
+    "blend": "normal",
+    "contrast": "0.96",
+    "saturation": "1.12",
+    "src": "/assets/aesthetics/hero-claymation-playful-builder.webp",
+    "treatment": "tabletop_model"
+  },
+  "layout": {
+    "density": "roomy",
+    "max_width": "1160px",
+    "radius": "8px",
+    "shadow": "0 18px 0 rgba(96, 63, 39, 0.26)"
+  },
+  "motion": {
+    "duration": "260ms",
+    "pace": "bouncy"
+  },
+  "palette": {
+    "accent": "#d45f3f",
+    "accent_2": "#2f8f9d",
+    "background": "#f6e7cc",
+    "border": "#c99a68",
+    "code_bg": "#2b2119",
+    "code_ink": "#ffe3bc",
+    "ink": "#2a2118",
+    "muted": "#695946",
+    "surface": "#fff3dc",
+    "surface_alt": "#ead2ad"
+  },
+  "typography": {
+    "body": "Hanken Grotesk",
+    "display": "Fraunces",
+    "mono": "IBM Plex Mono",
+    "scale": "friendly"
+  },
+  "voice": {
+    "body": "This mode keeps the spec serious while the surface becomes handmade, constructive, and a little mischievous.",
+    "eyebrow": "Tactile builder mode",
+    "headline": "Same architecture, built out of warm clay and shop light."
+  }
+}

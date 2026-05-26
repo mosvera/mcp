@@ -1,0 +1,75 @@
+// SPDX-License-Identifier: Apache-2.0
+import { describe, expect, it } from "vitest";
+import { Client } from "@modelcontextprotocol/sdk/client/index.js";
+import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
+import { mkdtempSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join, resolve } from "node:path";
+
+const root = resolve(import.meta.dirname, "..");
+const tsx = resolve(root, "node_modules", ".bin", "tsx");
+const server = resolve(root, "src", "server.ts");
+
+async function withClient<T>(args: string[], fn: (client: Client) => Promise<T>): Promise<T> {
+  const client = new Client({ name: "mosvera-mcp-test", version: "0.0.0" });
+  const transport = new StdioClientTransport({
+    command: tsx,
+    args: [server, ...args],
+    cwd: root,
+    stderr: "pipe",
+  });
+  await client.connect(transport);
+  try {
+    return await fn(client);
+  } finally {
+    await client.close();
+  }
+}
+
+describe("MCP stdio surface", () => {
+  it("lists annotated tools with output schemas and calls the main read path", async () => {
+    const registry = mkdtempSync(join(tmpdir(), "mosvera-mcp-stdio-"));
+    await withClient(["--registry", registry], async (client) => {
+      const tools = await client.listTools();
+      const byName = new Map(tools.tools.map((tool) => [tool.name, tool]));
+
+      for (const name of ["server_status", "list_aesthetics", "resolve_aesthetic", "compile_design_tokens", "save_aesthetic"]) {
+        expect(byName.get(name)?.inputSchema).toBeTruthy();
+        expect(byName.get(name)?.outputSchema).toBeTruthy();
+        expect(byName.get(name)?.annotations).toBeTruthy();
+      }
+
+      expect(byName.get("server_status")?.annotations?.readOnlyHint).toBe(true);
+      expect(byName.get("save_aesthetic")?.annotations).toMatchObject({
+        readOnlyHint: false,
+        destructiveHint: false,
+        idempotentHint: true,
+      });
+      expect(byName.get("delete_registry_document")?.annotations?.destructiveHint).toBe(true);
+
+      const status = await client.callTool({ name: "server_status", arguments: {} });
+      expect(status.structuredContent).toMatchObject({ ok: true, registry_writable: true });
+
+      const list = await client.callTool({ name: "list_aesthetics", arguments: {} });
+      expect((list.structuredContent as Record<string, unknown>).aesthetics).toHaveLength(4);
+
+      const resolved = await client.callTool({ name: "resolve_aesthetic", arguments: { aesthetic: "quiet-editorial" } });
+      expect((resolved.structuredContent as Record<string, unknown>).canonical).toMatchObject({ layout: { radius: "6px" } });
+
+      const tokens = await client.callTool({ name: "compile_design_tokens", arguments: { aesthetic: "quiet-editorial" } });
+      expect((tokens.structuredContent as Record<string, unknown>).css_variables).toMatchObject({ "--mosvera-palette-accent": "#bd5838" });
+    });
+  });
+
+  it("does not register persistence tools in read-only mode", async () => {
+    await withClient(["--read-only"], async (client) => {
+      const tools = await client.listTools();
+      const names = tools.tools.map((tool) => tool.name);
+      expect(names).toContain("draft_aesthetic");
+      expect(names).not.toContain("save_aesthetic");
+      expect(names).not.toContain("save_registry_document");
+      expect(names).not.toContain("delete_registry_document");
+      expect(names).not.toContain("write_merge_strategies");
+    });
+  });
+});

@@ -1,0 +1,45 @@
+{
+  "$schema": "https://mosvera.io/schema/0.1/template",
+  "id": "technical-manual-base",
+  "imagery": {
+    "alt": "High-key schematic Mosvera tesserae rendered like a technical reference plate.",
+    "blend": "multiply",
+    "contrast": "1.14",
+    "saturation": "0.72",
+    "src": "/assets/aesthetics/hero-technical-manual.webp",
+    "treatment": "schematic"
+  },
+  "layout": {
+    "density": "compact",
+    "max_width": "1220px",
+    "radius": "2px",
+    "shadow": "0 1px 0 rgba(16, 33, 28, 0.24)"
+  },
+  "motion": {
+    "duration": "120ms",
+    "pace": "quick"
+  },
+  "palette": {
+    "accent": "#17745f",
+    "accent_2": "#5847a6",
+    "background": "#f2f5f1",
+    "border": "#b9c8c0",
+    "code_bg": "#07130f",
+    "code_ink": "#d9f7ea",
+    "ink": "#10211c",
+    "muted": "#50615b",
+    "surface": "#ffffff",
+    "surface_alt": "#dfe8e2"
+  },
+  "typography": {
+    "body": "Hanken Grotesk",
+    "display": "IBM Plex Mono",
+    "mono": "IBM Plex Mono",
+    "scale": "compact"
+  },
+  "voice": {
+    "body": "This mode compresses the interface, raises structure, and makes the underlying Mosvera artifacts feel like a spec you can build from.",
+    "eyebrow": "Implementation reference",
+    "headline": "Same site, compiled as a technical surface."
+  }
+}

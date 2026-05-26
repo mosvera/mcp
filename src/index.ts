@@ -1,15 +1,29 @@
 // SPDX-License-Identifier: Apache-2.0
 //
-// @mosvera/mcp public surface: the pure tool handlers and the project loader.
-// server.ts wires these onto the MCP SDK over stdio.
+// @mosvera/mcp public surface. The package primarily ships a stdio MCP server,
+// but the pure handlers stay exported for tests and host integrations.
 
-export { loadRegistry } from "./registry/loader.ts";
-export { composeStrategies, mergeRegistry } from "./registry/strategies.ts";
-export { collectMissingReferences } from "./registry/preflight.ts";
-export { runListTemplates } from "./tools/list-templates.ts";
-export { runResolveComposition } from "./tools/resolve-composition.ts";
-export { runGetPalette } from "./tools/get-palette.ts";
-export { runValidateSchema } from "./tools/validate-schema.ts";
-export { runCompileGeneration } from "./tools/compile-generation.ts";
-export { buildContext, createServer } from "./server.ts";
+export {
+  buildContext,
+  defaultRegistryDir,
+  parseCliOptions,
+  registryDiagnostics,
+  SERVER_VERSION,
+} from "./context.ts";
+export { createServer } from "./server.ts";
+export {
+  runCompileDesignTokens,
+  runCompileProviderPayload,
+  runDeleteRegistryDocument,
+  runDraftAesthetic,
+  runGetRegistryDocument,
+  runListAesthetics,
+  runResolveAesthetic,
+  runSaveAesthetic,
+  runSaveRegistryDocument,
+  runServerStatus,
+  runValidateDocument,
+  runValidateRegistry,
+  runWriteMergeStrategies,
+} from "./tools/aesthetic.ts";
 export type { LoadedProject, ToolContext } from "./types.ts";

@@ -4,376 +4,162 @@ SPDX-License-Identifier: CC-BY-4.0
 
 # `@mosvera/mcp`
 
-The Mosvera Model Context Protocol (MCP) server. Exposes the
-[`@mosvera/runtime`](https://github.com/mosvera/runtime)'s resolve, validate, and compile capabilities as five
-strict MCP tools over stdio, so AI-native systems — agents, copilots, editors,
-automated content pipelines — can orchestrate aesthetic compositions without
-re-implementing the runtime.
+Mosvera for agents and desktop assistants. This package runs a local Model
+Context Protocol server that lets Claude Desktop, editors, and automation
+tools inspect, resolve, compile, draft, save, and delete Mosvera aesthetics in
+a local registry.
 
-**Version:** 0.1.0 · **Transport:** stdio · **Protocol:** MCP
-([spec.modelcontextprotocol.io](https://spec.modelcontextprotocol.io))
+The server never calls image providers, never sends provider HTTP requests,
+and does not store API keys or secrets. It turns aesthetic documents into
+canonical Mosvera models, portable design tokens, CSS variables, and
+deterministic provider payloads that other tools can consume.
 
----
+## Install In Claude Desktop
 
-## Which Package Do I Need?
+The easiest path for non-command-line users is the Mosvera MCP Bundle:
 
-Use `@mosvera/mcp` when another tool should call Mosvera through MCP tools over
-stdio.
+1. Download `mosvera-mcp-0.1.1.mcpb` from the latest
+   [GitHub release](https://github.com/mosvera/mcp/releases).
+2. Double-click the file, drag it into Claude Desktop, or install it from
+   Claude Desktop Settings → Extensions → Advanced settings → Install
+   Extension.
+3. Leave the registry directory blank to use the platform default, or choose a
+   folder where your aesthetic registry should live.
 
-Use `@mosvera/runtime` instead when you are writing a JavaScript or TypeScript
-app and want to call the runtime directly.
+Default registry locations:
 
-Use `@mosvera/provider-*` packages when you want direct provider payload
-compilation without running an MCP server.
+| Platform | Default registry |
+|----------|------------------|
+| macOS | `~/Library/Application Support/Mosvera/registry` |
+| Windows | `%APPDATA%/Mosvera/registry` |
+| Linux/dev | `~/.config/mosvera/registry` |
 
----
+On first run, Mosvera seeds four public demo aesthetics into the registry:
+`quiet-editorial`, `technical-manual`, `cinematic-lab`, and
+`claymation-playful-builder`.
 
-## Running the server
+## Install With npm
+
+Use npm when you are wiring Mosvera into another MCP host or a developer
+workflow:
 
 ```bash
-# Default registry: examples/cinematic-editorial/
-npx mosvera-mcp
-
-# Custom registry directory
-npx mosvera-mcp --registry path/to/my-aesthetic-system/
+npm install -g @mosvera/mcp
+mosvera-mcp
 ```
 
-The server loads an aesthetic-system **project directory** (the registry) at
-startup. Every tool also accepts an inline `registry` argument that is merged
-on top of the loaded project per-collection, keyed by document `id`; inline
-entries take precedence over the loaded file.
+Run with a custom registry:
 
----
+```bash
+mosvera-mcp --registry ./my-aesthetic-registry
+```
+
+Run read-only:
+
+```bash
+mosvera-mcp --read-only
+```
+
+Environment overrides:
+
+```bash
+MOSVERA_REGISTRY_DIR=./my-aesthetic-registry mosvera-mcp
+MOSVERA_MCP_READ_ONLY=1 mosvera-mcp
+```
+
+## What To Ask Claude
+
+Try these after installing the bundle:
+
+```text
+List my Mosvera aesthetics.
+```
+
+```text
+Resolve the claymation-playful-builder aesthetic and show me the canonical model.
+```
+
+```text
+Compile quiet-editorial into CSS variables.
+```
+
+```text
+Save a new aesthetic called executive-editorial based on quiet-editorial-base with a more compact, board-ready voice.
+```
+
+The saved documents are deterministic JSON in your local registry directory.
 
 ## Tools
 
-| Tool | Input (required) | Input (optional) | Output |
-|------|-----------------|-----------------|--------|
-| `list_templates` | — | `registry` | `[{ name, extends? }]` |
-| `resolve_composition` | `composition` | `registry`, `merge_strategies` | `{ canonical }` |
-| `get_palette` | `name` | `registry` | `{ palette }` |
-| `validate_schema` | `document`, `kind` | — | `{ valid, errors }` |
-| `compile_generation` | `composition`, `provider` | `registry`, `manifest`, `criticality`, `merge_strategies`, `emit` | `{ status, warnings?, canonical }` or `{ status, canonical, emission }` when `emit: true` |
+Every tool returns `structuredContent` plus a short text summary. Tools are
+annotated with MCP read/write hints so clients can present normal approval
+flows.
 
-All inputs and outputs carry strict JSON schemas; the server rejects malformed
-calls before any runtime work is done. Documents may be passed as parsed
-objects or as YAML/JSON strings.
+| Tool | Mode | Purpose |
+|------|------|---------|
+| `server_status` | Read | Registry path, write mode, versions, counts, diagnostics. |
+| `list_aesthetics` | Read | List named composition aesthetics in the active registry. |
+| `get_registry_document` | Read | Fetch a template, modifier, palette, composition, or capability manifest. |
+| `validate_document` | Read | Validate one document against a Mosvera schema kind. |
+| `validate_registry` | Read | Validate the active registry and return diagnostics. |
+| `resolve_aesthetic` | Read | Resolve a named or inline aesthetic into canonical Mosvera JSON. |
+| `compile_design_tokens` | Read | Compile canonical output into portable design tokens and CSS variables. |
+| `compile_provider_payload` | Read | Advanced deterministic provider payload compilation; no provider HTTP call. |
+| `draft_aesthetic` | Read | Draft a composition document without saving it. |
+| `save_aesthetic` | Write | Create or update a named composition aesthetic. |
+| `save_registry_document` | Write | Advanced create/update for registry documents and manifests. |
+| `delete_registry_document` | Destructive write | Delete a registry document. |
+| `write_merge_strategies` | Write | Replace `merge-strategies.json` with deterministic JSON. |
 
-### `list_templates`
+When the server starts with `--read-only`, write tools are not registered.
 
-Enumerates every template in the effective registry.
+## Registry Files
 
-**Input**
+Mosvera reads JSON and YAML, but writes deterministic JSON only:
 
-```json
-{ "registry": { "templates": { … } } }
+```text
+template.<id>.json
+modifier.<id>.json
+palette.<id>.json
+composition.<id>.json
+manifests/<provider>.manifest.json
+merge-strategies.json
 ```
 
-`registry` is optional. When supplied, its entries are merged on top of the
-loaded project's template collection.
-
-**Output**
-
-```json
-[
-  { "name": "cinematic-editorial-base" },
-  { "name": "noir", "extends": "cinematic-editorial-base" }
-]
-```
-
-`extends` is present only when the template declares a `$extends` parent.
-
----
-
-### `resolve_composition`
-
-Resolves a composition — base template lineage, ordered modifiers, inline
-overrides — into a single canonical aesthetic model, following the merge
-algebra defined in [MEP-0001](https://github.com/mosvera/spec/blob/main/meps/0001-composition-semantics.md).
-
-**Input**
-
-```json
-{
-  "composition": {
-    "base": "noir",
-    "modifiers": ["golden-hour", "high-contrast"],
-    "overrides": {
-      "subject": "a lighthouse on a basalt cliff at dusk",
-      "medium": "cinematic",
-      "palette": { "accent": "#c8943f" },
-      "aspect_ratio": "3:2",
-      "quality": "high",
-      "safety": "standard"
-    }
-  },
-  "registry": { … },
-  "merge_strategies": { "lights": { "strategy": "merge_by", "key": "name" } }
-}
-```
-
-`composition` may be a parsed object or a YAML/JSON string.
-
-**Output — success**
-
-```json
-{ "canonical": { … } }
-```
-
-**Output — error**
-
-```json
-{ "error": "unknown_reference", "detail": { "missing": ["golden-hour"] } }
-```
-
----
-
-### `get_palette`
-
-Returns a named palette's semantic color roles.
-
-**Input**
-
-```json
-{ "name": "editorial-warm", "registry": { … } }
-```
-
-**Output — success**
-
-```json
-{
-  "palette": {
-    "$schema": "https://mosvera.io/schema/0.1/palette",
-    "id": "editorial-warm",
-    "roles": {
-      "background": "#1a1410",
-      "foreground": "#f5e6d3",
-      "accent": "#c8943f",
-      "shadow": "#0a0805"
-    }
-  }
-}
-```
-
-**Output — unresolved inheritance**
-
-When the palette declares `$extends`, the stored value is returned along with a
-flag because palette inheritance resolution is deferred to a later runtime
-minor (design decision D4; see [ADR-0011](https://github.com/mosvera/spec/blob/main/docs/decisions/0011-mcp-surface-design.md)):
-
-```json
-{
-  "palette": { … },
-  "inheritance_unresolved": true
-}
-```
-
----
-
-### `validate_schema`
-
-Validates a Mosvera document against the published JSON schemas
-(`https://mosvera.io/schema/0.1/…`). A validation failure is a **successful
-call** with `valid: false`; it is not an error result.
-
-**Input**
-
-```json
-{
-  "document": { "$schema": "https://mosvera.io/schema/0.1/template", "id": "t", "medium": "photographic" },
-  "kind": "template"
-}
-```
-
-`kind` MUST be one of: `composition`, `template`, `modifier`, `palette`,
-`capability-manifest`.
-
-**Output — valid**
-
-```json
-{ "valid": true, "errors": [] }
-```
-
-**Output — invalid**
-
-```json
-{
-  "valid": false,
-  "errors": [
-    { "path": "/id", "message": "must be string" }
-  ]
-}
-```
-
----
-
-### `compile_generation`
-
-Resolves a composition, then applies the
-[MEP-0003](https://github.com/mosvera/spec/blob/main/meps/0003-provider-compilation-contract.md) compilation
-contract rule engine against the named provider's capability manifest. When
-`emit: true`, the default server context registers the reference OpenAI, FLUX,
-and SDXL adapters and returns deterministic provider payload emission.
-
-No provider HTTP call is made. `compile_generation` stops at the deterministic
-compile/emit boundary; adapter `execute()` is outside the MCP tool.
-
-**Input**
-
-```json
-{
-  "composition": {
-    "base": "noir",
-    "modifiers": ["golden-hour", "high-contrast"],
-    "overrides": {
-      "subject": "a lighthouse on a basalt cliff at dusk",
-      "medium": "cinematic",
-      "palette": { "accent": "#c8943f" },
-      "aspect_ratio": "3:2",
-      "quality": "high",
-      "safety": "standard"
-    }
-  },
-  "provider": "illustrative-image",
-  "registry": { … },
-  "manifest": { … },
-  "criticality": { "color_temperature": "required" },
-  "merge_strategies": { … },
-  "emit": false
-}
-```
-
-`manifest` overrides the manifest loaded from the registry for the named
-provider. `criticality` maps construct names to `"required"` or `"optional"`;
-unmarked constructs are treated as optional. `emit` defaults to `false`.
-
-Built-in reference provider ids:
-
-- `openai-gpt-image-1`
-- `bfl-flux-2-pro`
-- `sdxl-replicate`
-
-**Output — compiled**
-
-```json
-{
-  "status": "compiled",
-  "warnings": [
-    { "construct": "color_grade", "action": "approximate" },
-    { "construct": "color_temperature", "action": "unsupported" },
-    { "construct": "lighting", "action": "approximate" },
-    { "construct": "lights", "action": "emulate" },
-    { "construct": "palette", "action": "approximate" },
-    { "construct": "safety", "action": "unsupported" }
-  ],
-  "canonical": { … }
-}
-```
-
-**Output — emitted**
-
-When `emit: true`, the compiled response carries the adapter emission:
-
-```json
-{
-  "status": "compiled",
-  "canonical": { … },
-  "emission": {
-    "payload": { "prompt": "…", "size": "1536x1024" },
-    "prompt": "…",
-    "warnings": [ … ],
-    "provenance": { … }
-  }
-}
-```
-
-**Output — required construct unsupported**
-
-When a construct marked `required` cannot be fulfilled by the provider:
-
-```json
-{
-  "status": "error",
-  "error": "required_unsupported",
-  "construct": "color_temperature",
-  "canonical": { … }
-}
-```
-
----
-
-## Errors
-
-Tool calls that cannot be satisfied return a structured error object rather
-than throwing. The closed taxonomy is:
-
-| Code | Meaning |
-|------|---------|
-| `invalid_document` | The supplied document failed schema validation. `detail.errors` carries the validation issues. |
-| `unknown_reference` | One or more references (`base`, modifier entries) are not present in the effective registry. `detail.missing` lists them. |
-| `unknown_provider` | The named provider has no manifest in the registry and none was supplied inline. |
-| `inheritance_cycle` | Template `$extends` chain forms a cycle. |
-| `reference_cycle` | Composition reference graph contains a cycle. |
-| `multiple_inheritance_unsupported` | A template declares more than one `$extends` parent; multiple inheritance is not supported at v0.1. |
-
-The `compile_generation` tool additionally returns `{ "status": "error", "error": "required_unsupported", … }` when a `required` construct cannot be fulfilled (this is a compilation outcome, not a call-level error).
-
----
-
-## Registry directory layout
-
-A project directory (the registry) MUST contain template files named
-`template.<id>.json`, optionally modifier files `modifier.<id>.json`, palette
-files `palette.<id>.json`, and provider capability manifests under
-`manifests/<provider-id>.manifest.json`. It MAY contain a `merge-strategies.json`
-at its root declaring project-level field merge strategies (shape and
-precedence defined in [MEP-0004](https://github.com/mosvera/spec/blob/main/meps/0004-mcp-tool-contract.md)).
-
-See [`examples/cinematic-editorial/`](./examples/cinematic-editorial/)
-for the reference example.
-
----
-
-## Example transcripts
-
-[`examples/README.md`](./examples/README.md) contains one sample
-JSON-RPC `tools/call` request and the expected response for each of the five
-tools, verified against the default `cinematic-editorial` registry.
-
----
-
-## Tests
+IDs must be safe Mosvera references: lowercase letters, numbers, `_`, and `-`,
+starting with a letter. Absolute paths, dotfiles, path traversal, unknown
+kinds, and unsafe filenames are rejected.
+
+## Developer Verification
 
 ```bash
 npm install
 npm run ci
+npm audit --audit-level=moderate
+npm pack --dry-run
+npm run mcpb:pack
+npm run mcpb:inspect
 ```
 
----
+The MCPB pack step creates:
 
-## Layout
+```text
+build/mosvera/mosvera-mcp-0.1.1.mcpb
+```
 
-| Path | Purpose |
-|------|---------|
-| `src/server.ts` | Stdio bootstrap; thin wiring only. |
-| `src/tools/` | Pure tool handlers (one module per tool). |
-| `src/registry/` | Project loader, strategy composer, reference preflight. |
-| `src/errors.ts` | Closed error taxonomy and runtime-error mapping. |
-| `src/types.ts` | Shared types: `LoadedProject`, `ToolContext`, error codes. |
-| `test/` | Vitest conformance and protocol tests. |
-| `examples/` | Sample request/response transcripts. |
+## Package Boundaries
 
----
+Use `@mosvera/runtime` when your application wants to call the TypeScript
+runtime directly.
 
-## Specification
+Use the Python package `mosvera` when you want the peer Python runtime.
 
-Tool contracts are normatively defined in
-[MEP-0004](https://github.com/mosvera/spec/blob/main/meps/0004-mcp-tool-contract.md). Design decisions are
-recorded in [ADR-0011](https://github.com/mosvera/spec/blob/main/docs/decisions/0011-mcp-surface-design.md).
+Use `@mosvera/provider-*` packages when you want direct provider payload
+compilation without MCP.
 
----
+Use `@mosvera/mcp` when an agent, editor, or automation system should call
+Mosvera through MCP tools.
 
 ## License
 
-Apache-2.0 per
-[ADR-0001](https://github.com/mosvera/spec/blob/main/docs/decisions/0001-license-choice.md).
+Code is Apache-2.0. Documentation is CC-BY-4.0.

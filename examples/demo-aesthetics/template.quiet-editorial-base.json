@@ -1,0 +1,45 @@
+{
+  "$schema": "https://mosvera.io/schema/0.1/template",
+  "id": "quiet-editorial-base",
+  "imagery": {
+    "alt": "Warm paper-toned Mosvera tesserae arranged as a calm editorial composition.",
+    "blend": "normal",
+    "contrast": "1.02",
+    "saturation": "0.92",
+    "src": "/assets/aesthetics/hero-quiet-editorial.webp",
+    "treatment": "paper_field"
+  },
+  "layout": {
+    "density": "comfortable",
+    "max_width": "1160px",
+    "radius": "6px",
+    "shadow": "0 18px 55px rgba(58, 38, 21, 0.16)"
+  },
+  "motion": {
+    "duration": "220ms",
+    "pace": "steady"
+  },
+  "palette": {
+    "accent": "#bd5838",
+    "accent_2": "#2e6b5f",
+    "background": "#f7f2e7",
+    "border": "#d8c8b6",
+    "code_bg": "#181513",
+    "code_ink": "#f5ebdd",
+    "ink": "#211b16",
+    "muted": "#665c50",
+    "surface": "#fffaf0",
+    "surface_alt": "#eee3d4"
+  },
+  "typography": {
+    "body": "Hanken Grotesk",
+    "display": "Fraunces",
+    "mono": "IBM Plex Mono",
+    "scale": "editorial"
+  },
+  "voice": {
+    "body": "Mosvera turns aesthetic intent into typed, portable, reviewable artifacts that teams can run inside their own platforms.",
+    "eyebrow": "Canonical public home",
+    "headline": "Aesthetic infrastructure you can inspect."
+  }
+}

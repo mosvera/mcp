@@ -17,5 +17,6 @@ manifest used only to exercise the MEP-0003 compilation contract end-to-end. It
 is NOT a real provider adapter. The real reference adapters live in
 [`mosvera/providers`](https://github.com/mosvera/providers).
 
-This directory is the default registry for the reference MCP server
-(`npx mosvera-mcp`).
+This directory is retained as a compact provider-compilation fixture. The
+default first-run registry seed for the public MCP server is
+[`../demo-aesthetics/`](../demo-aesthetics/).

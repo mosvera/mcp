@@ -1,6 +1,7 @@
 node_modules/
 dist/
 coverage/
+build/
 *.tsbuildinfo
 *.tgz
 .DS_Store

@@ -10,6 +10,7 @@ import type {
   CompileWarning,
   JsonObject,
   MergeStrategies,
+  RegistryDiagnostic,
   Registry,
   Validator,
 } from "@mosvera/runtime";
@@ -25,6 +26,16 @@ export interface LoadedProject {
 
 /** Per-server context passed to every pure tool handler. */
 export interface ToolContext {
+  /** Absolute registry directory currently loaded by the server. */
+  registryDir: string;
+  /** True when persistence tools may write into registryDir. */
+  registryWritable: boolean;
+  /** True when write tools are intentionally suppressed. */
+  readOnlyMode: boolean;
+  /** True when the packaged examples were used because the configured registry could not be loaded. */
+  fallbackRegistry: boolean;
+  fallbackReason?: string;
+  loadDiagnostics: RegistryDiagnostic[];
   project: LoadedProject;
   validator: Validator;
   /** schema-derived defaults composed with the project's strategies. */
@@ -38,6 +49,10 @@ export type ToolErrorCode =
   | "invalid_document"
   | "unknown_reference"
   | "unknown_provider"
+  | "unsafe_filename"
+  | "schema_failure"
+  | "write_disabled"
+  | "registry_unwritable"
   | "inheritance_cycle"
   | "reference_cycle"
   | "multiple_inheritance_unsupported";

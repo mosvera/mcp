@@ -1,0 +1,5 @@
+{
+  "$schema": "https://mosvera.io/schema/0.1/composition",
+  "base": "quiet-editorial-base",
+  "id": "quiet-editorial"
+}

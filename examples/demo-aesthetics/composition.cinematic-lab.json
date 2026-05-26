@@ -1,0 +1,5 @@
+{
+  "$schema": "https://mosvera.io/schema/0.1/composition",
+  "base": "cinematic-lab-base",
+  "id": "cinematic-lab"
+}

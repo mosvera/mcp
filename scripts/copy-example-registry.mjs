@@ -7,8 +7,8 @@ import { fileURLToPath } from "node:url";
 const here = dirname(fileURLToPath(import.meta.url));
 const packageRoot = resolve(here, "..");
 
-const source = resolve(packageRoot, "examples", "cinematic-editorial");
-const target = resolve(packageRoot, "dist", "examples", "cinematic-editorial");
+const source = resolve(packageRoot, "examples");
+const target = resolve(packageRoot, "dist", "examples");
 
 mkdirSync(target, { recursive: true });
 cpSync(source, target, { recursive: true });

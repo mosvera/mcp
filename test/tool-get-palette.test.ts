@@ -6,6 +6,11 @@ import type { ToolContext } from "../src/types.ts";
 
 function ctx(): ToolContext {
   return {
+    registryDir: "/tmp/mosvera-test",
+    registryWritable: false,
+    readOnlyMode: true,
+    fallbackRegistry: false,
+    loadDiagnostics: [],
     project: {
       registry: {
         templates: {},

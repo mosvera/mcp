@@ -1,0 +1,45 @@
+{
+  "$schema": "https://mosvera.io/schema/0.1/template",
+  "id": "cinematic-lab-base",
+  "imagery": {
+    "alt": "Spotlit high-contrast Mosvera tesserae arranged for a cinematic lab surface.",
+    "blend": "screen",
+    "contrast": "1.22",
+    "saturation": "1.08",
+    "src": "/assets/aesthetics/hero-cinematic-lab.webp",
+    "treatment": "spotlit"
+  },
+  "layout": {
+    "density": "spacious",
+    "max_width": "1240px",
+    "radius": "8px",
+    "shadow": "0 28px 80px rgba(0, 0, 0, 0.42)"
+  },
+  "motion": {
+    "duration": "320ms",
+    "pace": "cinematic"
+  },
+  "palette": {
+    "accent": "#e05b45",
+    "accent_2": "#7cc9d8",
+    "background": "#12100f",
+    "border": "#4c3b39",
+    "code_bg": "#080707",
+    "code_ink": "#f8e6c8",
+    "ink": "#f6eee6",
+    "muted": "#c7b8aa",
+    "surface": "#1e1a18",
+    "surface_alt": "#2f2524"
+  },
+  "typography": {
+    "body": "Hanken Grotesk",
+    "display": "Fraunces",
+    "mono": "IBM Plex Mono",
+    "scale": "large"
+  },
+  "voice": {
+    "body": "Cinematic Lab pushes contrast, scale, and image presence while the same composition, schema, and token panes stay readable.",
+    "eyebrow": "Visual research mode",
+    "headline": "The standard can carry drama without losing structure."
+  }
+}
