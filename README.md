@@ -15,6 +15,19 @@ re-implementing the runtime.
 
 ---
 
+## Which Package Do I Need?
+
+Use `@mosvera/mcp` when another tool should call Mosvera through MCP tools over
+stdio.
+
+Use `@mosvera/runtime` instead when you are writing a JavaScript or TypeScript
+app and want to call the runtime directly.
+
+Use `@mosvera/provider-*` packages when you want direct provider payload
+compilation without running an MCP server.
+
+---
+
 ## Running the server
 
 ```bash

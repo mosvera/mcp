@@ -1,7 +1,7 @@
 {
   "name": "@mosvera/mcp",
   "version": "0.1.0",
-  "description": "Reference MCP server for Mosvera. Exposes the runtime's resolve/compile/validate capabilities as strict MCP tools over stdio.",
+  "description": "Run Mosvera as MCP tools over stdio for agents, editors, and automation.",
   "license": "Apache-2.0",
   "type": "module",
   "homepage": "https://mosvera.io",
