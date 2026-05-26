@@ -1,0 +1,11 @@
+{
+  "$schema": "https://mosvera.io/schema/0.1/template",
+  "id": "cinematic-editorial-base",
+  "medium": "photographic",
+  "lighting": { "scheme": "three_point", "mood": "neutral" },
+  "lights": [
+    { "name": "key", "power": 6 },
+    { "name": "fill", "power": 3 }
+  ],
+  "color_grade": { "contrast": "medium", "saturation": "natural" }
+}

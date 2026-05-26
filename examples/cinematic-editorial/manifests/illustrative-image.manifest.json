@@ -1,0 +1,16 @@
+{
+  "$schema": "https://mosvera.io/schema/0.1/capability-manifest",
+  "provider": "illustrative-image",
+  "adapter_version": "0.0.0-illustrative",
+  "constructs": {
+    "subject": { "lowering_action": "native" },
+    "medium": { "lowering_action": "native" },
+    "aspect_ratio": { "lowering_action": "native" },
+    "quality": { "lowering_action": "native" },
+    "safety": { "lowering_action": "unsupported", "note": "ILLUSTRATIVE ONLY — no tunable moderation control." },
+    "lighting": { "lowering_action": "approximate", "note": "ILLUSTRATIVE ONLY — not a real provider. lighting scheme/mood folded into a prompt phrase." },
+    "color_grade": { "lowering_action": "approximate", "note": "ILLUSTRATIVE ONLY — contrast/saturation folded into prompt adjectives." },
+    "palette": { "lowering_action": "approximate", "note": "ILLUSTRATIVE ONLY — accent color folded into prompt phrase." },
+    "lights": { "lowering_action": "emulate", "note": "ILLUSTRATIVE ONLY — named lights emulated via descriptive prompt clauses." }
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "$schema": "https://mosvera.io/schema/0.1/modifier",
+  "id": "high-contrast",
+  "color_grade": { "contrast": "very_high" }
+}

@@ -1,0 +1,10 @@
+{
+  "$schema": "https://mosvera.io/schema/0.1/modifier",
+  "id": "golden-hour",
+  "lighting": { "mood": "warm" },
+  "lights": [
+    { "name": "fill", "power": 5 },
+    { "name": "rim", "power": 2 }
+  ],
+  "color_temperature": "warm"
+}

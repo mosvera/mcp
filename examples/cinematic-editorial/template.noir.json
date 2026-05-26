@@ -1,0 +1,7 @@
+{
+  "$schema": "https://mosvera.io/schema/0.1/template",
+  "id": "noir",
+  "$extends": "cinematic-editorial-base",
+  "lighting": { "mood": "moody" },
+  "color_grade": { "contrast": "high", "saturation": "desaturated" }
+}

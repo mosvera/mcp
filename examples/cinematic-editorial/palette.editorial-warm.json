@@ -1,0 +1,10 @@
+{
+  "$schema": "https://mosvera.io/schema/0.1/palette",
+  "id": "editorial-warm",
+  "roles": {
+    "background": "#1a1410",
+    "foreground": "#f5e6d3",
+    "accent": "#c8943f",
+    "shadow": "#0a0805"
+  }
+}

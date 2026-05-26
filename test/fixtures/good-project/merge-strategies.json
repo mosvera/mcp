@@ -1,0 +1,1 @@
+{ "lights": { "strategy": "merge_by", "key": "name" } }
