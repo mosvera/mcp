@@ -59,6 +59,10 @@ describe("MCP stdio surface", () => {
 
       const status = await client.callTool({ name: "server_status", arguments: {} });
       expect(status.structuredContent).toMatchObject({ ok: true, registry_writable: true });
+      expect((status.content as Array<Record<string, unknown>>)[0]).toMatchObject({
+        type: "text",
+        text: expect.stringContaining("Write tools enabled: yes"),
+      });
 
       const list = await client.callTool({ name: "list_aesthetics", arguments: {} });
       expect((list.structuredContent as Record<string, unknown>).aesthetics).toHaveLength(4);
@@ -68,6 +72,10 @@ describe("MCP stdio surface", () => {
 
       const tokens = await client.callTool({ name: "compile_design_tokens", arguments: { aesthetic: "quiet-editorial" } });
       expect((tokens.structuredContent as Record<string, unknown>).css_variables).toMatchObject({ "--mosvera-palette-accent": "#bd5838" });
+      expect((tokens.content as Array<Record<string, unknown>>)[0]).toMatchObject({
+        type: "text",
+        text: expect.stringContaining("--mosvera-palette-accent: #bd5838;"),
+      });
 
       const pack = await client.callTool({ name: "export_aesthetic_pack", arguments: { aesthetic: "quiet-editorial" } });
       const packDocument = (pack.structuredContent as Record<string, unknown>).pack;
@@ -88,6 +96,24 @@ describe("MCP stdio surface", () => {
       expect(names).not.toContain("delete_registry_document");
       expect(names).not.toContain("write_merge_strategies");
       expect(names).not.toContain("import_aesthetic_pack");
+    });
+  });
+
+  it("treats unresolved MCPB user_config placeholders as unset defaults", async () => {
+    await withClient([
+      "--registry=${user_config.registry_directory}",
+      "--read-only=${user_config.read_only_mode}",
+    ], async (client) => {
+      const tools = await client.listTools();
+      const names = tools.tools.map((tool) => tool.name);
+      expect(names).toContain("save_aesthetic");
+
+      const status = await client.callTool({ name: "server_status", arguments: {} });
+      expect(status.structuredContent).toMatchObject({
+        registry_writable: true,
+        read_only_mode: false,
+        write_tools_enabled: true,
+      });
     });
   });
 });

@@ -2,7 +2,7 @@
   "manifest_version": "0.3",
   "name": "mosvera-mcp",
   "display_name": "Mosvera",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Resolve, compile, and save local Mosvera aesthetics from Claude Desktop.",
   "long_description": "Mosvera runs locally against your own aesthetic registry. It lets Claude list named aesthetics, resolve them to canonical Mosvera models, compile portable design tokens and CSS variables, and save registry documents without sending provider requests or storing secrets.",
   "author": {

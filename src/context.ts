@@ -29,7 +29,7 @@ import { openaiAdapter } from "@mosvera/provider-openai";
 import { sdxlAdapter } from "@mosvera/provider-sdxl";
 import type { ToolContext } from "./types.ts";
 
-export const SERVER_VERSION = "0.1.4";
+export const SERVER_VERSION = "0.1.5";
 
 export interface CliOptions {
   registryDir?: string;
@@ -51,14 +51,23 @@ function flagValue(argv: string[], name: string): string | undefined {
 
 function booleanFlag(argv: string[], name: string): boolean {
   const direct = argv.find((arg) => arg.startsWith(`${name}=`));
-  if (direct !== undefined) return !["", "0", "false", "no"].includes(direct.slice(name.length + 1).toLowerCase());
+  if (direct !== undefined) {
+    const value = direct.slice(name.length + 1).toLowerCase();
+    if (value.includes("${")) return false;
+    return !["", "0", "false", "no"].includes(value);
+  }
   return argv.includes(name);
 }
 
+function configValue(value: string | undefined): string | undefined {
+  if (value === undefined || value.length === 0 || value.includes("${")) return undefined;
+  return value;
+}
+
 export function parseCliOptions(argv: string[]): CliOptions {
-  const registryArg = flagValue(argv, "--registry");
-  const envRegistry = process.env.MOSVERA_REGISTRY_DIR;
-  const envReadOnly = process.env.MOSVERA_MCP_READ_ONLY ?? process.env.MOSVERA_READ_ONLY;
+  const registryArg = configValue(flagValue(argv, "--registry"));
+  const envRegistry = configValue(process.env.MOSVERA_REGISTRY_DIR);
+  const envReadOnly = configValue(process.env.MOSVERA_MCP_READ_ONLY ?? process.env.MOSVERA_READ_ONLY);
   const parsed: CliOptions = {
     readOnlyMode:
       booleanFlag(argv, "--read-only") ||

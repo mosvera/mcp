@@ -192,6 +192,14 @@ function toolFail(failure: ToolFailure): CallToolResult {
   return fail(failure.error, failure.message, failure.detail);
 }
 
+function topCssVariables(cssVariables: Record<string, string>, limit = 40): string {
+  const entries = Object.entries(cssVariables).sort(([a], [b]) => a.localeCompare(b));
+  if (entries.length === 0) return "No CSS variables were produced.";
+  const visible = entries.slice(0, limit).map(([key, value]) => `${key}: ${value};`);
+  const remaining = entries.length - visible.length;
+  return `${visible.join("\n")}${remaining > 0 ? `\n...and ${remaining} more CSS variable${remaining === 1 ? "" : "s"}.` : ""}`;
+}
+
 export function runServerStatus(ctx: ToolContext): CallToolResult {
   const diagnostics = [...ctx.loadDiagnostics, ...registryDiagnostics(ctx.project, ctx.validator)];
   const registry = ctx.project.registry;
@@ -202,7 +210,15 @@ export function runServerStatus(ctx: ToolContext): CallToolResult {
     compositions: Object.keys(registry.compositions ?? {}).length,
     manifests: Object.keys(ctx.project.manifests).length,
   };
-  return ok("Mosvera MCP server is ready.", {
+  const message = [
+    "Mosvera MCP server is ready.",
+    `Registry: ${ctx.registryDir}`,
+    `Writable: ${ctx.registryWritable ? "yes" : "no"}`,
+    `Read-only mode: ${ctx.readOnlyMode ? "yes" : "no"}`,
+    `Write tools enabled: ${ctx.registryWritable && !ctx.readOnlyMode ? "yes" : "no"}`,
+    `Loaded: ${counts.compositions} aesthetics, ${counts.templates} templates, ${counts.modifiers} modifiers, ${counts.palettes} palettes, ${counts.manifests} manifests.`,
+  ].join("\n");
+  return ok(message, {
     registry_path: ctx.registryDir,
     registry_writable: ctx.registryWritable,
     read_only_mode: ctx.readOnlyMode,
@@ -350,7 +366,14 @@ export function runCompileDesignTokens(
   if (args.css_prefix !== undefined) cssOptions.prefix = args.css_prefix;
   const tokens = compileDesignTokens(resolved.canonical, tokenOptions);
   const css_variables = toCssVariables(tokens, cssOptions);
-  return ok("Compiled portable design tokens.", { source: resolved.source, canonical: resolved.canonical, tokens, css_variables });
+  const sections = Object.keys(tokens).sort();
+  const message = [
+    "Compiled portable design tokens.",
+    `Token sections: ${sections.length > 0 ? sections.join(", ") : "none"}.`,
+    "CSS variables:",
+    topCssVariables(css_variables),
+  ].join("\n");
+  return ok(message, { source: resolved.source, canonical: resolved.canonical, tokens, css_variables });
 }
 
 export function runCompileProviderPayload(
