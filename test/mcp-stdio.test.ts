@@ -107,12 +107,16 @@ describe("MCP stdio surface", () => {
 
       const resolved = await client.callTool({ name: "resolve_aesthetic", arguments: { aesthetic: "quiet-editorial" } });
       expect((resolved.structuredContent as Record<string, unknown>).canonical).toMatchObject({ layout: { radius: "6px" } });
+      expect(text(resolved)).toContain("Canonical model");
+      expect(text(resolved)).toContain("Voice headline:");
 
       const tokens = await client.callTool({ name: "compile_design_tokens", arguments: { aesthetic: "quiet-editorial" } });
       expect((tokens.structuredContent as Record<string, unknown>).css_variables).toMatchObject({ "--mosvera-palette-accent": "#bd5838" });
       expect(text(tokens)).toContain("--mosvera-palette-accent: #bd5838;");
 
       const pack = await client.callTool({ name: "export_aesthetic_pack", arguments: { aesthetic: "quiet-editorial" } });
+      expect(text(pack)).toContain("Pack JSON");
+      expect(text(pack)).toContain("Suggested filename: quiet-editorial.mosvera.json");
       const packDocument = (pack.structuredContent as Record<string, unknown>).pack;
       const validated = await client.callTool({ name: "validate_aesthetic_pack", arguments: { pack: packDocument } });
       expect(validated.structuredContent).toMatchObject({ ok: true, valid: true });
@@ -136,6 +140,8 @@ describe("MCP stdio surface", () => {
       });
 
       expect(saved.isError).not.toBe(true);
+      expect(text(saved)).toContain("Composition document");
+      expect(text(saved)).toContain("Saved aesthetic \"smoke-test-editorial\" to the local registry.");
       expect(saved.structuredContent).toMatchObject({
         ok: true,
         kind: "composition",
@@ -201,6 +207,8 @@ describe("MCP stdio surface", () => {
           installed_entrypoint: { kind: "composition", id: "quiet-editorial-imported" },
         },
       });
+      expect(text(inlinePreview)).toContain("Installed entrypoint: composition:quiet-editorial-imported");
+      expect(text(inlinePreview)).toContain("No files were written.");
 
       const importPath = join(registry, "quiet-editorial.mosvera.json");
       writeFileSync(importPath, `${JSON.stringify(pack, null, 2)}\n`, "utf8");
@@ -215,6 +223,8 @@ describe("MCP stdio surface", () => {
         arguments: { path: importPath },
       });
       expect(imported.isError).not.toBe(true);
+      expect(text(imported)).toContain("Imported aesthetic pack \"quiet-editorial\"");
+      expect(text(imported)).toContain("Installed entrypoint: composition:quiet-editorial-imported");
       expect(imported.structuredContent).toMatchObject({
         ok: true,
         entrypoint: { kind: "composition", id: "quiet-editorial-imported" },

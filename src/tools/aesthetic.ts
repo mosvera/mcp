@@ -20,6 +20,7 @@ import {
   validateAestheticPack,
   type AestheticPack,
   type AestheticPackConflictStrategy,
+  type AestheticPackImportPlan,
   type AestheticPackStrategyConflict,
   type CapabilityManifest,
   type Criticality,
@@ -74,6 +75,139 @@ function stable(value: unknown): unknown {
 
 function stableStringify(value: unknown): string {
   return JSON.stringify(stable(value));
+}
+
+function stablePretty(value: unknown): string {
+  return JSON.stringify(stable(value), null, 2);
+}
+
+function jsonPreview(label: string, value: unknown, limit = 3000): string {
+  const pretty = stablePretty(value);
+  const suffix = pretty.length > limit ? `\n...truncated ${pretty.length - limit} character${pretty.length - limit === 1 ? "" : "s"}` : "";
+  return `${label}:\n\`\`\`json\n${pretty.slice(0, limit)}${suffix}\n\`\`\``;
+}
+
+function stringValue(value: unknown): string | undefined {
+  return typeof value === "string" && value.length > 0 ? value : undefined;
+}
+
+function objectValue(value: unknown): Record<string, unknown> | undefined {
+  return value !== null && typeof value === "object" && !Array.isArray(value) ? value as Record<string, unknown> : undefined;
+}
+
+function canonicalHighlights(canonical: JsonObject): string[] {
+  const lines: string[] = [];
+  const sections = Object.keys(canonical).sort();
+  lines.push(`Sections: ${sections.length > 0 ? sections.join(", ") : "none"}.`);
+
+  const voice = objectValue(canonical.voice);
+  const headline = stringValue(voice?.headline);
+  const body = stringValue(voice?.body);
+  if (headline !== undefined) lines.push(`Voice headline: ${headline}`);
+  if (body !== undefined) lines.push(`Voice body: ${body}`);
+
+  const palette = objectValue(canonical.palette);
+  if (palette !== undefined) {
+    const keys = ["accent", "accent_2", "background", "surface", "ink", "muted"];
+    const values = keys
+      .map((key) => [key, stringValue(palette[key])] as const)
+      .filter((entry): entry is readonly [string, string] => entry[1] !== undefined)
+      .map(([key, value]) => `${key} ${value}`);
+    if (values.length > 0) lines.push(`Palette: ${values.join(", ")}.`);
+  }
+
+  const typography = objectValue(canonical.typography);
+  if (typography !== undefined) {
+    const values = ["display", "body", "mono", "scale"]
+      .map((key) => [key, stringValue(typography[key])] as const)
+      .filter((entry): entry is readonly [string, string] => entry[1] !== undefined)
+      .map(([key, value]) => `${key} ${value}`);
+    if (values.length > 0) lines.push(`Typography: ${values.join(", ")}.`);
+  }
+
+  const layout = objectValue(canonical.layout);
+  if (layout !== undefined) {
+    const values = ["density", "radius", "max_width", "shadow"]
+      .map((key) => [key, stringValue(layout[key])] as const)
+      .filter((entry): entry is readonly [string, string] => entry[1] !== undefined)
+      .map(([key, value]) => `${key} ${value}`);
+    if (values.length > 0) lines.push(`Layout: ${values.join(", ")}.`);
+  }
+
+  const imagery = objectValue(canonical.imagery);
+  if (imagery !== undefined) {
+    const treatment = stringValue(imagery.treatment);
+    const src = stringValue(imagery.src);
+    const alt = stringValue(imagery.alt);
+    const values = [
+      treatment !== undefined ? `treatment ${treatment}` : undefined,
+      src !== undefined ? `src ${src}` : undefined,
+      alt !== undefined ? `alt ${alt}` : undefined,
+    ].filter((value): value is string => value !== undefined);
+    if (values.length > 0) lines.push(`Imagery: ${values.join(", ")}.`);
+  }
+
+  const motion = objectValue(canonical.motion);
+  if (motion !== undefined) {
+    const values = ["pace", "duration"]
+      .map((key) => [key, stringValue(motion[key])] as const)
+      .filter((entry): entry is readonly [string, string] => entry[1] !== undefined)
+      .map(([key, value]) => `${key} ${value}`);
+    if (values.length > 0) lines.push(`Motion: ${values.join(", ")}.`);
+  }
+
+  return lines;
+}
+
+function packCounts(pack: AestheticPack): Record<string, number> {
+  return {
+    templates: Object.keys(pack.documents.templates ?? {}).length,
+    palettes: Object.keys(pack.documents.palettes ?? {}).length,
+    modifiers: Object.keys(pack.documents.modifiers ?? {}).length,
+    compositions: Object.keys(pack.documents.compositions ?? {}).length,
+  };
+}
+
+function packSummary(pack: AestheticPack): string[] {
+  const counts = packCounts(pack);
+  return [
+    `Pack id: ${pack.id}`,
+    `Entrypoint: ${pack.entrypoint.kind}:${pack.entrypoint.id}`,
+    `Documents: ${counts.templates} templates, ${counts.palettes} palettes, ${counts.modifiers} modifiers, ${counts.compositions} compositions.`,
+  ];
+}
+
+function importPlanSummary(plan: AestheticPackImportPlan): string[] {
+  const actionCounts = plan.operations.reduce<Record<string, number>>((acc, op) => {
+    acc[op.action] = (acc[op.action] ?? 0) + 1;
+    return acc;
+  }, {});
+  const actions = Object.entries(actionCounts)
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([action, count]) => `${count} ${action}`)
+    .join(", ");
+  const renamed = plan.operations
+    .filter((op) => op.action === "rename")
+    .map((op) => `${op.kind}:${op.original_id} -> ${op.id}`);
+  return [
+    `Pack id: ${plan.pack_id}`,
+    `Entrypoint: ${plan.entrypoint.kind}:${plan.entrypoint.id}`,
+    `Installed entrypoint: ${plan.installed_entrypoint.kind}:${plan.installed_entrypoint.id}`,
+    `Operations: ${plan.operations.length}${actions.length > 0 ? ` (${actions})` : ""}.`,
+    renamed.length > 0 ? `Renames:\n${renamed.map((line) => `- ${line}`).join("\n")}` : "Renames: none.",
+    `Diagnostics: ${plan.diagnostics.length}.`,
+  ];
+}
+
+function warningSummary(warnings: Array<{ construct?: unknown; action?: unknown }> | undefined): string {
+  if (warnings === undefined || warnings.length === 0) return "Warnings: none.";
+  const visible = warnings.slice(0, 12).map((warning) => {
+    const construct = typeof warning.construct === "string" ? warning.construct : "unknown";
+    const action = typeof warning.action === "string" ? warning.action : "warning";
+    return `- ${construct}: ${action}`;
+  });
+  const remaining = warnings.length - visible.length;
+  return `Warnings (${warnings.length}):\n${visible.join("\n")}${remaining > 0 ? `\n...and ${remaining} more warning${remaining === 1 ? "" : "s"}.` : ""}`;
 }
 
 function validatePackPath(path: string): ToolFailure | undefined {
@@ -319,7 +453,12 @@ export function runPreviewAestheticImport(
   if (args.strategy_conflict !== undefined) options.strategyConflict = args.strategy_conflict;
   const plan = previewAestheticPackImport(source.pack, ctx.project.registry, options);
   if (!plan.valid) return fail("invalid_document", "Aesthetic pack import preview found blocking diagnostics.", { plan });
-  return ok("Previewed aesthetic pack import.", { source: source.source, path: source.path, plan });
+  const message = [
+    "Previewed aesthetic pack import.",
+    ...importPlanSummary(plan),
+    "No files were written.",
+  ].join("\n");
+  return ok(message, { source: source.source, path: source.path, plan });
 }
 
 export function runExportAestheticPack(
@@ -335,7 +474,13 @@ export function runExportAestheticPack(
     if (args.description !== undefined) options.description = args.description;
     const pack = exportAestheticPack(args.aesthetic, ctx.project.registry, options);
     const suggested_filename = `${pack.id}.mosvera.json`;
-    return ok(`Exported aesthetic pack "${pack.id}".`, { pack, suggested_filename });
+    const message = [
+      `Exported aesthetic pack "${pack.id}".`,
+      `Suggested filename: ${suggested_filename}`,
+      ...packSummary(pack),
+      jsonPreview("Pack JSON", pack, 8000),
+    ].join("\n");
+    return ok(message, { pack, suggested_filename });
   } catch (e) {
     return toolFail(runtimeError(e));
   }
@@ -350,7 +495,12 @@ export function runResolveAesthetic(
   const resolved = resolveInput(ctx, input);
   if (maybeFail(resolved)) return toolFail(resolved);
   const id = typeof args.aesthetic === "string" ? args.aesthetic : "inline";
-  return ok(`Resolved aesthetic "${id}".`, { canonical: resolved.canonical });
+  const message = [
+    `Resolved aesthetic "${id}".`,
+    ...canonicalHighlights(resolved.canonical),
+    jsonPreview("Canonical model", resolved.canonical, 5000),
+  ].join("\n");
+  return ok(message, { canonical: resolved.canonical });
 }
 
 export function runCompileDesignTokens(
@@ -407,7 +557,12 @@ export function runCompileProviderPayload(
 
   const compiled = compile(resolved.canonical, manifest as CapabilityManifest, args.criticality ?? {});
   if (compiled.status === "error") {
-    return ok(`Provider "${args.provider}" cannot satisfy required construct "${compiled.construct}".`, {
+    const message = [
+      `Provider "${args.provider}" cannot satisfy required construct "${compiled.construct}".`,
+      `Error: ${compiled.error}`,
+      jsonPreview("Canonical model", resolved.canonical, 2500),
+    ].join("\n");
+    return ok(message, {
       status: "error",
       error: compiled.error,
       construct: compiled.construct,
@@ -416,7 +571,12 @@ export function runCompileProviderPayload(
   }
 
   if (adapter === undefined) {
-    return ok(`Compiled provider contract for "${args.provider}".`, {
+    const message = [
+      `Compiled provider contract for "${args.provider}".`,
+      "No provider adapter is installed, so no payload was emitted.",
+      warningSummary(compiled.warnings),
+    ].join("\n");
+    return ok(message, {
       status: "compiled",
       provider: args.provider,
       warnings: compiled.warnings,
@@ -428,7 +588,13 @@ export function runCompileProviderPayload(
     const emitOptions: ProviderEmitOptions = { criticality: args.criticality ?? {} };
     if (args.provider_options !== undefined) emitOptions.providerOptions = args.provider_options;
     const emission = adapter.emit(resolved.canonical, emitOptions as Parameters<typeof adapter.emit>[1]);
-    return ok(`Compiled deterministic provider payload for "${args.provider}".`, {
+    const message = [
+      `Compiled deterministic provider payload for "${args.provider}".`,
+      emission.prompt.length > 0 ? `Prompt: ${emission.prompt}` : "Prompt: none.",
+      warningSummary(emission.warnings),
+      jsonPreview("Payload JSON", emission.payload, 5000),
+    ].join("\n");
+    return ok(message, {
       status: "compiled",
       provider: args.provider,
       warnings: emission.warnings,
@@ -452,7 +618,12 @@ export function runDraftAesthetic(
     if (args.modifiers !== undefined) options.modifiers = args.modifiers;
     if (overrides !== undefined) options.overrides = overrides;
     const document = createComposition(args.id, args.base, options);
-    return ok(`Drafted aesthetic "${args.id}".`, { kind: "composition", id: args.id, document });
+    const message = [
+      `Drafted aesthetic "${args.id}".`,
+      "This draft was not saved to the local registry. Use save_aesthetic to persist it.",
+      jsonPreview("Composition document", document, 4000),
+    ].join("\n");
+    return ok(message, { kind: "composition", id: args.id, document });
   } catch (e) {
     const failure = runtimeError(e);
     return toolFail(failure);
@@ -475,7 +646,12 @@ export function runSaveAesthetic(
   try {
     saveProjectDocument(ctx.registryDir, "composition", document);
     reloadContext(ctx);
-    return ok(`Saved aesthetic "${args.id}".`, { kind: "composition", id: args.id, document });
+    const message = [
+      `Saved aesthetic "${args.id}" to the local registry.`,
+      `Registry: ${ctx.registryDir}`,
+      jsonPreview("Composition document", document, 4000),
+    ].join("\n");
+    return ok(message, { kind: "composition", id: args.id, document });
   } catch (e) {
     return toolFail(runtimeError(e));
   }
@@ -498,12 +674,22 @@ export function runSaveRegistryDocument(
       const manifest = document as unknown as CapabilityManifest;
       saveCapabilityManifest(ctx.registryDir, manifest);
       reloadContext(ctx);
-      return ok(`Saved capability manifest "${manifest.provider}".`, { kind: args.kind, id: manifest.provider, document });
+      const message = [
+        `Saved capability manifest "${manifest.provider}".`,
+        `Registry: ${ctx.registryDir}`,
+        jsonPreview("Capability manifest", document, 4000),
+      ].join("\n");
+      return ok(message, { kind: args.kind, id: manifest.provider, document });
     }
 
     saveProjectDocument(ctx.registryDir, args.kind, document);
     reloadContext(ctx);
-    return ok(`Saved ${args.kind} "${String(document.id)}".`, { kind: args.kind, id: document.id, document });
+    const message = [
+      `Saved ${args.kind} "${String(document.id)}".`,
+      `Registry: ${ctx.registryDir}`,
+      jsonPreview("Registry document", document, 4000),
+    ].join("\n");
+    return ok(message, { kind: args.kind, id: document.id, document });
   } catch (e) {
     return toolFail(runtimeError(e));
   }
@@ -587,7 +773,12 @@ export function runImportAestheticPack(
       writeMergeStrategies(ctx.registryDir, result.strategies);
     }
     reloadContext(ctx);
-    return ok(`Imported aesthetic pack "${result.pack.id}".`, {
+    const message = [
+      `Imported aesthetic pack "${result.pack.id}".`,
+      `Registry: ${ctx.registryDir}`,
+      ...importPlanSummary(result.plan),
+    ].join("\n");
+    return ok(message, {
       source: source.source,
       path: source.path,
       plan: result.plan,

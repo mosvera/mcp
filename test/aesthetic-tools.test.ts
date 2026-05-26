@@ -23,6 +23,10 @@ function tempRegistry(): string {
   return mkdtempSync(join(tmpdir(), "mosvera-mcp-registry-"));
 }
 
+function text(result: { content?: Array<{ type: string; text?: string }> }): string {
+  return result.content?.find((item) => item.type === "text")?.text ?? "";
+}
+
 describe("aesthetic MCP tool handlers", () => {
   it("seeds the four public demo aesthetics into a writable user registry", () => {
     const ctx = buildContext({ registryDir: tempRegistry() });
@@ -106,6 +110,8 @@ describe("aesthetic MCP tool handlers", () => {
         headline: "Same architecture, built out of warm clay and shop light.",
       },
     });
+    expect(text(result)).toContain("Payload JSON");
+    expect(text(result)).toContain('"avatar_id": "avatar-demo"');
   });
 
   it("compiles the Phase 6L provider ids through injected adapters without executing providers", () => {
@@ -184,6 +190,8 @@ describe("aesthetic MCP tool handlers", () => {
     });
 
     expect(result.isError).not.toBe(true);
+    expect(text(result)).toContain("Composition document");
+    expect(text(result)).toContain("Saved aesthetic \"executive-editorial\" to the local registry.");
     expect(runValidateRegistry(ctx).structuredContent).toMatchObject({ valid: true });
     expect(runListAesthetics(ctx).structuredContent?.aesthetics).toContainEqual({
       kind: "composition",
@@ -214,10 +222,14 @@ describe("aesthetic MCP tool handlers", () => {
     const ctx = buildContext({ registryDir: dir });
     const exported = runExportAestheticPack(ctx, { aesthetic: "quiet-editorial" });
     expect(exported.isError).not.toBe(true);
+    expect(text(exported)).toContain("Pack JSON");
+    expect(text(exported)).toContain("quiet-editorial.mosvera.json");
     const pack = exported.structuredContent?.pack as object;
 
     expect(runValidateAestheticPack(ctx, { pack }).structuredContent).toMatchObject({ valid: true });
     const preview = runPreviewAestheticImport(ctx, { pack });
+    expect(text(preview)).toContain("Installed entrypoint: composition:quiet-editorial-imported");
+    expect(text(preview)).toContain("No files were written.");
     expect(preview.structuredContent?.plan).toMatchObject({
       valid: true,
       installed_entrypoint: { kind: "composition", id: "quiet-editorial-imported" },
@@ -227,6 +239,8 @@ describe("aesthetic MCP tool handlers", () => {
     writeFileSync(importPath, `${JSON.stringify(pack, null, 2)}\n`, "utf8");
     const imported = runImportAestheticPack(ctx, { path: importPath });
     expect(imported.isError).not.toBe(true);
+    expect(text(imported)).toContain("Imported aesthetic pack \"quiet-editorial\"");
+    expect(text(imported)).toContain("Installed entrypoint: composition:quiet-editorial-imported");
     expect(runListAesthetics(ctx).structuredContent?.aesthetics).toContainEqual({
       kind: "composition",
       id: "quiet-editorial-imported",
