@@ -114,6 +114,21 @@ describe("MCP stdio surface", () => {
       expect((tokens.structuredContent as Record<string, unknown>).css_variables).toMatchObject({ "--mosvera-palette-accent": "#bd5838" });
       expect(text(tokens)).toContain("--mosvera-palette-accent: #bd5838;");
 
+      const elevenLabs = await client.callTool({
+        name: "compile_provider_payload",
+        arguments: {
+          aesthetic: "claymation-playful-builder",
+          provider: "elevenlabs-tts",
+          provider_options: {
+            voice_id: "voice-demo",
+            script: "Welcome to Mosvera. This is a compile-only smoke test.",
+          },
+        },
+      });
+      expect(elevenLabs.isError).not.toBe(true);
+      expect(text(elevenLabs)).toContain("Payload JSON");
+      expect(text(elevenLabs)).toContain('"text": "Welcome to Mosvera. This is a compile-only smoke test."');
+
       const pack = await client.callTool({ name: "export_aesthetic_pack", arguments: { aesthetic: "quiet-editorial" } });
       expect(text(pack)).toContain("Pack JSON");
       expect(text(pack)).toContain("Suggested filename: quiet-editorial.mosvera.json");
