@@ -29,7 +29,7 @@ import { openaiAdapter } from "@mosvera/provider-openai";
 import { sdxlAdapter } from "@mosvera/provider-sdxl";
 import type { ToolContext } from "./types.ts";
 
-export const SERVER_VERSION = "0.1.3";
+export const SERVER_VERSION = "0.1.4";
 
 export interface CliOptions {
   registryDir?: string;

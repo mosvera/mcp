@@ -32,6 +32,10 @@ describe("aesthetic MCP tool handlers", () => {
     });
 
     const list = runListAesthetics(ctx);
+    expect(list.content?.[0]).toMatchObject({
+      type: "text",
+      text: expect.stringContaining("quiet-editorial"),
+    });
     expect(list.structuredContent?.aesthetics).toEqual([
       { kind: "composition", id: "cinematic-lab", base: "cinematic-lab-base" },
       { kind: "composition", id: "claymation-playful-builder", base: "claymation-playful-builder-base" },

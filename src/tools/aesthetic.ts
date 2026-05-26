@@ -220,7 +220,11 @@ export function runServerStatus(ctx: ToolContext): CallToolResult {
 
 export function runListAesthetics(ctx: ToolContext): CallToolResult {
   const aesthetics = listRegistryEntries(ctx.project.registry, "composition");
-  return ok(`Found ${aesthetics.length} aesthetic${aesthetics.length === 1 ? "" : "s"}.`, { aesthetics });
+  const label = aesthetics.length === 1 ? "aesthetic" : "aesthetics";
+  const summary =
+    aesthetics.length === 0 ? "Found 0 aesthetics." :
+    `Found ${aesthetics.length} ${label}:\n${aesthetics.map((entry) => `- ${entry.id}${entry.base !== undefined ? ` (base: ${entry.base})` : ""}`).join("\n")}`;
+  return ok(summary, { aesthetics });
 }
 
 export function runGetRegistryDocument(

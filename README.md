@@ -18,7 +18,7 @@ deterministic provider payloads that other tools can consume.
 
 The easiest path for non-command-line users is the Mosvera MCP Bundle:
 
-1. Download `mosvera-mcp-0.1.3.mcpb` from the latest
+1. Download `mosvera-mcp-0.1.4.mcpb` from the latest
    [GitHub release](https://github.com/mosvera/mcp/releases).
 2. Double-click the file, drag it into Claude Desktop, or install it from
    Claude Desktop Settings → Extensions → Advanced settings → Install
@@ -176,7 +176,7 @@ npm run mcpb:inspect
 The MCPB pack step creates:
 
 ```text
-build/mosvera/mosvera-mcp-0.1.3.mcpb
+build/mosvera/mosvera-mcp-0.1.4.mcpb
 ```
 
 ## Package Boundaries
