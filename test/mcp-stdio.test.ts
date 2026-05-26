@@ -129,6 +129,20 @@ describe("MCP stdio surface", () => {
       expect(text(elevenLabs)).toContain("Payload JSON");
       expect(text(elevenLabs)).toContain('"text": "Welcome to Mosvera. This is a compile-only smoke test."');
 
+      const googleImage = await client.callTool({
+        name: "compile_provider_payload",
+        arguments: {
+          aesthetic: "claymation-playful-builder",
+          provider: "google-gemini-image",
+          provider_options: {
+            prompt: "A friendly claymation builder desk with colorful tools and warm studio lighting.",
+          },
+        },
+      });
+      expect(googleImage.isError).not.toBe(true);
+      expect(text(googleImage)).toContain("A friendly claymation builder desk with colorful tools and warm studio lighting.");
+      expect(text(googleImage)).toContain("Mosvera aesthetic direction:");
+
       const pack = await client.callTool({ name: "export_aesthetic_pack", arguments: { aesthetic: "quiet-editorial" } });
       expect(text(pack)).toContain("Pack JSON");
       expect(text(pack)).toContain("Suggested filename: quiet-editorial.mosvera.json");

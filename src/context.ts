@@ -30,7 +30,7 @@ import { sdxlAdapter } from "@mosvera/provider-sdxl";
 import type { ProviderAdapter } from "@mosvera/provider-base";
 import type { ToolContext } from "./types.ts";
 
-export const SERVER_VERSION = "0.1.8";
+export const SERVER_VERSION = "0.1.9";
 
 export interface CliOptions {
   registryDir?: string;
