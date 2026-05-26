@@ -33,7 +33,17 @@ describe("MCP stdio surface", () => {
       const tools = await client.listTools();
       const byName = new Map(tools.tools.map((tool) => [tool.name, tool]));
 
-      for (const name of ["server_status", "list_aesthetics", "resolve_aesthetic", "compile_design_tokens", "save_aesthetic"]) {
+      for (const name of [
+        "server_status",
+        "list_aesthetics",
+        "validate_aesthetic_pack",
+        "preview_aesthetic_import",
+        "export_aesthetic_pack",
+        "resolve_aesthetic",
+        "compile_design_tokens",
+        "save_aesthetic",
+        "import_aesthetic_pack",
+      ]) {
         expect(byName.get(name)?.inputSchema).toBeTruthy();
         expect(byName.get(name)?.outputSchema).toBeTruthy();
         expect(byName.get(name)?.annotations).toBeTruthy();
@@ -58,6 +68,11 @@ describe("MCP stdio surface", () => {
 
       const tokens = await client.callTool({ name: "compile_design_tokens", arguments: { aesthetic: "quiet-editorial" } });
       expect((tokens.structuredContent as Record<string, unknown>).css_variables).toMatchObject({ "--mosvera-palette-accent": "#bd5838" });
+
+      const pack = await client.callTool({ name: "export_aesthetic_pack", arguments: { aesthetic: "quiet-editorial" } });
+      const packDocument = (pack.structuredContent as Record<string, unknown>).pack;
+      const validated = await client.callTool({ name: "validate_aesthetic_pack", arguments: { pack: packDocument } });
+      expect(validated.structuredContent).toMatchObject({ ok: true, valid: true });
     });
   });
 
@@ -66,10 +81,13 @@ describe("MCP stdio surface", () => {
       const tools = await client.listTools();
       const names = tools.tools.map((tool) => tool.name);
       expect(names).toContain("draft_aesthetic");
+      expect(names).toContain("export_aesthetic_pack");
+      expect(names).toContain("preview_aesthetic_import");
       expect(names).not.toContain("save_aesthetic");
       expect(names).not.toContain("save_registry_document");
       expect(names).not.toContain("delete_registry_document");
       expect(names).not.toContain("write_merge_strategies");
+      expect(names).not.toContain("import_aesthetic_pack");
     });
   });
 });

@@ -1,15 +1,19 @@
 // SPDX-License-Identifier: Apache-2.0
 import { describe, expect, it } from "vitest";
-import { mkdtempSync, readFileSync } from "node:fs";
+import { mkdtempSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { buildContext } from "../src/context.ts";
 import {
   runCompileDesignTokens,
   runDeleteRegistryDocument,
+  runExportAestheticPack,
+  runImportAestheticPack,
   runListAesthetics,
+  runPreviewAestheticImport,
   runSaveAesthetic,
   runServerStatus,
+  runValidateAestheticPack,
   runValidateRegistry,
 } from "../src/tools/aesthetic.ts";
 
@@ -81,6 +85,34 @@ describe("aesthetic MCP tool handlers", () => {
 
     const deleted = runDeleteRegistryDocument(ctx, { kind: "composition", id: "executive-editorial" });
     expect(deleted.structuredContent).toMatchObject({ deleted: true });
+  });
+
+  it("validates, previews, exports, and imports aesthetic packs", () => {
+    const dir = tempRegistry();
+    const ctx = buildContext({ registryDir: dir });
+    const exported = runExportAestheticPack(ctx, { aesthetic: "quiet-editorial" });
+    expect(exported.isError).not.toBe(true);
+    const pack = exported.structuredContent?.pack as object;
+
+    expect(runValidateAestheticPack(ctx, { pack }).structuredContent).toMatchObject({ valid: true });
+    const preview = runPreviewAestheticImport(ctx, { pack });
+    expect(preview.structuredContent?.plan).toMatchObject({
+      valid: true,
+      installed_entrypoint: { kind: "composition", id: "quiet-editorial-imported" },
+    });
+
+    const importPath = join(dir, "quiet-editorial.mosvera.json");
+    writeFileSync(importPath, `${JSON.stringify(pack, null, 2)}\n`, "utf8");
+    const imported = runImportAestheticPack(ctx, { path: importPath });
+    expect(imported.isError).not.toBe(true);
+    expect(runListAesthetics(ctx).structuredContent?.aesthetics).toContainEqual({
+      kind: "composition",
+      id: "quiet-editorial-imported",
+      base: "quiet-editorial-base-imported",
+    });
+    expect(readFileSync(join(dir, "composition.quiet-editorial-imported.json"), "utf8")).toContain(
+      '"base": "quiet-editorial-base-imported"',
+    );
   });
 
   it("returns structured MCP errors for unsafe ids", () => {

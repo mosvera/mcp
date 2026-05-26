@@ -9,11 +9,18 @@ import {
   compileDesignTokens,
   composeStrategies,
   createComposition,
+  exportAestheticPack,
   getRegistryDocument,
+  importAestheticPack,
   listRegistryEntries,
   parse,
+  previewAestheticPackImport,
   resolveAesthetic,
   toCssVariables,
+  validateAestheticPack,
+  type AestheticPack,
+  type AestheticPackConflictStrategy,
+  type AestheticPackStrategyConflict,
   type CapabilityManifest,
   type Criticality,
   type DocumentKind,
@@ -24,6 +31,8 @@ import {
 } from "@mosvera/runtime";
 import { deleteProjectDocument, RegistryProjectError, saveProjectDocument, writeMergeStrategies } from "@mosvera/runtime/node";
 import { EmissionError } from "@mosvera/provider-base";
+import { readFileSync } from "node:fs";
+import { basename } from "node:path";
 import { registryDiagnostics, reloadContext, SERVER_VERSION } from "../context.ts";
 import { fail, ok, type ToolFailure } from "../mcp-result.ts";
 import { deleteCapabilityManifest, ProjectWriteError, saveCapabilityManifest } from "../project-writes.ts";
@@ -33,6 +42,7 @@ import type { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
 
 export const registryKinds = ["template", "modifier", "palette", "composition"] as const;
 export const documentKinds = ["template", "modifier", "palette", "composition", "capability-manifest"] as const;
+const PACK_EXT = /\.mosvera\.json$/i;
 
 function parseDocument(source: object | string): JsonObject | ToolFailure {
   try {
@@ -43,6 +53,63 @@ function parseDocument(source: object | string): JsonObject | ToolFailure {
       message: `Could not parse Mosvera document: ${e instanceof Error ? e.message : String(e)}`,
     };
   }
+}
+
+function stable(value: unknown): unknown {
+  if (Array.isArray(value)) return value.map(stable);
+  if (value !== null && typeof value === "object") {
+    const out: Record<string, unknown> = {};
+    for (const [key, child] of Object.entries(value).sort(([a], [b]) => a.localeCompare(b))) {
+      out[key] = stable(child);
+    }
+    return out;
+  }
+  return value;
+}
+
+function stableStringify(value: unknown): string {
+  return JSON.stringify(stable(value));
+}
+
+function validatePackPath(path: string): ToolFailure | undefined {
+  if (/^https?:\/\//i.test(path)) {
+    return { error: "unsafe_filename", message: "Aesthetic pack imports only accept local .mosvera.json files, not URLs." };
+  }
+  const file = basename(path);
+  if (file.startsWith(".") || !PACK_EXT.test(file)) {
+    return { error: "unsafe_filename", message: "Aesthetic pack paths must end with .mosvera.json and must not be dotfiles." };
+  }
+  return undefined;
+}
+
+function readPackSource(args: { pack?: object | string; path?: string }): { pack: JsonObject; source: "inline" | "path"; path?: string } | ToolFailure {
+  if ((args.pack === undefined && args.path === undefined) || (args.pack !== undefined && args.path !== undefined)) {
+    return { error: "invalid_document", message: "Provide exactly one aesthetic pack source: inline pack JSON or a local .mosvera.json path." };
+  }
+  if (args.path !== undefined) {
+    const pathFailure = validatePackPath(args.path);
+    if (pathFailure !== undefined) return pathFailure;
+    const parsed = parseDocument(readFileSync(args.path, "utf8"));
+    if (maybeFail(parsed)) return parsed;
+    return { pack: parsed, source: "path", path: args.path };
+  }
+  const parsed = parseDocument(args.pack!);
+  if (maybeFail(parsed)) return parsed;
+  return { pack: parsed, source: "inline" };
+}
+
+function readValidPackSource(args: { pack?: object | string; path?: string }, ctx: ToolContext): { pack: AestheticPack; source: "inline" | "path"; path?: string } | ToolFailure {
+  const source = readPackSource(args);
+  if (maybeFail(source)) return source;
+  const diagnostics = validateAestheticPack(source.pack, { validator: ctx.validator });
+  if (diagnostics.length > 0) {
+    return {
+      error: "schema_failure",
+      message: "Aesthetic pack failed validation.",
+      detail: { valid: false, diagnostics },
+    };
+  }
+  return source as unknown as { pack: AestheticPack; source: "inline" | "path"; path?: string };
 }
 
 function runtimeError(e: unknown): ToolFailure {
@@ -144,7 +211,7 @@ export function runServerStatus(ctx: ToolContext): CallToolResult {
     fallback_reason: ctx.fallbackReason,
     versions: {
       mcp: SERVER_VERSION,
-      runtime: "0.1.1",
+      runtime: "0.1.2",
     },
     counts,
     diagnostics,
@@ -191,6 +258,62 @@ export function runValidateRegistry(ctx: ToolContext): CallToolResult {
     valid: diagnostics.length === 0,
     diagnostics,
   });
+}
+
+export function runValidateAestheticPack(
+  ctx: ToolContext,
+  args: { pack?: object | string; path?: string },
+): CallToolResult {
+  const source = readPackSource(args);
+  if (maybeFail(source)) return toolFail(source);
+  const diagnostics = validateAestheticPack(source.pack, { validator: ctx.validator });
+  return ok(diagnostics.length === 0 ? "Aesthetic pack is valid." : "Aesthetic pack is invalid.", {
+    valid: diagnostics.length === 0,
+    source: source.source,
+    path: source.path,
+    diagnostics,
+  });
+}
+
+export function runPreviewAestheticImport(
+  ctx: ToolContext,
+  args: {
+    pack?: object | string;
+    path?: string;
+    conflict_strategy?: AestheticPackConflictStrategy;
+    strategy_conflict?: AestheticPackStrategyConflict;
+  },
+): CallToolResult {
+  const source = readValidPackSource(args, ctx);
+  if (maybeFail(source)) return toolFail(source);
+  const options: Parameters<typeof previewAestheticPackImport>[2] = {
+    validator: ctx.validator,
+    strategies: ctx.project.strategies,
+  };
+  if (args.conflict_strategy !== undefined) options.conflictStrategy = args.conflict_strategy;
+  if (args.strategy_conflict !== undefined) options.strategyConflict = args.strategy_conflict;
+  const plan = previewAestheticPackImport(source.pack, ctx.project.registry, options);
+  if (!plan.valid) return fail("invalid_document", "Aesthetic pack import preview found blocking diagnostics.", { plan });
+  return ok("Previewed aesthetic pack import.", { source: source.source, path: source.path, plan });
+}
+
+export function runExportAestheticPack(
+  ctx: ToolContext,
+  args: { aesthetic: string; id?: string; name?: string; description?: string },
+): CallToolResult {
+  try {
+    const options: { id?: string; name?: string; description?: string; strategies?: MergeStrategies } = {
+      strategies: ctx.project.strategies,
+    };
+    if (args.id !== undefined) options.id = args.id;
+    if (args.name !== undefined) options.name = args.name;
+    if (args.description !== undefined) options.description = args.description;
+    const pack = exportAestheticPack(args.aesthetic, ctx.project.registry, options);
+    const suggested_filename = `${pack.id}.mosvera.json`;
+    return ok(`Exported aesthetic pack "${pack.id}".`, { pack, suggested_filename });
+  } catch (e) {
+    return toolFail(runtimeError(e));
+  }
 }
 
 export function runResolveAesthetic(
@@ -386,6 +509,55 @@ export function runWriteMergeStrategies(
     writeMergeStrategies(ctx.registryDir, args.merge_strategies);
     reloadContext(ctx);
     return ok("Saved merge strategies.", { merge_strategies: args.merge_strategies });
+  } catch (e) {
+    return toolFail(runtimeError(e));
+  }
+}
+
+export function runImportAestheticPack(
+  ctx: ToolContext,
+  args: {
+    pack?: object | string;
+    path?: string;
+    conflict_strategy?: AestheticPackConflictStrategy;
+    strategy_conflict?: AestheticPackStrategyConflict;
+  },
+): CallToolResult {
+  const disabled = writeDisabled(ctx);
+  if (disabled !== undefined) return toolFail(disabled);
+  const source = readValidPackSource(args, ctx);
+  if (maybeFail(source)) return toolFail(source);
+
+  try {
+    const options: Parameters<typeof importAestheticPack>[2] = {
+      validator: ctx.validator,
+      strategies: ctx.project.strategies,
+    };
+    if (args.conflict_strategy !== undefined) options.conflictStrategy = args.conflict_strategy;
+    if (args.strategy_conflict !== undefined) options.strategyConflict = args.strategy_conflict;
+    const result = importAestheticPack(ctx.project.registry, source.pack, options);
+    if (!result.plan.valid) return fail("invalid_document", "Aesthetic pack import found blocking diagnostics.", { plan: result.plan });
+
+    for (const kind of registryKinds) {
+      const collection =
+        kind === "template" ? result.pack.documents.templates :
+        kind === "modifier" ? result.pack.documents.modifiers :
+        kind === "palette" ? result.pack.documents.palettes :
+        result.pack.documents.compositions;
+      for (const document of Object.values(collection ?? {})) {
+        saveProjectDocument(ctx.registryDir, kind, document);
+      }
+    }
+    if (stableStringify(result.strategies) !== stableStringify(ctx.project.strategies)) {
+      writeMergeStrategies(ctx.registryDir, result.strategies);
+    }
+    reloadContext(ctx);
+    return ok(`Imported aesthetic pack "${result.pack.id}".`, {
+      source: source.source,
+      path: source.path,
+      plan: result.plan,
+      entrypoint: result.plan.installed_entrypoint,
+    });
   } catch (e) {
     return toolFail(runtimeError(e));
   }

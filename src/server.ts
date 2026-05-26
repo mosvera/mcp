@@ -17,12 +17,16 @@ import {
   runCompileProviderPayload,
   runDeleteRegistryDocument,
   runDraftAesthetic,
+  runExportAestheticPack,
   runGetRegistryDocument,
+  runImportAestheticPack,
   runListAesthetics,
+  runPreviewAestheticImport,
   runResolveAesthetic,
   runSaveAesthetic,
   runSaveRegistryDocument,
   runServerStatus,
+  runValidateAestheticPack,
   runValidateDocument,
   runValidateRegistry,
   runWriteMergeStrategies,
@@ -30,6 +34,10 @@ import {
 import type { ToolContext } from "./types.ts";
 
 const docArg = z.union([z.string(), z.record(z.any())]);
+const packSourceArg = {
+  pack: docArg.optional(),
+  path: z.string().optional(),
+};
 const strategiesArg = z.record(z.object({
   strategy: z.enum(["replace", "append", "merge_by"]),
   key: z.string().optional(),
@@ -37,6 +45,8 @@ const strategiesArg = z.record(z.object({
 const criticalityArg = z.record(z.enum(["required", "optional"]));
 const documentKindArg = z.enum(documentKinds);
 const registryDocumentKindArg = z.enum(documentKinds);
+const packConflictArg = z.enum(["auto_rename", "fail", "replace"]);
+const packStrategyConflictArg = z.enum(["fail", "replace"]);
 const outputSchema = z.object({ ok: z.boolean(), message: z.string() }).passthrough();
 
 const readAnnotations = {
@@ -126,6 +136,51 @@ export function createServer(ctx: ToolContext): McpServer {
       annotations: readAnnotations,
     },
     async () => runValidateRegistry(ctx),
+  );
+
+  server.registerTool(
+    "validate_aesthetic_pack",
+    {
+      title: "Validate Aesthetic Pack",
+      description: "Validate an inline or local .mosvera.json aesthetic pack.",
+      inputSchema: packSourceArg,
+      outputSchema,
+      annotations: readAnnotations,
+    },
+    async (args) => runValidateAestheticPack(ctx, args as Parameters<typeof runValidateAestheticPack>[1]),
+  );
+
+  server.registerTool(
+    "preview_aesthetic_import",
+    {
+      title: "Preview Aesthetic Import",
+      description: "Preview importing an aesthetic pack into the active local registry without writing files.",
+      inputSchema: {
+        ...packSourceArg,
+        conflict_strategy: packConflictArg.optional(),
+        strategy_conflict: packStrategyConflictArg.optional(),
+      },
+      outputSchema,
+      annotations: readAnnotations,
+    },
+    async (args) => runPreviewAestheticImport(ctx, args as Parameters<typeof runPreviewAestheticImport>[1]),
+  );
+
+  server.registerTool(
+    "export_aesthetic_pack",
+    {
+      title: "Export Aesthetic Pack",
+      description: "Export a named aesthetic and its registry dependencies as a portable .mosvera.json pack.",
+      inputSchema: {
+        aesthetic: z.string(),
+        id: z.string().optional(),
+        name: z.string().optional(),
+        description: z.string().optional(),
+      },
+      outputSchema,
+      annotations: readAnnotations,
+    },
+    async (args) => runExportAestheticPack(ctx, args as Parameters<typeof runExportAestheticPack>[1]),
   );
 
   server.registerTool(
@@ -244,6 +299,22 @@ export function createServer(ctx: ToolContext): McpServer {
         annotations: writeAnnotations,
       },
       async (args) => runWriteMergeStrategies(ctx, args as Parameters<typeof runWriteMergeStrategies>[1]),
+    );
+
+    server.registerTool(
+      "import_aesthetic_pack",
+      {
+        title: "Import Aesthetic Pack",
+        description: "Import an inline or local .mosvera.json aesthetic pack into the active local registry.",
+        inputSchema: {
+          ...packSourceArg,
+          conflict_strategy: packConflictArg.optional(),
+          strategy_conflict: packStrategyConflictArg.optional(),
+        },
+        outputSchema,
+        annotations: writeAnnotations,
+      },
+      async (args) => runImportAestheticPack(ctx, args as Parameters<typeof runImportAestheticPack>[1]),
     );
   }
 

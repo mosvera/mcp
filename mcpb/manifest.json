@@ -2,7 +2,7 @@
   "manifest_version": "0.3",
   "name": "mosvera-mcp",
   "display_name": "Mosvera",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Resolve, compile, and save local Mosvera aesthetics from Claude Desktop.",
   "long_description": "Mosvera runs locally against your own aesthetic registry. It lets Claude list named aesthetics, resolve them to canonical Mosvera models, compile portable design tokens and CSS variables, and save registry documents without sending provider requests or storing secrets.",
   "author": {
@@ -36,6 +36,9 @@
     { "name": "get_registry_document", "description": "Fetch a template, modifier, palette, composition, or capability manifest." },
     { "name": "validate_document", "description": "Validate one Mosvera document against a schema kind." },
     { "name": "validate_registry", "description": "Validate the active local registry." },
+    { "name": "validate_aesthetic_pack", "description": "Validate an inline or local .mosvera.json aesthetic pack." },
+    { "name": "preview_aesthetic_import", "description": "Preview importing an aesthetic pack without writing files." },
+    { "name": "export_aesthetic_pack", "description": "Export a named aesthetic as a portable .mosvera.json pack." },
     { "name": "resolve_aesthetic", "description": "Resolve a named or inline aesthetic to the canonical Mosvera model." },
     { "name": "compile_design_tokens", "description": "Compile an aesthetic into portable design tokens and CSS variables." },
     { "name": "compile_provider_payload", "description": "Compile a deterministic provider payload without making provider HTTP calls." },
@@ -43,7 +46,8 @@
     { "name": "save_aesthetic", "description": "Create or update a named aesthetic in the active local registry." },
     { "name": "save_registry_document", "description": "Create or update an advanced registry document." },
     { "name": "delete_registry_document", "description": "Delete a registry document from the active local registry." },
-    { "name": "write_merge_strategies", "description": "Replace merge-strategies.json with deterministic JSON." }
+    { "name": "write_merge_strategies", "description": "Replace merge-strategies.json with deterministic JSON." },
+    { "name": "import_aesthetic_pack", "description": "Import an aesthetic pack into the active local registry." }
   ],
   "keywords": ["mosvera", "aesthetic-infrastructure", "mcp", "design-tokens"],
   "license": "Apache-2.0",

@@ -18,7 +18,7 @@ deterministic provider payloads that other tools can consume.
 
 The easiest path for non-command-line users is the Mosvera MCP Bundle:
 
-1. Download `mosvera-mcp-0.1.2.mcpb` from the latest
+1. Download `mosvera-mcp-0.1.3.mcpb` from the latest
    [GitHub release](https://github.com/mosvera/mcp/releases).
 2. Double-click the file, drag it into Claude Desktop, or install it from
    Claude Desktop Settings → Extensions → Advanced settings → Install
@@ -37,6 +37,21 @@ Default registry locations:
 On first run, Mosvera seeds four public demo aesthetics into the registry:
 `quiet-editorial`, `technical-manual`, `cinematic-lab`, and
 `claymation-playful-builder`.
+
+## Language
+
+Mosvera uses a small term stack on purpose:
+
+- A **named aesthetic** is the user-facing intent, like
+  `executive-editorial`.
+- A **composition document** is the technical Mosvera document that resolves
+  that intent.
+- An **aesthetic pack** is a portable `.mosvera.json` file for sharing a named
+  aesthetic and its registry dependencies.
+- A **local registry** is the folder where your templates, palettes,
+  modifiers, composition documents, manifests, and merge strategies live.
+- **Tokens** and provider **payloads** are compiled outputs for other tools to
+  consume.
 
 ## Install With npm
 
@@ -84,6 +99,14 @@ Compile quiet-editorial into CSS variables.
 ```
 
 ```text
+Export quiet-editorial as an aesthetic pack.
+```
+
+```text
+Preview importing this aesthetic pack into my registry.
+```
+
+```text
 Save a new aesthetic called executive-editorial based on quiet-editorial-base with a more compact, board-ready voice.
 ```
 
@@ -102,6 +125,9 @@ flows.
 | `get_registry_document` | Read | Fetch a template, modifier, palette, composition, or capability manifest. |
 | `validate_document` | Read | Validate one document against a Mosvera schema kind. |
 | `validate_registry` | Read | Validate the active registry and return diagnostics. |
+| `validate_aesthetic_pack` | Read | Validate an inline or local `.mosvera.json` aesthetic pack. |
+| `preview_aesthetic_import` | Read | Preview importing an aesthetic pack without writing files. |
+| `export_aesthetic_pack` | Read | Export a named aesthetic as a portable `.mosvera.json` pack. |
 | `resolve_aesthetic` | Read | Resolve a named or inline aesthetic into canonical Mosvera JSON. |
 | `compile_design_tokens` | Read | Compile canonical output into portable design tokens and CSS variables. |
 | `compile_provider_payload` | Read | Advanced deterministic provider payload compilation; no provider HTTP call. |
@@ -110,6 +136,7 @@ flows.
 | `save_registry_document` | Write | Advanced create/update for registry documents and manifests. |
 | `delete_registry_document` | Destructive write | Delete a registry document. |
 | `write_merge_strategies` | Write | Replace `merge-strategies.json` with deterministic JSON. |
+| `import_aesthetic_pack` | Write | Import an aesthetic pack into the active local registry. |
 
 When the server starts with `--read-only`, write tools are not registered.
 
@@ -125,6 +152,11 @@ composition.<id>.json
 manifests/<provider>.manifest.json
 merge-strategies.json
 ```
+
+Aesthetic packs are exchanged as separate `.mosvera.json` files. They can carry
+templates, palettes, modifiers, composition documents, and merge strategies.
+They do not carry assets, provider manifests, credentials, remote URLs, or zip
+bundles in v1.
 
 IDs must be safe Mosvera references: lowercase letters, numbers, `_`, and `-`,
 starting with a letter. Absolute paths, dotfiles, path traversal, unknown
@@ -144,7 +176,7 @@ npm run mcpb:inspect
 The MCPB pack step creates:
 
 ```text
-build/mosvera/mosvera-mcp-0.1.2.mcpb
+build/mosvera/mosvera-mcp-0.1.3.mcpb
 ```
 
 ## Package Boundaries

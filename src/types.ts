@@ -51,6 +51,7 @@ export type ToolErrorCode =
   | "unknown_provider"
   | "unsafe_filename"
   | "schema_failure"
+  | "strategy_conflict"
   | "write_disabled"
   | "registry_unwritable"
   | "inheritance_cycle"
