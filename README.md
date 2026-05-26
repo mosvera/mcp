@@ -14,6 +14,12 @@ HTTP requests, and does not store API keys or secrets. It turns documents in
 your local registry into canonical Mosvera models, portable design tokens,
 CSS variables, deterministic provider payloads, and portable aesthetic packs.
 
+## 10-Minute Quickstart
+
+New users should start with the
+[`10-minute quickstart`](https://github.com/mosvera/spec/blob/main/docs/guides/10-minute-quickstart.md).
+It begins with Claude Desktop, then shows the npm/MCP path and runtime paths.
+
 ## Install In Claude Desktop
 
 The easiest path for non-command-line users is the Mosvera MCP Bundle:
