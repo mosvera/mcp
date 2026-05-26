@@ -34,7 +34,7 @@
     }
   },
   "bin": {
-    "mosvera-mcp": "./dist/server.js"
+    "mosvera-mcp": "dist/server.js"
   },
   "scripts": {
     "build": "npm run clean && tsc -p tsconfig.build.json && node scripts/copy-example-registry.mjs",
