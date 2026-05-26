@@ -11,10 +11,9 @@ import {
   readdirSync,
   statSync,
 } from "node:fs";
-import { createRequire } from "node:module";
 import { homedir } from "node:os";
 import { dirname, join, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import {
   composeStrategies,
   createValidator,
@@ -31,7 +30,7 @@ import { sdxlAdapter } from "@mosvera/provider-sdxl";
 import type { ProviderAdapter } from "@mosvera/provider-base";
 import type { ToolContext } from "./types.ts";
 
-export const SERVER_VERSION = "0.1.5";
+export const SERVER_VERSION = "0.1.6";
 
 export interface CliOptions {
   registryDir?: string;
@@ -42,8 +41,6 @@ export interface BuildContextOptions {
   registryDir?: string;
   readOnlyMode?: boolean;
 }
-
-const optionalRequire = createRequire(import.meta.url);
 
 function flagValue(argv: string[], name: string): string | undefined {
   const direct = argv.find((arg) => arg.startsWith(`${name}=`));
@@ -172,18 +169,18 @@ function optionalPackageEntrypoint(packageName: string): string | undefined {
   }
 }
 
-function optionalAdapter(packageName: string, exportName: string): ProviderAdapter | undefined {
+async function optionalAdapter(packageName: string, exportName: string): Promise<ProviderAdapter | undefined> {
   const entrypoint = optionalPackageEntrypoint(packageName);
   if (entrypoint === undefined) return undefined;
   try {
-    const mod = optionalRequire(entrypoint) as Record<string, unknown>;
+    const mod = await import(pathToFileURL(entrypoint).href) as Record<string, unknown>;
     const adapter = mod[exportName];
     return isProviderAdapter(adapter) ? adapter : undefined;
   } catch (e) {
     const code = typeof e === "object" && e !== null && "code" in e ? (e as { code?: unknown }).code : undefined;
     if (
       e instanceof Error &&
-      (code === "MODULE_NOT_FOUND" || code === "ERR_REQUIRE_ESM" || code === "ERR_PACKAGE_PATH_NOT_EXPORTED")
+      (code === "MODULE_NOT_FOUND" || code === "ERR_MODULE_NOT_FOUND" || code === "ERR_PACKAGE_PATH_NOT_EXPORTED")
     ) {
       return undefined;
     }
@@ -192,14 +189,27 @@ function optionalAdapter(packageName: string, exportName: string): ProviderAdapt
 }
 
 function providerAdapters(): Record<string, ProviderAdapter> {
-  const optional = [
-    optionalAdapter("@mosvera/provider-heygen", "heygenAdapter"),
-  ].filter((adapter): adapter is ProviderAdapter => adapter !== undefined);
   return {
     [openaiAdapter.id]: openaiAdapter,
     [fluxAdapter.id]: fluxAdapter,
     [sdxlAdapter.id]: sdxlAdapter,
-    ...Object.fromEntries(optional.map((adapter) => [adapter.id, adapter])),
+  };
+}
+
+export async function loadOptionalProviderAdapters(ctx: ToolContext): Promise<void> {
+  const optional = await Promise.all([
+    optionalAdapter("@mosvera/provider-heygen", "heygenAdapter"),
+    optionalAdapter("@mosvera/provider-google", "googleGeminiImageAdapter"),
+    optionalAdapter("@mosvera/provider-google", "googleVeoVideoAdapter"),
+    optionalAdapter("@mosvera/provider-runway", "runwayGen4ImageAdapter"),
+    optionalAdapter("@mosvera/provider-runway", "runwayGen45VideoAdapter"),
+    optionalAdapter("@mosvera/provider-elevenlabs", "elevenLabsTtsAdapter"),
+    optionalAdapter("@mosvera/provider-firefly", "fireflyImageAdapter"),
+    optionalAdapter("@mosvera/provider-meshy", "meshyTextTo3DAdapter"),
+  ]);
+  ctx.adapters = {
+    ...(ctx.adapters ?? {}),
+    ...Object.fromEntries(optional.filter((adapter): adapter is ProviderAdapter => adapter !== undefined).map((adapter) => [adapter.id, adapter])),
   };
 }
 

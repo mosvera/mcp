@@ -10,7 +10,7 @@ import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 import { realpathSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { z } from "zod";
-import { buildContext, parseCliOptions, SERVER_VERSION } from "./context.ts";
+import { buildContext, loadOptionalProviderAdapters, parseCliOptions, SERVER_VERSION } from "./context.ts";
 import {
   documentKinds,
   runCompileDesignTokens,
@@ -325,6 +325,7 @@ export function createServer(ctx: ToolContext): McpServer {
 async function main(): Promise<void> {
   const options = parseCliOptions(process.argv.slice(2));
   const ctx = buildContext(options);
+  await loadOptionalProviderAdapters(ctx);
   const server = createServer(ctx);
   await server.connect(new StdioServerTransport());
 }

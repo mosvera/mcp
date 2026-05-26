@@ -1,6 +1,6 @@
 {
   "name": "@mosvera/mcp",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Run Mosvera as local MCP tools for agents, editors, and Claude Desktop.",
   "license": "Apache-2.0",
   "type": "module",
@@ -41,8 +41,8 @@
     "ci": "npm run build && npm run typecheck && npm test",
     "clean": "rm -rf dist",
     "mcpb:stage": "npm run build && node scripts/stage-mcpb.mjs",
-    "mcpb:pack": "npm run mcpb:stage && mcpb pack build/mcpb/mosvera build/mosvera/mosvera-mcp-0.1.5.mcpb",
-    "mcpb:inspect": "node scripts/inspect-mcpb.mjs build/mosvera/mosvera-mcp-0.1.5.mcpb",
+    "mcpb:pack": "npm run mcpb:stage && mcpb pack build/mcpb/mosvera build/mosvera/mosvera-mcp-0.1.6.mcpb",
+    "mcpb:inspect": "node scripts/inspect-mcpb.mjs build/mosvera/mosvera-mcp-0.1.6.mcpb",
     "prepublishOnly": "npm run build && npm run typecheck && npm test",
     "start": "tsx src/server.ts",
     "test": "vitest run",
@@ -65,7 +65,12 @@
     "zod": "^3.24.1"
   },
   "optionalDependencies": {
-    "@mosvera/provider-heygen": "^0.1.1"
+    "@mosvera/provider-elevenlabs": "^0.1.2",
+    "@mosvera/provider-firefly": "^0.1.2",
+    "@mosvera/provider-google": "^0.1.2",
+    "@mosvera/provider-heygen": "^0.1.1",
+    "@mosvera/provider-meshy": "^0.1.2",
+    "@mosvera/provider-runway": "^0.1.2"
   },
   "devDependencies": {
     "@anthropic-ai/mcpb": "^2.1.2",

@@ -145,7 +145,7 @@ read-only mode.
 | `export_aesthetic_pack` | Read | Export a named aesthetic as a portable `.mosvera.json` pack. |
 | `resolve_aesthetic` | Read | Resolve a named or inline aesthetic into canonical Mosvera JSON. |
 | `compile_design_tokens` | Read | Compile canonical output into portable design tokens and CSS variables. |
-| `compile_provider_payload` | Read | Advanced deterministic provider payload compilation; no provider HTTP call. Supports provider-specific `provider_options` such as HeyGen `avatar_id` and `script`. |
+| `compile_provider_payload` | Read | Advanced deterministic provider payload compilation; no provider HTTP call. Supports provider-specific `provider_options` such as HeyGen `avatar_id`/`script`, ElevenLabs `voice_id`, and short-video `duration` settings. |
 | `draft_aesthetic` | Read | Draft a composition document without saving it. |
 | `save_aesthetic` | Write | Create or update a named composition aesthetic. |
 | `save_registry_document` | Write | Advanced create/update for registry documents and manifests. |
@@ -195,7 +195,7 @@ npm run mcpb:inspect
 The MCPB pack step creates:
 
 ```text
-build/mosvera/mosvera-mcp-0.1.5.mcpb
+build/mosvera/mosvera-mcp-0.1.6.mcpb
 ```
 
 ## Package Boundaries
@@ -206,9 +206,23 @@ runtime directly.
 Use the Python package `mosvera` when you want the peer Python runtime.
 
 Use `@mosvera/provider-*` packages when you want direct provider payload
-compilation without MCP. The MCP package loads the HeyGen video adapter when
-`@mosvera/provider-heygen` is installed; until that package is published it
-remains an optional dependency so MCP installs stay clean.
+compilation without MCP. The MCP package loads optional provider adapters when
+they are installed and always keeps provider calls out of MCP. The current
+compile-only provider ids are:
+
+```text
+openai-gpt-image-1
+bfl-flux-2-pro
+sdxl-replicate
+heygen-avatar-video
+google-gemini-image
+google-veo-video
+runway-gen4-image
+runway-gen45-video
+elevenlabs-tts
+adobe-firefly-image
+meshy-text-to-3d
+```
 
 Use `@mosvera/mcp` when an agent, editor, or automation system should call
 Mosvera through MCP tools.

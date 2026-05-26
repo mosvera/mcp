@@ -108,6 +108,71 @@ describe("aesthetic MCP tool handlers", () => {
     });
   });
 
+  it("compiles the Phase 6L provider ids through injected adapters without executing providers", () => {
+    const ctx = buildContext({ registryDir: tempRegistry() });
+    const providerIds = [
+      "google-gemini-image",
+      "google-veo-video",
+      "runway-gen4-image",
+      "runway-gen45-video",
+      "elevenlabs-tts",
+      "adobe-firefly-image",
+      "meshy-text-to-3d",
+    ];
+    ctx.adapters = {
+      ...(ctx.adapters ?? {}),
+      ...Object.fromEntries(
+        providerIds.map((id) => [
+          id,
+          {
+            id,
+            version: "0.1.2",
+            manifest: () => ({
+              provider: id,
+              adapter_version: "0.1.2",
+              constructs: {
+                palette: { lowering_action: "approximate", note: "folded into provider prompt" },
+                voice: { lowering_action: "approximate", note: "folded into provider prompt" },
+              },
+            }),
+            emit(canonical, options): EmissionResult {
+              const providerOptions = options as { providerOptions?: Record<string, unknown> } | undefined;
+              return {
+                payload: {
+                  provider: id,
+                  option_keys: Object.keys(providerOptions?.providerOptions ?? {}).sort(),
+                  headline: ((canonical.voice as Record<string, unknown> | undefined)?.headline ?? ""),
+                },
+                prompt: `${id} demo`,
+                warnings: [],
+                provenance: {},
+              };
+            },
+            async execute(payload: ProviderPayload) {
+              throw new Error(`MCP must not execute provider payloads: ${JSON.stringify(payload)}`);
+            },
+          } satisfies ProviderAdapter,
+        ]),
+      ),
+    };
+
+    for (const provider of providerIds) {
+      const result = runCompileProviderPayload(ctx, {
+        aesthetic: "claymation-playful-builder",
+        provider,
+        provider_options: { duration: 5, voice_id: "voice-demo" },
+      });
+      expect(result.isError).not.toBe(true);
+      expect(result.structuredContent?.emission).toMatchObject({
+        payload: {
+          provider,
+          option_keys: ["duration", "voice_id"],
+          headline: "Same architecture, built out of warm clay and shop light.",
+        },
+      });
+    }
+  });
+
   it("saves deterministic JSON and refreshes the loaded registry", () => {
     const dir = tempRegistry();
     const ctx = buildContext({ registryDir: dir });
