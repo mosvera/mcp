@@ -11,11 +11,13 @@ import {
   runImportAestheticPack,
   runListAesthetics,
   runPreviewAestheticImport,
+  runCompileProviderPayload,
   runSaveAesthetic,
   runServerStatus,
   runValidateAestheticPack,
   runValidateRegistry,
 } from "../src/tools/aesthetic.ts";
+import type { EmissionResult, ProviderAdapter, ProviderPayload } from "@mosvera/provider-base";
 
 function tempRegistry(): string {
   return mkdtempSync(join(tmpdir(), "mosvera-mcp-registry-"));
@@ -52,6 +54,57 @@ describe("aesthetic MCP tool handlers", () => {
       "--mosvera-palette-accent": "#d45f3f",
       "--mosvera-layout-radius": "8px",
       "--mosvera-voice-headline": "Same architecture, built out of warm clay and shop light.",
+    });
+  });
+
+  it("passes provider_options into compile_provider_payload without executing providers", () => {
+    const ctx = buildContext({ registryDir: tempRegistry() });
+    const adapter: ProviderAdapter = {
+      id: "heygen-avatar-video",
+      version: "0.1.1",
+      manifest: () => ({
+        provider: "heygen-avatar-video",
+        adapter_version: "0.1.1",
+        constructs: {
+          palette: { lowering_action: "approximate", note: "folded into avatar-video direction" },
+          voice: { lowering_action: "approximate", note: "folded into avatar-video direction" },
+        },
+      }),
+      emit(canonical, options): EmissionResult {
+        const providerOptions = options as { providerOptions?: Record<string, unknown> } | undefined;
+        return {
+          payload: {
+            avatar_id: providerOptions?.providerOptions?.avatar_id,
+            script: providerOptions?.providerOptions?.script,
+            headline: ((canonical.voice as Record<string, unknown> | undefined)?.headline ?? ""),
+          },
+          prompt: "heygen demo",
+          warnings: [],
+          provenance: {},
+        };
+      },
+      async execute(payload: ProviderPayload) {
+        throw new Error(`MCP must not execute provider payloads: ${JSON.stringify(payload)}`);
+      },
+    };
+    ctx.adapters = { ...(ctx.adapters ?? {}), [adapter.id]: adapter };
+
+    const result = runCompileProviderPayload(ctx, {
+      aesthetic: "claymation-playful-builder",
+      provider: "heygen-avatar-video",
+      provider_options: {
+        avatar_id: "avatar-demo",
+        script: "Welcome to Mosvera.",
+      },
+    });
+
+    expect(result.isError).not.toBe(true);
+    expect(result.structuredContent?.emission).toMatchObject({
+      payload: {
+        avatar_id: "avatar-demo",
+        script: "Welcome to Mosvera.",
+        headline: "Same architecture, built out of warm clay and shop light.",
+      },
     });
   });
 

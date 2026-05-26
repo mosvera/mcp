@@ -40,6 +40,11 @@ import { isResolutionError, mapResolutionError } from "../errors.ts";
 import type { ToolContext, ToolErrorCode } from "../types.ts";
 import type { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
 
+type ProviderEmitOptions = {
+  criticality?: Record<string, Criticality>;
+  providerOptions?: Record<string, unknown>;
+};
+
 export const registryKinds = ["template", "modifier", "palette", "composition"] as const;
 export const documentKinds = ["template", "modifier", "palette", "composition", "capability-manifest"] as const;
 const PACK_EXT = /\.mosvera\.json$/i;
@@ -381,6 +386,7 @@ export function runCompileProviderPayload(
   args: {
     aesthetic: string | object;
     provider: string;
+    provider_options?: Record<string, unknown>;
     criticality?: Record<string, Criticality>;
     merge_strategies?: MergeStrategies;
   },
@@ -419,7 +425,9 @@ export function runCompileProviderPayload(
   }
 
   try {
-    const emission = adapter.emit(resolved.canonical, { criticality: args.criticality ?? {} });
+    const emitOptions: ProviderEmitOptions = { criticality: args.criticality ?? {} };
+    if (args.provider_options !== undefined) emitOptions.providerOptions = args.provider_options;
+    const emission = adapter.emit(resolved.canonical, emitOptions as Parameters<typeof adapter.emit>[1]);
     return ok(`Compiled deterministic provider payload for "${args.provider}".`, {
       status: "compiled",
       provider: args.provider,

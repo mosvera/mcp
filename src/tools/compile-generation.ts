@@ -22,6 +22,11 @@ import { collectMissingReferences } from "../registry/preflight.ts";
 import { composeStrategies, mergeRegistry } from "../registry/strategies.ts";
 import type { CompileResultMcp, ToolContext } from "../types.ts";
 
+type ProviderEmitOptions = {
+  criticality?: Record<string, Criticality>;
+  providerOptions?: Record<string, unknown>;
+};
+
 export interface CompileArgs {
   composition: object | string;
   provider: string;
@@ -29,6 +34,7 @@ export interface CompileArgs {
   manifest?: CapabilityManifest;
   criticality?: Record<string, Criticality>;
   merge_strategies?: MergeStrategies;
+  provider_options?: Record<string, unknown>;
   emit?: boolean;
 }
 
@@ -77,7 +83,13 @@ export function runCompileGeneration(ctx: ToolContext, args: CompileArgs): Compi
       return toolError("unknown_provider", { provider: args.provider, adapter: "missing" } as unknown as JsonObject);
     }
     try {
-      return { status: "compiled", canonical, emission: adapter.emit(canonical, { criticality: args.criticality ?? {} }) };
+      const emitOptions: ProviderEmitOptions = { criticality: args.criticality ?? {} };
+      if (args.provider_options !== undefined) emitOptions.providerOptions = args.provider_options;
+      return {
+        status: "compiled",
+        canonical,
+        emission: adapter.emit(canonical, emitOptions as Parameters<typeof adapter.emit>[1]),
+      };
     } catch (e) {
       if (e instanceof EmissionError) {
         return { status: "error", error: e.error, construct: e.construct, canonical };

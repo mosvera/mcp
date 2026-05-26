@@ -9,7 +9,7 @@ Context Protocol server that lets Claude Desktop, editors, and automation
 tools inspect, resolve, compile, draft, save, and delete Mosvera aesthetics in
 a local registry.
 
-The server runs locally. It never calls image providers, never sends provider
+The server runs locally. It never executes provider APIs, never sends provider
 HTTP requests, and does not store API keys or secrets. It turns documents in
 your local registry into canonical Mosvera models, portable design tokens,
 CSS variables, deterministic provider payloads, and portable aesthetic packs.
@@ -145,7 +145,7 @@ read-only mode.
 | `export_aesthetic_pack` | Read | Export a named aesthetic as a portable `.mosvera.json` pack. |
 | `resolve_aesthetic` | Read | Resolve a named or inline aesthetic into canonical Mosvera JSON. |
 | `compile_design_tokens` | Read | Compile canonical output into portable design tokens and CSS variables. |
-| `compile_provider_payload` | Read | Advanced deterministic provider payload compilation; no provider HTTP call. |
+| `compile_provider_payload` | Read | Advanced deterministic provider payload compilation; no provider HTTP call. Supports provider-specific `provider_options` such as HeyGen `avatar_id` and `script`. |
 | `draft_aesthetic` | Read | Draft a composition document without saving it. |
 | `save_aesthetic` | Write | Create or update a named composition aesthetic. |
 | `save_registry_document` | Write | Advanced create/update for registry documents and manifests. |
@@ -206,7 +206,9 @@ runtime directly.
 Use the Python package `mosvera` when you want the peer Python runtime.
 
 Use `@mosvera/provider-*` packages when you want direct provider payload
-compilation without MCP.
+compilation without MCP. The MCP package loads the HeyGen video adapter when
+`@mosvera/provider-heygen` is installed; until that package is published it
+remains an optional dependency so MCP installs stay clean.
 
 Use `@mosvera/mcp` when an agent, editor, or automation system should call
 Mosvera through MCP tools.

@@ -221,6 +221,7 @@ export function createServer(ctx: ToolContext): McpServer {
       inputSchema: {
         aesthetic: z.union([z.string(), z.record(z.any())]),
         provider: z.string(),
+        provider_options: z.record(z.any()).optional(),
         criticality: criticalityArg.optional(),
         merge_strategies: strategiesArg.optional(),
       },
