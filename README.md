@@ -9,10 +9,10 @@ Context Protocol server that lets Claude Desktop, editors, and automation
 tools inspect, resolve, compile, draft, save, and delete Mosvera aesthetics in
 a local registry.
 
-The server never calls image providers, never sends provider HTTP requests,
-and does not store API keys or secrets. It turns aesthetic documents into
-canonical Mosvera models, portable design tokens, CSS variables, and
-deterministic provider payloads that other tools can consume.
+The server runs locally. It never calls image providers, never sends provider
+HTTP requests, and does not store API keys or secrets. It turns documents in
+your local registry into canonical Mosvera models, portable design tokens,
+CSS variables, deterministic provider payloads, and portable aesthetic packs.
 
 ## Install In Claude Desktop
 
@@ -107,16 +107,25 @@ Preview importing this aesthetic pack into my registry.
 ```
 
 ```text
+Import the claymation-playful-builder sample pack into my registry.
+```
+
+```text
 Save a new aesthetic called executive-editorial based on quiet-editorial-base with a more compact, board-ready voice.
 ```
 
 The saved documents are deterministic JSON in your local registry directory.
 
+Canonical sample pack:
+<https://raw.githubusercontent.com/mosvera/spec/main/examples/packs/claymation-playful-builder.mosvera.json>
+
 ## Tools
 
 Every tool returns `structuredContent` plus a short text summary. Tools are
-annotated with MCP read/write hints so clients can present normal approval
-flows.
+annotated with MCP read/write/destructive hints so clients can present normal
+approval flows. Read tools do not mutate the registry. Write tools are only
+registered when the active local registry is writable and the server is not in
+read-only mode.
 
 | Tool | Mode | Purpose |
 |------|------|---------|
@@ -157,6 +166,10 @@ Aesthetic packs are exchanged as separate `.mosvera.json` files. They can carry
 templates, palettes, modifiers, composition documents, and merge strategies.
 They do not carry assets, provider manifests, credentials, remote URLs, or zip
 bundles in v1.
+
+To test import/export without authoring a pack from scratch, use the canonical
+sample pack in
+[`mosvera/spec/examples/packs`](https://github.com/mosvera/spec/tree/main/examples/packs).
 
 IDs must be safe Mosvera references: lowercase letters, numbers, `_`, and `-`,
 starting with a letter. Absolute paths, dotfiles, path traversal, unknown
