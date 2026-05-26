@@ -7,6 +7,8 @@
 
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+import { realpathSync } from "node:fs";
+import { fileURLToPath } from "node:url";
 import { z } from "zod";
 import { buildContext, parseCliOptions, SERVER_VERSION } from "./context.ts";
 import {
@@ -255,7 +257,17 @@ async function main(): Promise<void> {
   await server.connect(new StdioServerTransport());
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+function isDirectRun(): boolean {
+  if (!process.argv[1]) return false;
+  const modulePath = fileURLToPath(import.meta.url);
+  try {
+    return realpathSync(process.argv[1]) === realpathSync(modulePath);
+  } catch {
+    return process.argv[1] === modulePath;
+  }
+}
+
+if (isDirectRun()) {
   main().catch((e) => {
     process.stderr.write(`mosvera-mcp failed to start: ${e instanceof Error ? e.stack : String(e)}\n`);
     process.exit(1);
