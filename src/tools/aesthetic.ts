@@ -289,15 +289,19 @@ function strategies(ctx: ToolContext, inline?: MergeStrategies): MergeStrategies
 
 function resolveInput(
   ctx: ToolContext,
-  args: { aesthetic?: string | object; canonical?: object | string; merge_strategies?: MergeStrategies },
+  args: { aesthetic?: string | object; aesthetic_id?: string; canonical?: object | string; merge_strategies?: MergeStrategies },
 ): { canonical: JsonObject; source: "canonical" | "aesthetic" } | ToolFailure {
+  const selectors = [args.aesthetic, args.aesthetic_id, args.canonical].filter((value) => value !== undefined);
+  if (selectors.length !== 1) {
+    return { error: "invalid_document", message: "Provide exactly one of aesthetic, aesthetic_id, or canonical." };
+  }
   if (args.canonical !== undefined) {
     const canonical = parseDocument(args.canonical);
     if (maybeFail(canonical)) return canonical;
     return { canonical, source: "canonical" };
   }
 
-  const aesthetic = args.aesthetic ?? "quiet-editorial";
+  const aesthetic = args.aesthetic ?? args.aesthetic_id!;
   const docOrId = typeof aesthetic === "string" ? aesthetic : parseDocument(aesthetic);
   if (maybeFail(docOrId)) return docOrId;
 
@@ -507,6 +511,7 @@ export function runCompileDesignTokens(
   ctx: ToolContext,
   args: {
     aesthetic?: string | object;
+    aesthetic_id?: string;
     canonical?: object | string;
     merge_strategies?: MergeStrategies;
     css_prefix?: string;

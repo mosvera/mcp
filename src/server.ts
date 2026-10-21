@@ -202,6 +202,7 @@ export function createServer(ctx: ToolContext): McpServer {
       description: "Compile a named/inline aesthetic or canonical model into portable design tokens and CSS variables.",
       inputSchema: {
         aesthetic: z.union([z.string(), z.record(z.any())]).optional(),
+        aesthetic_id: z.string().optional(),
         canonical: docArg.optional(),
         merge_strategies: strategiesArg.optional(),
         css_prefix: z.string().optional(),
