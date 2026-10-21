@@ -30,7 +30,7 @@ import { sdxlAdapter } from "@mosvera/provider-sdxl";
 import type { ProviderAdapter } from "@mosvera/provider-base";
 import type { ToolContext } from "./types.ts";
 
-export const SERVER_VERSION = "0.1.9";
+export const SERVER_VERSION = "0.1.10";
 
 export interface CliOptions {
   registryDir?: string;
@@ -196,20 +196,39 @@ function providerAdapters(): Record<string, ProviderAdapter> {
   };
 }
 
+const OPTIONAL_ADAPTER_SPECS = [
+  ["@mosvera/provider-heygen", "heygenAdapter"],
+  ["@mosvera/provider-google", "googleGeminiImageAdapter"],
+  ["@mosvera/provider-google", "googleVeoVideoAdapter"],
+  ["@mosvera/provider-runway", "runwayGen4ImageAdapter"],
+  ["@mosvera/provider-runway", "runwayGen45VideoAdapter"],
+  ["@mosvera/provider-elevenlabs", "elevenLabsTtsAdapter"],
+  ["@mosvera/provider-firefly", "fireflyImageAdapter"],
+  ["@mosvera/provider-meshy", "meshyTextTo3DAdapter"],
+] as const;
+
 export async function loadOptionalProviderAdapters(ctx: ToolContext): Promise<void> {
-  const optional = await Promise.all([
-    optionalAdapter("@mosvera/provider-heygen", "heygenAdapter"),
-    optionalAdapter("@mosvera/provider-google", "googleGeminiImageAdapter"),
-    optionalAdapter("@mosvera/provider-google", "googleVeoVideoAdapter"),
-    optionalAdapter("@mosvera/provider-runway", "runwayGen4ImageAdapter"),
-    optionalAdapter("@mosvera/provider-runway", "runwayGen45VideoAdapter"),
-    optionalAdapter("@mosvera/provider-elevenlabs", "elevenLabsTtsAdapter"),
-    optionalAdapter("@mosvera/provider-firefly", "fireflyImageAdapter"),
-    optionalAdapter("@mosvera/provider-meshy", "meshyTextTo3DAdapter"),
-  ]);
+  const optional = await Promise.all(
+    OPTIONAL_ADAPTER_SPECS.map(([packageName, exportName]) => optionalAdapter(packageName, exportName)),
+  );
+  const loaded = optional.filter((adapter): adapter is ProviderAdapter => adapter !== undefined);
+  // Optional adapters arrive via optionalDependencies, so a partial install
+  // degrades silently by design. Report what loaded and what was skipped on
+  // stderr (stdout carries the MCP transport) so a missing adapter is visible
+  // in the server log instead of surfacing as an absent tool capability.
+  const missing = OPTIONAL_ADAPTER_SPECS.filter((_, index) => optional[index] === undefined).map(
+    ([packageName, exportName]) => packageName + " (" + exportName + ")",
+  );
+  console.error(
+    "[mosvera-mcp] provider adapters loaded: " +
+      [...Object.keys(providerAdapters()), ...loaded.map((adapter) => adapter.id)].join(", "),
+  );
+  if (missing.length > 0) {
+    console.error("[mosvera-mcp] optional provider adapters not installed, skipped: " + missing.join(", "));
+  }
   ctx.adapters = {
     ...(ctx.adapters ?? {}),
-    ...Object.fromEntries(optional.filter((adapter): adapter is ProviderAdapter => adapter !== undefined).map((adapter) => [adapter.id, adapter])),
+    ...Object.fromEntries(loaded.map((adapter) => [adapter.id, adapter])),
   };
 }
 
