@@ -152,6 +152,44 @@ describe("MCP stdio surface", () => {
     });
   });
 
+  it("compiles the requested aesthetic_id and rejects missing or unknown selectors", async () => {
+    const registry = mkdtempSync(join(tmpdir(), "mosvera-mcp-stdio-tokens-"));
+    await withClient(["--registry", registry], async (client) => {
+      const quiet = await client.callTool({
+        name: "compile_design_tokens", arguments: { aesthetic_id: "quiet-editorial" },
+      });
+      const cinematic = await client.callTool({
+        name: "compile_design_tokens", arguments: { aesthetic_id: "cinematic-lab" },
+      });
+      expect(quiet.isError).not.toBe(true);
+      expect(cinematic.isError).not.toBe(true);
+      expect((quiet.structuredContent as Record<string, unknown>).css_variables).toMatchObject({
+        "--mosvera-palette-background": "#f7f2e7",
+        "--mosvera-palette-accent": "#bd5838",
+      });
+      expect((cinematic.structuredContent as Record<string, unknown>).css_variables).toMatchObject({
+        "--mosvera-palette-background": "#12100f",
+        "--mosvera-palette-accent": "#e05b45",
+      });
+
+      const unknown = await client.callTool({
+        name: "compile_design_tokens", arguments: { aesthetic_id: "missing-aesthetic" },
+      });
+      expect(unknown.isError).toBe(true);
+      expect(unknown.structuredContent).toMatchObject({ ok: false, error: "unknown_reference" });
+
+      const omitted = await client.callTool({ name: "compile_design_tokens", arguments: {} });
+      expect(omitted.isError).toBe(true);
+      expect(omitted.structuredContent).toMatchObject({ ok: false, error: "invalid_document" });
+
+      const ambiguous = await client.callTool({
+        name: "compile_design_tokens", arguments: { aesthetic: "quiet-editorial", aesthetic_id: "cinematic-lab" },
+      });
+      expect(ambiguous.isError).toBe(true);
+      expect(ambiguous.structuredContent).toMatchObject({ ok: false, error: "invalid_document" });
+    });
+  });
+
   it("saves deterministic JSON and reloads the registry over stdio", async () => {
     const registry = mkdtempSync(join(tmpdir(), "mosvera-mcp-stdio-save-"));
     await withClient(["--registry", registry], async (client) => {

@@ -144,7 +144,7 @@ read-only mode.
 | `preview_aesthetic_import` | Read | Preview importing an aesthetic pack without writing files. |
 | `export_aesthetic_pack` | Read | Export a named aesthetic as a portable `.mosvera.json` pack. |
 | `resolve_aesthetic` | Read | Resolve a named or inline aesthetic into canonical Mosvera JSON. |
-| `compile_design_tokens` | Read | Compile canonical output into portable design tokens and CSS variables. |
+| `compile_design_tokens` | Read | Compile tokens and CSS variables from exactly one of `aesthetic`, `aesthetic_id`, or `canonical`. Unknown aesthetic ids return an error. |
 | `compile_provider_payload` | Read | Advanced deterministic provider payload compilation; no provider HTTP call. Supports provider-specific `provider_options` such as HeyGen `avatar_id`/`script`, ElevenLabs `voice_id`, and short-video `duration` settings. |
 | `draft_aesthetic` | Read | Draft a composition document without saving it. |
 | `save_aesthetic` | Write | Create or update a named composition aesthetic. |
