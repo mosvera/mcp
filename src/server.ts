@@ -33,16 +33,16 @@ import {
 } from "./tools/aesthetic.ts";
 import type { ToolContext } from "./types.ts";
 
-const docArg = z.union([z.string(), z.record(z.any())]);
+const docArg = z.union([z.string(), z.record(z.string(), z.any())]);
 const packSourceArg = {
   pack: docArg.optional(),
   path: z.string().optional(),
 };
-const strategiesArg = z.record(z.object({
+const strategiesArg = z.record(z.string(), z.object({
   strategy: z.enum(["replace", "append", "merge_by"]),
   key: z.string().optional(),
 }));
-const criticalityArg = z.record(z.enum(["required", "optional"]));
+const criticalityArg = z.record(z.string(), z.enum(["required", "optional"]));
 const documentKindArg = z.enum(documentKinds);
 const registryDocumentKindArg = z.enum(documentKinds);
 const packConflictArg = z.enum(["auto_rename", "fail", "replace"]);
@@ -188,7 +188,7 @@ export function createServer(ctx: ToolContext): McpServer {
     {
       title: "Resolve Aesthetic",
       description: "Resolve a named or inline aesthetic composition into the canonical Mosvera model.",
-      inputSchema: { aesthetic: z.union([z.string(), z.record(z.any())]), merge_strategies: strategiesArg.optional() },
+      inputSchema: { aesthetic: z.union([z.string(), z.record(z.string(), z.any())]), merge_strategies: strategiesArg.optional() },
       outputSchema,
       annotations: readAnnotations,
     },
@@ -201,7 +201,7 @@ export function createServer(ctx: ToolContext): McpServer {
       title: "Compile Design Tokens",
       description: "Compile a named/inline aesthetic or canonical model into portable design tokens and CSS variables.",
       inputSchema: {
-        aesthetic: z.union([z.string(), z.record(z.any())]).optional(),
+        aesthetic: z.union([z.string(), z.record(z.string(), z.any())]).optional(),
         aesthetic_id: z.string().optional(),
         canonical: docArg.optional(),
         merge_strategies: strategiesArg.optional(),
@@ -220,9 +220,9 @@ export function createServer(ctx: ToolContext): McpServer {
       title: "Compile Provider Payload",
       description: "Advanced: deterministically compile a named/inline aesthetic into a provider payload. No provider HTTP call is made.",
       inputSchema: {
-        aesthetic: z.union([z.string(), z.record(z.any())]),
+        aesthetic: z.union([z.string(), z.record(z.string(), z.any())]),
         provider: z.string(),
-        provider_options: z.record(z.any()).optional(),
+        provider_options: z.record(z.string(), z.any()).optional(),
         criticality: criticalityArg.optional(),
         merge_strategies: strategiesArg.optional(),
       },
