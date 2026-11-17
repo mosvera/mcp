@@ -19,7 +19,7 @@ import { existsSync, mkdtempSync, readFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { PassThrough } from "node:stream";
-import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+import { StdioServerTransport } from "@modelcontextprotocol/server/stdio";
 import { buildContext, createServer } from "../../src/server.ts";
 
 export const REPO_ROOT = resolve(import.meta.dirname, "..", "..");
@@ -185,16 +185,24 @@ export function sortTools(result: Record<string, unknown>): Array<Record<string,
   return tools.sort((a, b) => String(a.name).localeCompare(String(b.name)));
 }
 
-/** Keys a generator adds without changing what a caller may send or receive. */
-export const GENERATOR_MARKERS = ["$schema"] as const;
-
-export function stripGeneratorMarkers<T>(value: T): T {
-  if (Array.isArray(value)) return value.map(stripGeneratorMarkers) as T;
+/**
+ * Generator markers that differ between SDK stages without changing what a
+ * caller may send or receive. Each is named and documented in CHANGES.md:
+ *
+ * - `$schema` (any depth): SDK v1 emitted the draft-07 dialect URI, SDK v2
+ *   emits the 2020-12 URI. The schema bodies are otherwise identical.
+ * - tool-level `execution: { taskSupport: "forbidden" }`: SDK v1.32 emitted
+ *   it on every tool; SDK v2 omits it. Absent means forbidden, so task
+ *   support is unchanged.
+ */
+export function stripGeneratorMarkers<T>(value: T, depth = 0): T {
+  if (Array.isArray(value)) return value.map((v) => stripGeneratorMarkers(v, depth)) as T;
   if (value !== null && typeof value === "object") {
     const out: Record<string, unknown> = {};
     for (const [key, child] of Object.entries(value)) {
-      if ((GENERATOR_MARKERS as readonly string[]).includes(key)) continue;
-      out[key] = stripGeneratorMarkers(child);
+      if (key === "$schema") continue;
+      if (depth === 0 && key === "execution" && JSON.stringify(child) === '{"taskSupport":"forbidden"}') continue;
+      out[key] = stripGeneratorMarkers(child, depth + 1);
     }
     return out as T;
   }

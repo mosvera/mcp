@@ -16,7 +16,8 @@ const required = [
   "icon.png",
   "server/dist/server.js",
   "server/dist/examples/demo-aesthetics/composition.quiet-editorial.json",
-  "server/node_modules/@modelcontextprotocol/sdk/package.json",
+  "server/node_modules/@modelcontextprotocol/server/package.json",
+  "server/node_modules/@modelcontextprotocol/core/package.json",
 ];
 const forbidden = [
   ".env",

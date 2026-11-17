@@ -3,8 +3,13 @@
 // Small helpers for MCP-native results: a structured payload for clients, plus
 // a short text summary for hosts that still render tool output as text.
 
-import type { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
+import type { CallToolResult as SdkCallToolResult } from "@modelcontextprotocol/server";
 import type { ToolErrorCode } from "./types.ts";
+
+// SDK v2 types `structuredContent` as an opaque value. Mosvera always returns
+// a JSON object there, and the exported run* handlers promised that shape on
+// SDK v1, so keep it as the public result type.
+export type CallToolResult = SdkCallToolResult & { structuredContent?: Record<string, unknown> };
 
 export interface ToolFailure {
   error: ToolErrorCode;

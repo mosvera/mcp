@@ -5,8 +5,8 @@
 // aesthetic tool surface over the TypeScript runtime and a local project
 // registry.
 
-import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+import { StdioServerTransport } from "@modelcontextprotocol/server/stdio";
+import { McpServer } from "@modelcontextprotocol/server";
 import { realpathSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { z } from "zod";
@@ -83,7 +83,7 @@ export function createServer(ctx: ToolContext): McpServer {
     {
       title: "Server Status",
       description: "Show the active Mosvera registry path, write mode, versions, document counts, and diagnostics.",
-      inputSchema: {},
+      inputSchema: z.object({}),
       outputSchema,
       annotations: readAnnotations,
     },
@@ -95,7 +95,7 @@ export function createServer(ctx: ToolContext): McpServer {
     {
       title: "List Aesthetics",
       description: "List named aesthetics available in the active local Mosvera registry.",
-      inputSchema: {},
+      inputSchema: z.object({}),
       outputSchema,
       annotations: readAnnotations,
     },
@@ -107,7 +107,7 @@ export function createServer(ctx: ToolContext): McpServer {
     {
       title: "Get Registry Document",
       description: "Fetch a template, modifier, palette, composition, or capability manifest from the active registry.",
-      inputSchema: { kind: registryDocumentKindArg, id: z.string() },
+      inputSchema: z.object({ kind: registryDocumentKindArg, id: z.string() }),
       outputSchema,
       annotations: readAnnotations,
     },
@@ -119,7 +119,7 @@ export function createServer(ctx: ToolContext): McpServer {
     {
       title: "Validate Document",
       description: "Validate one Mosvera document against a schema kind. Invalid documents return valid=false, not a thrown protocol error.",
-      inputSchema: { document: docArg, kind: documentKindArg },
+      inputSchema: z.object({ document: docArg, kind: documentKindArg }),
       outputSchema,
       annotations: readAnnotations,
     },
@@ -131,7 +131,7 @@ export function createServer(ctx: ToolContext): McpServer {
     {
       title: "Validate Registry",
       description: "Validate the active local registry and return Mosvera diagnostics.",
-      inputSchema: {},
+      inputSchema: z.object({}),
       outputSchema,
       annotations: readAnnotations,
     },
@@ -143,7 +143,7 @@ export function createServer(ctx: ToolContext): McpServer {
     {
       title: "Validate Aesthetic Pack",
       description: "Validate an inline or local .mosvera.json aesthetic pack.",
-      inputSchema: packSourceArg,
+      inputSchema: z.object(packSourceArg),
       outputSchema,
       annotations: readAnnotations,
     },
@@ -155,11 +155,11 @@ export function createServer(ctx: ToolContext): McpServer {
     {
       title: "Preview Aesthetic Import",
       description: "Preview importing an aesthetic pack into the active local registry without writing files.",
-      inputSchema: {
+      inputSchema: z.object({
         ...packSourceArg,
         conflict_strategy: packConflictArg.optional(),
         strategy_conflict: packStrategyConflictArg.optional(),
-      },
+      }),
       outputSchema,
       annotations: readAnnotations,
     },
@@ -171,12 +171,12 @@ export function createServer(ctx: ToolContext): McpServer {
     {
       title: "Export Aesthetic Pack",
       description: "Export a named aesthetic and its registry dependencies as a portable .mosvera.json pack.",
-      inputSchema: {
+      inputSchema: z.object({
         aesthetic: z.string(),
         id: z.string().optional(),
         name: z.string().optional(),
         description: z.string().optional(),
-      },
+      }),
       outputSchema,
       annotations: readAnnotations,
     },
@@ -188,7 +188,7 @@ export function createServer(ctx: ToolContext): McpServer {
     {
       title: "Resolve Aesthetic",
       description: "Resolve a named or inline aesthetic composition into the canonical Mosvera model.",
-      inputSchema: { aesthetic: z.union([z.string(), z.record(z.string(), z.any())]), merge_strategies: strategiesArg.optional() },
+      inputSchema: z.object({ aesthetic: z.union([z.string(), z.record(z.string(), z.any())]), merge_strategies: strategiesArg.optional() }),
       outputSchema,
       annotations: readAnnotations,
     },
@@ -200,14 +200,14 @@ export function createServer(ctx: ToolContext): McpServer {
     {
       title: "Compile Design Tokens",
       description: "Compile a named/inline aesthetic or canonical model into portable design tokens and CSS variables.",
-      inputSchema: {
+      inputSchema: z.object({
         aesthetic: z.union([z.string(), z.record(z.string(), z.any())]).optional(),
         aesthetic_id: z.string().optional(),
         canonical: docArg.optional(),
         merge_strategies: strategiesArg.optional(),
         css_prefix: z.string().optional(),
         preserve_unknown: z.boolean().optional(),
-      },
+      }),
       outputSchema,
       annotations: readAnnotations,
     },
@@ -219,13 +219,13 @@ export function createServer(ctx: ToolContext): McpServer {
     {
       title: "Compile Provider Payload",
       description: "Advanced: deterministically compile a named/inline aesthetic into a provider payload. No provider HTTP call is made.",
-      inputSchema: {
+      inputSchema: z.object({
         aesthetic: z.union([z.string(), z.record(z.string(), z.any())]),
         provider: z.string(),
         provider_options: z.record(z.string(), z.any()).optional(),
         criticality: criticalityArg.optional(),
         merge_strategies: strategiesArg.optional(),
-      },
+      }),
       outputSchema,
       annotations: readAnnotations,
     },
@@ -237,12 +237,12 @@ export function createServer(ctx: ToolContext): McpServer {
     {
       title: "Draft Aesthetic",
       description: "Draft a valid composition document without saving it to disk.",
-      inputSchema: {
+      inputSchema: z.object({
         id: z.string(),
         base: z.string(),
         modifiers: z.array(z.string()).optional(),
         overrides: docArg.optional(),
-      },
+      }),
       outputSchema,
       annotations: readAnnotations,
     },
@@ -255,12 +255,12 @@ export function createServer(ctx: ToolContext): McpServer {
       {
         title: "Save Aesthetic",
         description: "Create or update a named aesthetic composition in the active local registry.",
-        inputSchema: {
+        inputSchema: z.object({
           id: z.string(),
           base: z.string(),
           modifiers: z.array(z.string()).optional(),
           overrides: docArg.optional(),
-        },
+        }),
         outputSchema,
         annotations: writeAnnotations,
       },
@@ -272,7 +272,7 @@ export function createServer(ctx: ToolContext): McpServer {
       {
         title: "Save Registry Document",
         description: "Advanced: create or update a template, modifier, palette, composition, or capability manifest in the active local registry.",
-        inputSchema: { kind: registryDocumentKindArg, document: docArg },
+        inputSchema: z.object({ kind: registryDocumentKindArg, document: docArg }),
         outputSchema,
         annotations: writeAnnotations,
       },
@@ -284,7 +284,7 @@ export function createServer(ctx: ToolContext): McpServer {
       {
         title: "Delete Registry Document",
         description: "Delete a registry document from the active local registry.",
-        inputSchema: { kind: registryDocumentKindArg, id: z.string() },
+        inputSchema: z.object({ kind: registryDocumentKindArg, id: z.string() }),
         outputSchema,
         annotations: destructiveAnnotations,
       },
@@ -296,7 +296,7 @@ export function createServer(ctx: ToolContext): McpServer {
       {
         title: "Write Merge Strategies",
         description: "Advanced: replace the active registry's merge-strategies.json with deterministic JSON.",
-        inputSchema: { merge_strategies: strategiesArg },
+        inputSchema: z.object({ merge_strategies: strategiesArg }),
         outputSchema,
         annotations: writeAnnotations,
       },
@@ -308,11 +308,11 @@ export function createServer(ctx: ToolContext): McpServer {
       {
         title: "Import Aesthetic Pack",
         description: "Import an inline or local .mosvera.json aesthetic pack into the active local registry.",
-        inputSchema: {
+        inputSchema: z.object({
           ...packSourceArg,
           conflict_strategy: packConflictArg.optional(),
           strategy_conflict: packStrategyConflictArg.optional(),
-        },
+        }),
         outputSchema,
         annotations: writeAnnotations,
       },

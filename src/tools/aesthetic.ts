@@ -35,11 +35,10 @@ import { EmissionError } from "@mosvera/provider-base";
 import { readFileSync } from "node:fs";
 import { basename } from "node:path";
 import { registryDiagnostics, reloadContext, SERVER_VERSION } from "../context.ts";
-import { fail, ok, type ToolFailure } from "../mcp-result.ts";
+import { fail, ok, type CallToolResult, type ToolFailure } from "../mcp-result.ts";
 import { deleteCapabilityManifest, ProjectWriteError, saveCapabilityManifest } from "../project-writes.ts";
 import { isResolutionError, mapResolutionError } from "../errors.ts";
 import type { ToolContext, ToolErrorCode } from "../types.ts";
-import type { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
 
 type ProviderEmitOptions = {
   criticality?: Record<string, Criticality>;

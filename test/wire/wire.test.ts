@@ -74,13 +74,13 @@ function expectValidationFailure(msg: { result?: Record<string, unknown> }, path
 
 /**
  * Calling a tool that is not registered (an unknown name, or a write tool in
- * read-only mode). SDK v1: an isError tool result carrying -32602 in the text.
+ * read-only mode). SDK v1 answered with an isError tool result carrying
+ * "MCP error -32602" in its text; SDK v2 answers with a JSON-RPC error,
+ * code -32602. Nothing executes either way. Documented in CHANGES.md.
  */
 function expectUnknownTool(msg: { result?: Record<string, unknown>; error?: { code: number; message: string } }, name: string): void {
-  const r = result(msg);
-  expect(r.isError).toBe(true);
-  expect(text(r)).toContain("-32602");
-  expect(text(r)).toContain(`Tool ${name} not found`);
+  expect(msg.result).toBeUndefined();
+  expect(msg.error).toEqual({ code: -32602, message: `Tool ${name} not found` });
 }
 
 describe("net guard", () => {
@@ -133,6 +133,17 @@ describe("stdio wire contract", () => {
     const actual = sortTools(list.result!);
     const pinned = fixture("tools-list.json", actual);
     expect(stripGeneratorMarkers(actual)).toEqual(stripGeneratorMarkers(pinned));
+  });
+
+  it("differs from the v1 receipt only by the documented generator markers", async () => {
+    const list = await h.peer.request("tools/list", {});
+    const tools = sortTools(list.result!);
+    for (const tool of tools) {
+      expect(tool.execution).toBeUndefined();
+      expect((tool.inputSchema as Record<string, unknown>).$schema).toBe("https://json-schema.org/draft/2020-12/schema");
+      expect((tool.outputSchema as Record<string, unknown>).$schema).toBe("https://json-schema.org/draft/2020-12/schema");
+      expect((tool.outputSchema as Record<string, unknown>).additionalProperties).toEqual({});
+    }
   });
 
   it("union args accept both arms and reject anything else before the handler", async () => {
