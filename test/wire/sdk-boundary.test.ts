@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
 //
-// Package boundary and provenance for the MCP SDK v2 migration (OB-70372).
+// Package boundary and provenance for the MCP SDK v2 migration.
 // Source stays on the split v2 packages; the monolithic v1 package is neither
 // imported, depended on, nor present in the lockfile; the published server
 // ships only @modelcontextprotocol/server (the client is test-only); and every

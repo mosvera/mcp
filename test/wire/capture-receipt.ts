@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 // Capture raw JSON-RPC receipts from the real stdio server for the SDK v2
-// migration record (OB-70372). Usage:
+// migration record. Usage:
 //   node --import tsx test/wire/capture-receipt.ts <out-dir>
 // Writes initialize.json, tools-list.json and tools-list.read-only.json.
 

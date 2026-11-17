@@ -1,5 +1,5 @@
 /**
- * Outbound network guard for the mosvera-mcp wire fixtures (OB-70372).
+ * Outbound network guard for the mosvera-mcp wire fixtures.
  *
  * Preloaded (node --require) into every server process the wire suite
  * spawns. Any socket connect to a non-loopback host is refused before DNS

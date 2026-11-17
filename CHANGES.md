@@ -11,7 +11,7 @@ index.
 - Source moved from `@modelcontextprotocol/sdk` 1.32.2 to
   `@modelcontextprotocol/server` 2.4.0 (runtime) and
   `@modelcontextprotocol/client` 2.4.0 (tests only) via the pinned
-  `@modelcontextprotocol/codemod@2.4.0`, with four hand corrections (OB-70372).
+  `@modelcontextprotocol/codemod@2.4.0`, with four hand corrections.
 - New `test/wire/` suite pins the v1 receipts first: raw JSON-RPC over the
   real stdio entrypoint and an in-process loopback, net guard preloaded, full
   `tools/list` (writable and read-only) and the compiled payload from all

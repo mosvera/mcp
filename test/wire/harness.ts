@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
 //
-// Wire harness for the MCP SDK v2 migration (OB-70372).
+// Wire harness for the MCP SDK v2 migration.
 //
 // Drives the real mosvera-mcp server with raw newline-delimited JSON-RPC, so
 // the receipts do not depend on which SDK client is installed:

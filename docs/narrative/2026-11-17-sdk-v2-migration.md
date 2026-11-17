@@ -3,7 +3,7 @@
 `@mosvera/mcp` was the eighth of fifteen MCP servers in a planned move from
 the monolithic `@modelcontextprotocol/sdk` (v1) to the split v2 packages
 (`@modelcontextprotocol/server`, `/client`, `/core`), ahead of the v1
-support horizon in early 2027 (OB-70372). The server is a public npm package
+support horizon in early 2027. The server is a public npm package
 and a one-click MCPB bundle, and it is in daily use, so the migration was
 held to one rule: a caller must not be able to tell, except where this
 document says so.

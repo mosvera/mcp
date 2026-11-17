@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
 //
-// Wire contract for the MCP SDK v2 migration (OB-70372). Pinned on SDK v1
+// Wire contract for the MCP SDK v2 migration. Pinned on SDK v1
 // first; every later stage must keep these assertions green, and any change
 // to the pinned receipts is listed in CHANGES.md and the migration narrative.
 
