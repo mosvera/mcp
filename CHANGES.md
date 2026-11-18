@@ -6,6 +6,34 @@ index.
 
 ---
 
+## 2026-11-17 — MCP SDK v2 (split packages), wire contract pinned
+
+- Source moved from `@modelcontextprotocol/sdk` 1.32.2 to
+  `@modelcontextprotocol/server` 2.4.0 (runtime) and
+  `@modelcontextprotocol/client` 2.4.0 (tests only) via the pinned
+  `@modelcontextprotocol/codemod@2.4.0`, with four hand corrections.
+- New `test/wire/` suite pins the v1 receipts first: raw JSON-RPC over the
+  real stdio entrypoint and an in-process loopback, net guard preloaded, full
+  `tools/list` (writable and read-only) and the compiled payload from all
+  eleven provider adapters. Zod 4 behaviour (unions, records, stripping,
+  passthrough output) is proven, not changed.
+- Caller-visible changes: schema `$schema` is the 2020-12 URI instead of
+  draft-07; `execution.taskSupport: "forbidden"` is no longer emitted (absent
+  means forbidden); calling an unregistered tool is a JSON-RPC `-32602` error
+  instead of an `isError` result; validation-failure text is reformatted
+  (still `isError`, still names the path). Schemas, annotations and provider
+  payloads are otherwise identical.
+- `CallToolResult` exported from `src/mcp-result.ts` keeps
+  `structuredContent: Record<string, unknown>` for the exported handlers.
+- Provenance: the MCPB inspector requires the v2 `server`/`core` packages; a
+  boundary test keeps v1 out of source, `package.json` and the lockfile and
+  pins every MCP package to the npm registry with an integrity hash.
+- Not released or deployed; rollback is source + lockfile at `0705702`.
+
+Full record: `docs/narrative/2026-11-17-sdk-v2-migration.md`.
+
+---
+
 ## 2026-10-27 — 0.1.10 published; zod 4 crossed; lock at runtime 0.1.3
 
 - `@mosvera/mcp` 0.1.10 published to npm from a staged, content-verified

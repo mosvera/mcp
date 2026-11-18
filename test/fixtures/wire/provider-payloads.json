@@ -1,0 +1,3136 @@
+{
+  "openai-gpt-image-1": {
+    "isError": false,
+    "structuredContent": {
+      "ok": true,
+      "message": "Compiled deterministic provider payload for \"openai-gpt-image-1\".\nPrompt: accent color (#d45f3f)\nWarnings (15):\n- imagery: unsupported\n- layout: unsupported\n- motion: unsupported\n- palette.accent: approximate\n- palette.accent_2: unsupported\n- palette.background: unsupported\n- palette.border: unsupported\n- palette.code_bg: unsupported\n- palette.code_ink: unsupported\n- palette.ink: unsupported\n- palette.muted: unsupported\n- palette.surface: unsupported\n...and 3 more warnings.\nPayload JSON:\n```json\n{\n  \"model\": \"gpt-image-1\",\n  \"n\": 1,\n  \"output_format\": \"png\",\n  \"prompt\": \"accent color (#d45f3f)\"\n}\n```",
+      "status": "compiled",
+      "provider": "openai-gpt-image-1",
+      "warnings": [
+        {
+          "construct": "imagery",
+          "action": "unsupported"
+        },
+        {
+          "construct": "layout",
+          "action": "unsupported"
+        },
+        {
+          "construct": "motion",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.accent",
+          "action": "approximate"
+        },
+        {
+          "construct": "palette.accent_2",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.background",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.border",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.code_bg",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.code_ink",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.ink",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.muted",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.surface",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.surface_alt",
+          "action": "unsupported"
+        },
+        {
+          "construct": "typography",
+          "action": "unsupported"
+        },
+        {
+          "construct": "voice",
+          "action": "unsupported"
+        }
+      ],
+      "canonical": {
+        "imagery": {
+          "alt": "Tactile clay-like Mosvera tesserae under warm builder-table light.",
+          "blend": "normal",
+          "contrast": "0.96",
+          "saturation": "1.12",
+          "src": "/assets/aesthetics/hero-claymation-playful-builder.webp",
+          "treatment": "tabletop_model"
+        },
+        "layout": {
+          "density": "roomy",
+          "max_width": "1160px",
+          "radius": "8px",
+          "shadow": "0 18px 0 rgba(96, 63, 39, 0.26)"
+        },
+        "motion": {
+          "duration": "260ms",
+          "pace": "bouncy"
+        },
+        "palette": {
+          "accent": "#d45f3f",
+          "accent_2": "#2f8f9d",
+          "background": "#f6e7cc",
+          "border": "#c99a68",
+          "code_bg": "#2b2119",
+          "code_ink": "#ffe3bc",
+          "ink": "#2a2118",
+          "muted": "#695946",
+          "surface": "#fff3dc",
+          "surface_alt": "#ead2ad"
+        },
+        "typography": {
+          "body": "Hanken Grotesk",
+          "display": "Fraunces",
+          "mono": "IBM Plex Mono",
+          "scale": "friendly"
+        },
+        "voice": {
+          "body": "This mode keeps the spec serious while the surface becomes handmade, constructive, and a little mischievous.",
+          "eyebrow": "Tactile builder mode",
+          "headline": "Same architecture, built out of warm clay and shop light."
+        }
+      },
+      "emission": {
+        "payload": {
+          "model": "gpt-image-1",
+          "n": 1,
+          "output_format": "png",
+          "prompt": "accent color (#d45f3f)"
+        },
+        "prompt": "accent color (#d45f3f)",
+        "warnings": [
+          {
+            "construct": "imagery",
+            "action": "unsupported"
+          },
+          {
+            "construct": "layout",
+            "action": "unsupported"
+          },
+          {
+            "construct": "motion",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.accent",
+            "action": "approximate"
+          },
+          {
+            "construct": "palette.accent_2",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.background",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.border",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.code_bg",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.code_ink",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.ink",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.muted",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.surface",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.surface_alt",
+            "action": "unsupported"
+          },
+          {
+            "construct": "typography",
+            "action": "unsupported"
+          },
+          {
+            "construct": "voice",
+            "action": "unsupported"
+          }
+        ],
+        "provenance": {
+          "prompt.0": {
+            "canonical_construct": "palette.accent",
+            "lowering_action": "approximate",
+            "source_value": "#d45f3f"
+          }
+        }
+      }
+    }
+  },
+  "bfl-flux-2-pro": {
+    "isError": false,
+    "structuredContent": {
+      "ok": true,
+      "message": "Compiled deterministic provider payload for \"bfl-flux-2-pro\".\nPrompt: accent color (#d45f3f)\nWarnings (15):\n- imagery: unsupported\n- layout: unsupported\n- motion: unsupported\n- palette.accent: approximate\n- palette.accent_2: unsupported\n- palette.background: unsupported\n- palette.border: unsupported\n- palette.code_bg: unsupported\n- palette.code_ink: unsupported\n- palette.ink: unsupported\n- palette.muted: unsupported\n- palette.surface: unsupported\n...and 3 more warnings.\nPayload JSON:\n```json\n{\n  \"height\": 1024,\n  \"output_format\": \"png\",\n  \"prompt\": \"accent color (#d45f3f)\",\n  \"safety_tolerance\": 2,\n  \"width\": 1024\n}\n```",
+      "status": "compiled",
+      "provider": "bfl-flux-2-pro",
+      "warnings": [
+        {
+          "construct": "imagery",
+          "action": "unsupported"
+        },
+        {
+          "construct": "layout",
+          "action": "unsupported"
+        },
+        {
+          "construct": "motion",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.accent",
+          "action": "approximate"
+        },
+        {
+          "construct": "palette.accent_2",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.background",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.border",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.code_bg",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.code_ink",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.ink",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.muted",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.surface",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.surface_alt",
+          "action": "unsupported"
+        },
+        {
+          "construct": "typography",
+          "action": "unsupported"
+        },
+        {
+          "construct": "voice",
+          "action": "unsupported"
+        }
+      ],
+      "canonical": {
+        "imagery": {
+          "alt": "Tactile clay-like Mosvera tesserae under warm builder-table light.",
+          "blend": "normal",
+          "contrast": "0.96",
+          "saturation": "1.12",
+          "src": "/assets/aesthetics/hero-claymation-playful-builder.webp",
+          "treatment": "tabletop_model"
+        },
+        "layout": {
+          "density": "roomy",
+          "max_width": "1160px",
+          "radius": "8px",
+          "shadow": "0 18px 0 rgba(96, 63, 39, 0.26)"
+        },
+        "motion": {
+          "duration": "260ms",
+          "pace": "bouncy"
+        },
+        "palette": {
+          "accent": "#d45f3f",
+          "accent_2": "#2f8f9d",
+          "background": "#f6e7cc",
+          "border": "#c99a68",
+          "code_bg": "#2b2119",
+          "code_ink": "#ffe3bc",
+          "ink": "#2a2118",
+          "muted": "#695946",
+          "surface": "#fff3dc",
+          "surface_alt": "#ead2ad"
+        },
+        "typography": {
+          "body": "Hanken Grotesk",
+          "display": "Fraunces",
+          "mono": "IBM Plex Mono",
+          "scale": "friendly"
+        },
+        "voice": {
+          "body": "This mode keeps the spec serious while the surface becomes handmade, constructive, and a little mischievous.",
+          "eyebrow": "Tactile builder mode",
+          "headline": "Same architecture, built out of warm clay and shop light."
+        }
+      },
+      "emission": {
+        "payload": {
+          "height": 1024,
+          "output_format": "png",
+          "prompt": "accent color (#d45f3f)",
+          "safety_tolerance": 2,
+          "width": 1024
+        },
+        "prompt": "accent color (#d45f3f)",
+        "warnings": [
+          {
+            "construct": "imagery",
+            "action": "unsupported"
+          },
+          {
+            "construct": "layout",
+            "action": "unsupported"
+          },
+          {
+            "construct": "motion",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.accent",
+            "action": "approximate"
+          },
+          {
+            "construct": "palette.accent_2",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.background",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.border",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.code_bg",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.code_ink",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.ink",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.muted",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.surface",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.surface_alt",
+            "action": "unsupported"
+          },
+          {
+            "construct": "typography",
+            "action": "unsupported"
+          },
+          {
+            "construct": "voice",
+            "action": "unsupported"
+          }
+        ],
+        "provenance": {
+          "prompt.0": {
+            "canonical_construct": "palette.accent",
+            "lowering_action": "approximate",
+            "source_value": "#d45f3f"
+          }
+        }
+      }
+    }
+  },
+  "sdxl-replicate": {
+    "isError": false,
+    "structuredContent": {
+      "ok": true,
+      "message": "Compiled deterministic provider payload for \"sdxl-replicate\".\nPrompt: accent color (#d45f3f)\nWarnings (15):\n- imagery: unsupported\n- layout: unsupported\n- motion: unsupported\n- palette.accent: approximate\n- palette.accent_2: unsupported\n- palette.background: unsupported\n- palette.border: unsupported\n- palette.code_bg: unsupported\n- palette.code_ink: unsupported\n- palette.ink: unsupported\n- palette.muted: unsupported\n- palette.surface: unsupported\n...and 3 more warnings.\nPayload JSON:\n```json\n{\n  \"guidance_scale\": 7.5,\n  \"height\": 1024,\n  \"high_noise_frac\": 0.8,\n  \"negative_prompt\": \"ugly, blurry, low quality, distorted, disfigured\",\n  \"num_inference_steps\": 35,\n  \"num_outputs\": 1,\n  \"output_format\": \"png\",\n  \"prompt\": \"accent color (#d45f3f)\",\n  \"refine\": \"expert_ensemble_refiner\",\n  \"scheduler\": \"K_EULER\",\n  \"width\": 1024\n}\n```",
+      "status": "compiled",
+      "provider": "sdxl-replicate",
+      "warnings": [
+        {
+          "construct": "imagery",
+          "action": "unsupported"
+        },
+        {
+          "construct": "layout",
+          "action": "unsupported"
+        },
+        {
+          "construct": "motion",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.accent",
+          "action": "approximate"
+        },
+        {
+          "construct": "palette.accent_2",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.background",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.border",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.code_bg",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.code_ink",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.ink",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.muted",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.surface",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.surface_alt",
+          "action": "unsupported"
+        },
+        {
+          "construct": "typography",
+          "action": "unsupported"
+        },
+        {
+          "construct": "voice",
+          "action": "unsupported"
+        }
+      ],
+      "canonical": {
+        "imagery": {
+          "alt": "Tactile clay-like Mosvera tesserae under warm builder-table light.",
+          "blend": "normal",
+          "contrast": "0.96",
+          "saturation": "1.12",
+          "src": "/assets/aesthetics/hero-claymation-playful-builder.webp",
+          "treatment": "tabletop_model"
+        },
+        "layout": {
+          "density": "roomy",
+          "max_width": "1160px",
+          "radius": "8px",
+          "shadow": "0 18px 0 rgba(96, 63, 39, 0.26)"
+        },
+        "motion": {
+          "duration": "260ms",
+          "pace": "bouncy"
+        },
+        "palette": {
+          "accent": "#d45f3f",
+          "accent_2": "#2f8f9d",
+          "background": "#f6e7cc",
+          "border": "#c99a68",
+          "code_bg": "#2b2119",
+          "code_ink": "#ffe3bc",
+          "ink": "#2a2118",
+          "muted": "#695946",
+          "surface": "#fff3dc",
+          "surface_alt": "#ead2ad"
+        },
+        "typography": {
+          "body": "Hanken Grotesk",
+          "display": "Fraunces",
+          "mono": "IBM Plex Mono",
+          "scale": "friendly"
+        },
+        "voice": {
+          "body": "This mode keeps the spec serious while the surface becomes handmade, constructive, and a little mischievous.",
+          "eyebrow": "Tactile builder mode",
+          "headline": "Same architecture, built out of warm clay and shop light."
+        }
+      },
+      "emission": {
+        "payload": {
+          "guidance_scale": 7.5,
+          "height": 1024,
+          "high_noise_frac": 0.8,
+          "negative_prompt": "ugly, blurry, low quality, distorted, disfigured",
+          "num_inference_steps": 35,
+          "num_outputs": 1,
+          "output_format": "png",
+          "prompt": "accent color (#d45f3f)",
+          "refine": "expert_ensemble_refiner",
+          "scheduler": "K_EULER",
+          "width": 1024
+        },
+        "prompt": "accent color (#d45f3f)",
+        "warnings": [
+          {
+            "construct": "imagery",
+            "action": "unsupported"
+          },
+          {
+            "construct": "layout",
+            "action": "unsupported"
+          },
+          {
+            "construct": "motion",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.accent",
+            "action": "approximate"
+          },
+          {
+            "construct": "palette.accent_2",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.background",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.border",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.code_bg",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.code_ink",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.ink",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.muted",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.surface",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.surface_alt",
+            "action": "unsupported"
+          },
+          {
+            "construct": "typography",
+            "action": "unsupported"
+          },
+          {
+            "construct": "voice",
+            "action": "unsupported"
+          }
+        ],
+        "provenance": {
+          "prompt.0": {
+            "canonical_construct": "palette.accent",
+            "lowering_action": "approximate",
+            "source_value": "#d45f3f"
+          }
+        }
+      }
+    }
+  },
+  "heygen-avatar-video": {
+    "isError": false,
+    "structuredContent": {
+      "ok": true,
+      "message": "Compiled deterministic provider payload for \"heygen-avatar-video\".\nPrompt: context label: Tactile builder mode; headline intent: Same architecture, built out of warm clay and shop light.; delivery tone: This mode keeps the spec serious while the surface becomes handmade, constructive, and a little mischievous.; background color #f6e7cc; surface color #fff3dc; alternate surface color #ead2ad; primary accent #d45f3f; secondary accent #2f8f9d; primary text color #2a2118; muted text color #695946; border color #c99a68; technical panel background #2b2119; technical panel text color #ffe3bc; imagery treatment: tabletop model; scene reference: Tactile clay-like Mosvera tesserae under warm builder-table light.; layout density: roomy; surface radius: 8px; shadow language: 0 18px 0 rgba(96, 63, 39, 0.26); avatar body language should feel bouncy; motion timing: 260ms; display typography character: Fraunces; body typography character: Hanken Grotesk; technical typography character: IBM Plex Mono; typographic scale: friendly\nWarnings (29):\n- imagery.alt: approximate\n- imagery.blend: unsupported\n- imagery.contrast: unsupported\n- imagery.saturation: unsupported\n- imagery.src: unsupported\n- imagery.treatment: approximate\n- layout.density: approximate\n- layout.max_width: unsupported\n- layout.radius: approximate\n- layout.shadow: approximate\n- motion.duration: approximate\n- motion.pace: approximate\n...and 17 more warnings.\nPayload JSON:\n```json\n{\n  \"aspect_ratio\": \"16:9\",\n  \"avatar_id\": \"avatar-fixture\",\n  \"background\": {\n    \"value\": \"#f6e7cc\"\n  },\n  \"motion_prompt\": \"context label: Tactile builder mode; headline intent: Same architecture, built out of warm clay and shop light.; delivery tone: This mode keeps the spec serious while the surface becomes handmade, constructive, and a little mischievous.; background color #f6e7cc; surface color #fff3dc; alternate surface color #ead2ad; primary accent #d45f3f; secondary accent #2f8f9d; primary text color #2a2118; muted text color #695946; border color #c99a68; technical panel background #2b2119; technical panel text color #ffe3bc; imagery treatment: tabletop model; scene reference: Tactile clay-like Mosvera tesserae under warm builder-table light.; layout density: roomy; surface radius: 8px; shadow language: 0 18px 0 rgba(96, 63, 39, 0.26); avatar body language should feel bouncy; motion timing: 260ms; display typography character: Fraunces; body typography character: Hanken Grotesk; technical typography character: IBM Plex Mono; typographic scale: friendly\",\n  \"output_format\": \"mp4\",\n  \"resolution\": \"1080p\",\n  \"script\": \"Wire fixture script.\",\n  \"title\": \"Same architecture, built out of warm clay and shop light.\",\n  \"type\": \"avatar\",\n  \"voice_id\": \"voice-fixture\"\n}\n```",
+      "status": "compiled",
+      "provider": "heygen-avatar-video",
+      "warnings": [
+        {
+          "construct": "imagery.alt",
+          "action": "approximate"
+        },
+        {
+          "construct": "imagery.blend",
+          "action": "unsupported"
+        },
+        {
+          "construct": "imagery.contrast",
+          "action": "unsupported"
+        },
+        {
+          "construct": "imagery.saturation",
+          "action": "unsupported"
+        },
+        {
+          "construct": "imagery.src",
+          "action": "unsupported"
+        },
+        {
+          "construct": "imagery.treatment",
+          "action": "approximate"
+        },
+        {
+          "construct": "layout.density",
+          "action": "approximate"
+        },
+        {
+          "construct": "layout.max_width",
+          "action": "unsupported"
+        },
+        {
+          "construct": "layout.radius",
+          "action": "approximate"
+        },
+        {
+          "construct": "layout.shadow",
+          "action": "approximate"
+        },
+        {
+          "construct": "motion.duration",
+          "action": "approximate"
+        },
+        {
+          "construct": "motion.pace",
+          "action": "approximate"
+        },
+        {
+          "construct": "palette.accent",
+          "action": "approximate"
+        },
+        {
+          "construct": "palette.accent_2",
+          "action": "approximate"
+        },
+        {
+          "construct": "palette.background",
+          "action": "approximate"
+        },
+        {
+          "construct": "palette.border",
+          "action": "approximate"
+        },
+        {
+          "construct": "palette.code_bg",
+          "action": "approximate"
+        },
+        {
+          "construct": "palette.code_ink",
+          "action": "approximate"
+        },
+        {
+          "construct": "palette.ink",
+          "action": "approximate"
+        },
+        {
+          "construct": "palette.muted",
+          "action": "approximate"
+        },
+        {
+          "construct": "palette.surface",
+          "action": "approximate"
+        },
+        {
+          "construct": "palette.surface_alt",
+          "action": "approximate"
+        },
+        {
+          "construct": "typography.body",
+          "action": "approximate"
+        },
+        {
+          "construct": "typography.display",
+          "action": "approximate"
+        },
+        {
+          "construct": "typography.mono",
+          "action": "approximate"
+        },
+        {
+          "construct": "typography.scale",
+          "action": "approximate"
+        },
+        {
+          "construct": "voice.body",
+          "action": "approximate"
+        },
+        {
+          "construct": "voice.eyebrow",
+          "action": "approximate"
+        },
+        {
+          "construct": "voice.headline",
+          "action": "approximate"
+        }
+      ],
+      "canonical": {
+        "imagery": {
+          "alt": "Tactile clay-like Mosvera tesserae under warm builder-table light.",
+          "blend": "normal",
+          "contrast": "0.96",
+          "saturation": "1.12",
+          "src": "/assets/aesthetics/hero-claymation-playful-builder.webp",
+          "treatment": "tabletop_model"
+        },
+        "layout": {
+          "density": "roomy",
+          "max_width": "1160px",
+          "radius": "8px",
+          "shadow": "0 18px 0 rgba(96, 63, 39, 0.26)"
+        },
+        "motion": {
+          "duration": "260ms",
+          "pace": "bouncy"
+        },
+        "palette": {
+          "accent": "#d45f3f",
+          "accent_2": "#2f8f9d",
+          "background": "#f6e7cc",
+          "border": "#c99a68",
+          "code_bg": "#2b2119",
+          "code_ink": "#ffe3bc",
+          "ink": "#2a2118",
+          "muted": "#695946",
+          "surface": "#fff3dc",
+          "surface_alt": "#ead2ad"
+        },
+        "typography": {
+          "body": "Hanken Grotesk",
+          "display": "Fraunces",
+          "mono": "IBM Plex Mono",
+          "scale": "friendly"
+        },
+        "voice": {
+          "body": "This mode keeps the spec serious while the surface becomes handmade, constructive, and a little mischievous.",
+          "eyebrow": "Tactile builder mode",
+          "headline": "Same architecture, built out of warm clay and shop light."
+        }
+      },
+      "emission": {
+        "payload": {
+          "aspect_ratio": "16:9",
+          "avatar_id": "avatar-fixture",
+          "background": {
+            "value": "#f6e7cc"
+          },
+          "motion_prompt": "context label: Tactile builder mode; headline intent: Same architecture, built out of warm clay and shop light.; delivery tone: This mode keeps the spec serious while the surface becomes handmade, constructive, and a little mischievous.; background color #f6e7cc; surface color #fff3dc; alternate surface color #ead2ad; primary accent #d45f3f; secondary accent #2f8f9d; primary text color #2a2118; muted text color #695946; border color #c99a68; technical panel background #2b2119; technical panel text color #ffe3bc; imagery treatment: tabletop model; scene reference: Tactile clay-like Mosvera tesserae under warm builder-table light.; layout density: roomy; surface radius: 8px; shadow language: 0 18px 0 rgba(96, 63, 39, 0.26); avatar body language should feel bouncy; motion timing: 260ms; display typography character: Fraunces; body typography character: Hanken Grotesk; technical typography character: IBM Plex Mono; typographic scale: friendly",
+          "output_format": "mp4",
+          "resolution": "1080p",
+          "script": "Wire fixture script.",
+          "title": "Same architecture, built out of warm clay and shop light.",
+          "type": "avatar",
+          "voice_id": "voice-fixture"
+        },
+        "prompt": "context label: Tactile builder mode; headline intent: Same architecture, built out of warm clay and shop light.; delivery tone: This mode keeps the spec serious while the surface becomes handmade, constructive, and a little mischievous.; background color #f6e7cc; surface color #fff3dc; alternate surface color #ead2ad; primary accent #d45f3f; secondary accent #2f8f9d; primary text color #2a2118; muted text color #695946; border color #c99a68; technical panel background #2b2119; technical panel text color #ffe3bc; imagery treatment: tabletop model; scene reference: Tactile clay-like Mosvera tesserae under warm builder-table light.; layout density: roomy; surface radius: 8px; shadow language: 0 18px 0 rgba(96, 63, 39, 0.26); avatar body language should feel bouncy; motion timing: 260ms; display typography character: Fraunces; body typography character: Hanken Grotesk; technical typography character: IBM Plex Mono; typographic scale: friendly",
+        "warnings": [
+          {
+            "construct": "imagery.alt",
+            "action": "approximate"
+          },
+          {
+            "construct": "imagery.blend",
+            "action": "unsupported"
+          },
+          {
+            "construct": "imagery.contrast",
+            "action": "unsupported"
+          },
+          {
+            "construct": "imagery.saturation",
+            "action": "unsupported"
+          },
+          {
+            "construct": "imagery.src",
+            "action": "unsupported"
+          },
+          {
+            "construct": "imagery.treatment",
+            "action": "approximate"
+          },
+          {
+            "construct": "layout.density",
+            "action": "approximate"
+          },
+          {
+            "construct": "layout.max_width",
+            "action": "unsupported"
+          },
+          {
+            "construct": "layout.radius",
+            "action": "approximate"
+          },
+          {
+            "construct": "layout.shadow",
+            "action": "approximate"
+          },
+          {
+            "construct": "motion.duration",
+            "action": "approximate"
+          },
+          {
+            "construct": "motion.pace",
+            "action": "approximate"
+          },
+          {
+            "construct": "palette.accent",
+            "action": "approximate"
+          },
+          {
+            "construct": "palette.accent_2",
+            "action": "approximate"
+          },
+          {
+            "construct": "palette.background",
+            "action": "approximate"
+          },
+          {
+            "construct": "palette.border",
+            "action": "approximate"
+          },
+          {
+            "construct": "palette.code_bg",
+            "action": "approximate"
+          },
+          {
+            "construct": "palette.code_ink",
+            "action": "approximate"
+          },
+          {
+            "construct": "palette.ink",
+            "action": "approximate"
+          },
+          {
+            "construct": "palette.muted",
+            "action": "approximate"
+          },
+          {
+            "construct": "palette.surface",
+            "action": "approximate"
+          },
+          {
+            "construct": "palette.surface_alt",
+            "action": "approximate"
+          },
+          {
+            "construct": "typography.body",
+            "action": "approximate"
+          },
+          {
+            "construct": "typography.display",
+            "action": "approximate"
+          },
+          {
+            "construct": "typography.mono",
+            "action": "approximate"
+          },
+          {
+            "construct": "typography.scale",
+            "action": "approximate"
+          },
+          {
+            "construct": "voice.body",
+            "action": "approximate"
+          },
+          {
+            "construct": "voice.eyebrow",
+            "action": "approximate"
+          },
+          {
+            "construct": "voice.headline",
+            "action": "approximate"
+          }
+        ],
+        "provenance": {
+          "background": {
+            "canonical_construct": "palette.background",
+            "lowering_action": "approximate",
+            "source_value": "#f6e7cc"
+          },
+          "prompt.0": {
+            "canonical_construct": "voice.eyebrow",
+            "lowering_action": "approximate",
+            "source_value": "Tactile builder mode"
+          },
+          "prompt.1": {
+            "canonical_construct": "voice.headline",
+            "lowering_action": "approximate",
+            "source_value": "Same architecture, built out of warm clay and shop light."
+          },
+          "prompt.10": {
+            "canonical_construct": "palette.border",
+            "lowering_action": "approximate",
+            "source_value": "#c99a68"
+          },
+          "prompt.11": {
+            "canonical_construct": "palette.code_bg",
+            "lowering_action": "approximate",
+            "source_value": "#2b2119"
+          },
+          "prompt.12": {
+            "canonical_construct": "palette.code_ink",
+            "lowering_action": "approximate",
+            "source_value": "#ffe3bc"
+          },
+          "prompt.13": {
+            "canonical_construct": "imagery.treatment",
+            "lowering_action": "approximate",
+            "source_value": "tabletop_model"
+          },
+          "prompt.14": {
+            "canonical_construct": "imagery.alt",
+            "lowering_action": "approximate",
+            "source_value": "Tactile clay-like Mosvera tesserae under warm builder-table light."
+          },
+          "prompt.15": {
+            "canonical_construct": "layout.density",
+            "lowering_action": "approximate",
+            "source_value": "roomy"
+          },
+          "prompt.16": {
+            "canonical_construct": "layout.radius",
+            "lowering_action": "approximate",
+            "source_value": "8px"
+          },
+          "prompt.17": {
+            "canonical_construct": "layout.shadow",
+            "lowering_action": "approximate",
+            "source_value": "0 18px 0 rgba(96, 63, 39, 0.26)"
+          },
+          "prompt.18": {
+            "canonical_construct": "motion.pace",
+            "lowering_action": "approximate",
+            "source_value": "bouncy"
+          },
+          "prompt.19": {
+            "canonical_construct": "motion.duration",
+            "lowering_action": "approximate",
+            "source_value": "260ms"
+          },
+          "prompt.2": {
+            "canonical_construct": "voice.body",
+            "lowering_action": "approximate",
+            "source_value": "This mode keeps the spec serious while the surface becomes handmade, constructive, and a little mischievous."
+          },
+          "prompt.20": {
+            "canonical_construct": "typography.display",
+            "lowering_action": "approximate",
+            "source_value": "Fraunces"
+          },
+          "prompt.21": {
+            "canonical_construct": "typography.body",
+            "lowering_action": "approximate",
+            "source_value": "Hanken Grotesk"
+          },
+          "prompt.22": {
+            "canonical_construct": "typography.mono",
+            "lowering_action": "approximate",
+            "source_value": "IBM Plex Mono"
+          },
+          "prompt.23": {
+            "canonical_construct": "typography.scale",
+            "lowering_action": "approximate",
+            "source_value": "friendly"
+          },
+          "prompt.3": {
+            "canonical_construct": "palette.background",
+            "lowering_action": "approximate",
+            "source_value": "#f6e7cc"
+          },
+          "prompt.4": {
+            "canonical_construct": "palette.surface",
+            "lowering_action": "approximate",
+            "source_value": "#fff3dc"
+          },
+          "prompt.5": {
+            "canonical_construct": "palette.surface_alt",
+            "lowering_action": "approximate",
+            "source_value": "#ead2ad"
+          },
+          "prompt.6": {
+            "canonical_construct": "palette.accent",
+            "lowering_action": "approximate",
+            "source_value": "#d45f3f"
+          },
+          "prompt.7": {
+            "canonical_construct": "palette.accent_2",
+            "lowering_action": "approximate",
+            "source_value": "#2f8f9d"
+          },
+          "prompt.8": {
+            "canonical_construct": "palette.ink",
+            "lowering_action": "approximate",
+            "source_value": "#2a2118"
+          },
+          "prompt.9": {
+            "canonical_construct": "palette.muted",
+            "lowering_action": "approximate",
+            "source_value": "#695946"
+          }
+        }
+      }
+    }
+  },
+  "google-gemini-image": {
+    "isError": false,
+    "structuredContent": {
+      "ok": true,
+      "message": "Compiled deterministic provider payload for \"google-gemini-image\".\nPrompt: context label: Tactile builder mode, headline intent: Same architecture, built out of warm clay and shop light., delivery tone: This mode keeps the spec serious while the surface becomes handmade, constructive, and a little mischievous., background color #f6e7cc, surface color #fff3dc, accent color #d45f3f, secondary accent #2f8f9d, text color #2a2118, imagery treatment: tabletop model, scene reference: Tactile clay-like Mosvera tesserae under warm builder-table light., layout density: roomy, surface radius: 8px\nWarnings (25):\n- imagery.alt: approximate\n- imagery.blend: unsupported\n- imagery.contrast: unsupported\n- imagery.saturation: unsupported\n- imagery.src: unsupported\n- imagery.treatment: approximate\n- layout.density: approximate\n- layout.max_width: unsupported\n- layout.radius: approximate\n- layout.shadow: unsupported\n- motion: unsupported\n- palette.accent: approximate\n...and 13 more warnings.\nPayload JSON:\n```json\n{\n  \"contents\": [\n    {\n      \"parts\": [\n        {\n          \"text\": \"Wire fixture prompt.\\n\\nMosvera aesthetic direction: context label: Tactile builder mode, headline intent: Same architecture, built out of warm clay and shop light., delivery tone: This mode keeps the spec serious while the surface becomes handmade, constructive, and a little mischievous., background color #f6e7cc, surface color #fff3dc, accent color #d45f3f, secondary accent #2f8f9d, text color #2a2118, imagery treatment: tabletop model, scene reference: Tactile clay-like Mosvera tesserae under warm builder-table light., layout density: roomy, surface radius: 8px\"\n        }\n      ]\n    }\n  ],\n  \"generationConfig\": {\n    \"responseModalities\": [\n      \"TEXT\",\n      \"IMAGE\"\n    ]\n  },\n  \"model\": \"gemini-3.1-flash-image-preview\"\n}\n```",
+      "status": "compiled",
+      "provider": "google-gemini-image",
+      "warnings": [
+        {
+          "construct": "imagery.alt",
+          "action": "approximate"
+        },
+        {
+          "construct": "imagery.blend",
+          "action": "unsupported"
+        },
+        {
+          "construct": "imagery.contrast",
+          "action": "unsupported"
+        },
+        {
+          "construct": "imagery.saturation",
+          "action": "unsupported"
+        },
+        {
+          "construct": "imagery.src",
+          "action": "unsupported"
+        },
+        {
+          "construct": "imagery.treatment",
+          "action": "approximate"
+        },
+        {
+          "construct": "layout.density",
+          "action": "approximate"
+        },
+        {
+          "construct": "layout.max_width",
+          "action": "unsupported"
+        },
+        {
+          "construct": "layout.radius",
+          "action": "approximate"
+        },
+        {
+          "construct": "layout.shadow",
+          "action": "unsupported"
+        },
+        {
+          "construct": "motion",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.accent",
+          "action": "approximate"
+        },
+        {
+          "construct": "palette.accent_2",
+          "action": "approximate"
+        },
+        {
+          "construct": "palette.background",
+          "action": "approximate"
+        },
+        {
+          "construct": "palette.border",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.code_bg",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.code_ink",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.ink",
+          "action": "approximate"
+        },
+        {
+          "construct": "palette.muted",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.surface",
+          "action": "approximate"
+        },
+        {
+          "construct": "palette.surface_alt",
+          "action": "unsupported"
+        },
+        {
+          "construct": "typography",
+          "action": "unsupported"
+        },
+        {
+          "construct": "voice.body",
+          "action": "approximate"
+        },
+        {
+          "construct": "voice.eyebrow",
+          "action": "approximate"
+        },
+        {
+          "construct": "voice.headline",
+          "action": "approximate"
+        }
+      ],
+      "canonical": {
+        "imagery": {
+          "alt": "Tactile clay-like Mosvera tesserae under warm builder-table light.",
+          "blend": "normal",
+          "contrast": "0.96",
+          "saturation": "1.12",
+          "src": "/assets/aesthetics/hero-claymation-playful-builder.webp",
+          "treatment": "tabletop_model"
+        },
+        "layout": {
+          "density": "roomy",
+          "max_width": "1160px",
+          "radius": "8px",
+          "shadow": "0 18px 0 rgba(96, 63, 39, 0.26)"
+        },
+        "motion": {
+          "duration": "260ms",
+          "pace": "bouncy"
+        },
+        "palette": {
+          "accent": "#d45f3f",
+          "accent_2": "#2f8f9d",
+          "background": "#f6e7cc",
+          "border": "#c99a68",
+          "code_bg": "#2b2119",
+          "code_ink": "#ffe3bc",
+          "ink": "#2a2118",
+          "muted": "#695946",
+          "surface": "#fff3dc",
+          "surface_alt": "#ead2ad"
+        },
+        "typography": {
+          "body": "Hanken Grotesk",
+          "display": "Fraunces",
+          "mono": "IBM Plex Mono",
+          "scale": "friendly"
+        },
+        "voice": {
+          "body": "This mode keeps the spec serious while the surface becomes handmade, constructive, and a little mischievous.",
+          "eyebrow": "Tactile builder mode",
+          "headline": "Same architecture, built out of warm clay and shop light."
+        }
+      },
+      "emission": {
+        "payload": {
+          "contents": [
+            {
+              "parts": [
+                {
+                  "text": "Wire fixture prompt.\n\nMosvera aesthetic direction: context label: Tactile builder mode, headline intent: Same architecture, built out of warm clay and shop light., delivery tone: This mode keeps the spec serious while the surface becomes handmade, constructive, and a little mischievous., background color #f6e7cc, surface color #fff3dc, accent color #d45f3f, secondary accent #2f8f9d, text color #2a2118, imagery treatment: tabletop model, scene reference: Tactile clay-like Mosvera tesserae under warm builder-table light., layout density: roomy, surface radius: 8px"
+                }
+              ]
+            }
+          ],
+          "generationConfig": {
+            "responseModalities": [
+              "TEXT",
+              "IMAGE"
+            ]
+          },
+          "model": "gemini-3.1-flash-image-preview"
+        },
+        "prompt": "context label: Tactile builder mode, headline intent: Same architecture, built out of warm clay and shop light., delivery tone: This mode keeps the spec serious while the surface becomes handmade, constructive, and a little mischievous., background color #f6e7cc, surface color #fff3dc, accent color #d45f3f, secondary accent #2f8f9d, text color #2a2118, imagery treatment: tabletop model, scene reference: Tactile clay-like Mosvera tesserae under warm builder-table light., layout density: roomy, surface radius: 8px",
+        "warnings": [
+          {
+            "construct": "imagery.alt",
+            "action": "approximate"
+          },
+          {
+            "construct": "imagery.blend",
+            "action": "unsupported"
+          },
+          {
+            "construct": "imagery.contrast",
+            "action": "unsupported"
+          },
+          {
+            "construct": "imagery.saturation",
+            "action": "unsupported"
+          },
+          {
+            "construct": "imagery.src",
+            "action": "unsupported"
+          },
+          {
+            "construct": "imagery.treatment",
+            "action": "approximate"
+          },
+          {
+            "construct": "layout.density",
+            "action": "approximate"
+          },
+          {
+            "construct": "layout.max_width",
+            "action": "unsupported"
+          },
+          {
+            "construct": "layout.radius",
+            "action": "approximate"
+          },
+          {
+            "construct": "layout.shadow",
+            "action": "unsupported"
+          },
+          {
+            "construct": "motion",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.accent",
+            "action": "approximate"
+          },
+          {
+            "construct": "palette.accent_2",
+            "action": "approximate"
+          },
+          {
+            "construct": "palette.background",
+            "action": "approximate"
+          },
+          {
+            "construct": "palette.border",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.code_bg",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.code_ink",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.ink",
+            "action": "approximate"
+          },
+          {
+            "construct": "palette.muted",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.surface",
+            "action": "approximate"
+          },
+          {
+            "construct": "palette.surface_alt",
+            "action": "unsupported"
+          },
+          {
+            "construct": "typography",
+            "action": "unsupported"
+          },
+          {
+            "construct": "voice.body",
+            "action": "approximate"
+          },
+          {
+            "construct": "voice.eyebrow",
+            "action": "approximate"
+          },
+          {
+            "construct": "voice.headline",
+            "action": "approximate"
+          }
+        ],
+        "provenance": {
+          "prompt.0": {
+            "canonical_construct": "voice.eyebrow",
+            "lowering_action": "approximate",
+            "source_value": "Tactile builder mode"
+          },
+          "prompt.1": {
+            "canonical_construct": "voice.headline",
+            "lowering_action": "approximate",
+            "source_value": "Same architecture, built out of warm clay and shop light."
+          },
+          "prompt.10": {
+            "canonical_construct": "layout.density",
+            "lowering_action": "approximate",
+            "source_value": "roomy"
+          },
+          "prompt.11": {
+            "canonical_construct": "layout.radius",
+            "lowering_action": "approximate",
+            "source_value": "8px"
+          },
+          "prompt.2": {
+            "canonical_construct": "voice.body",
+            "lowering_action": "approximate",
+            "source_value": "This mode keeps the spec serious while the surface becomes handmade, constructive, and a little mischievous."
+          },
+          "prompt.3": {
+            "canonical_construct": "palette.background",
+            "lowering_action": "approximate",
+            "source_value": "#f6e7cc"
+          },
+          "prompt.4": {
+            "canonical_construct": "palette.surface",
+            "lowering_action": "approximate",
+            "source_value": "#fff3dc"
+          },
+          "prompt.5": {
+            "canonical_construct": "palette.accent",
+            "lowering_action": "approximate",
+            "source_value": "#d45f3f"
+          },
+          "prompt.6": {
+            "canonical_construct": "palette.accent_2",
+            "lowering_action": "approximate",
+            "source_value": "#2f8f9d"
+          },
+          "prompt.7": {
+            "canonical_construct": "palette.ink",
+            "lowering_action": "approximate",
+            "source_value": "#2a2118"
+          },
+          "prompt.8": {
+            "canonical_construct": "imagery.treatment",
+            "lowering_action": "approximate",
+            "source_value": "tabletop_model"
+          },
+          "prompt.9": {
+            "canonical_construct": "imagery.alt",
+            "lowering_action": "approximate",
+            "source_value": "Tactile clay-like Mosvera tesserae under warm builder-table light."
+          }
+        }
+      }
+    }
+  },
+  "google-veo-video": {
+    "isError": false,
+    "structuredContent": {
+      "ok": true,
+      "message": "Compiled deterministic provider payload for \"google-veo-video\".\nPrompt: context label: Tactile builder mode, headline intent: Same architecture, built out of warm clay and shop light., delivery tone: This mode keeps the spec serious while the surface becomes handmade, constructive, and a little mischievous., background color #f6e7cc, surface color #fff3dc, accent color #d45f3f, secondary accent #2f8f9d, text color #2a2118, imagery treatment: tabletop model, scene reference: Tactile clay-like Mosvera tesserae under warm builder-table light., layout density: roomy, surface radius: 8px, bouncy camera and body movement, motion timing: 260ms\nWarnings (26):\n- imagery.alt: approximate\n- imagery.blend: unsupported\n- imagery.contrast: unsupported\n- imagery.saturation: unsupported\n- imagery.src: unsupported\n- imagery.treatment: approximate\n- layout.density: approximate\n- layout.max_width: unsupported\n- layout.radius: approximate\n- layout.shadow: unsupported\n- motion.duration: approximate\n- motion.pace: approximate\n...and 14 more warnings.\nPayload JSON:\n```json\n{\n  \"instances\": [\n    {\n      \"prompt\": \"Wire fixture prompt.\\n\\nMosvera aesthetic direction: context label: Tactile builder mode, headline intent: Same architecture, built out of warm clay and shop light., delivery tone: This mode keeps the spec serious while the surface becomes handmade, constructive, and a little mischievous., background color #f6e7cc, surface color #fff3dc, accent color #d45f3f, secondary accent #2f8f9d, text color #2a2118, imagery treatment: tabletop model, scene reference: Tactile clay-like Mosvera tesserae under warm builder-table light., layout density: roomy, surface radius: 8px, bouncy camera and body movement, motion timing: 260ms\"\n    }\n  ],\n  \"model\": \"veo-3.1-generate-preview\",\n  \"parameters\": {\n    \"aspectRatio\": \"16:9\",\n    \"resolution\": \"720p\"\n  }\n}\n```",
+      "status": "compiled",
+      "provider": "google-veo-video",
+      "warnings": [
+        {
+          "construct": "imagery.alt",
+          "action": "approximate"
+        },
+        {
+          "construct": "imagery.blend",
+          "action": "unsupported"
+        },
+        {
+          "construct": "imagery.contrast",
+          "action": "unsupported"
+        },
+        {
+          "construct": "imagery.saturation",
+          "action": "unsupported"
+        },
+        {
+          "construct": "imagery.src",
+          "action": "unsupported"
+        },
+        {
+          "construct": "imagery.treatment",
+          "action": "approximate"
+        },
+        {
+          "construct": "layout.density",
+          "action": "approximate"
+        },
+        {
+          "construct": "layout.max_width",
+          "action": "unsupported"
+        },
+        {
+          "construct": "layout.radius",
+          "action": "approximate"
+        },
+        {
+          "construct": "layout.shadow",
+          "action": "unsupported"
+        },
+        {
+          "construct": "motion.duration",
+          "action": "approximate"
+        },
+        {
+          "construct": "motion.pace",
+          "action": "approximate"
+        },
+        {
+          "construct": "palette.accent",
+          "action": "approximate"
+        },
+        {
+          "construct": "palette.accent_2",
+          "action": "approximate"
+        },
+        {
+          "construct": "palette.background",
+          "action": "approximate"
+        },
+        {
+          "construct": "palette.border",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.code_bg",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.code_ink",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.ink",
+          "action": "approximate"
+        },
+        {
+          "construct": "palette.muted",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.surface",
+          "action": "approximate"
+        },
+        {
+          "construct": "palette.surface_alt",
+          "action": "unsupported"
+        },
+        {
+          "construct": "typography",
+          "action": "unsupported"
+        },
+        {
+          "construct": "voice.body",
+          "action": "approximate"
+        },
+        {
+          "construct": "voice.eyebrow",
+          "action": "approximate"
+        },
+        {
+          "construct": "voice.headline",
+          "action": "approximate"
+        }
+      ],
+      "canonical": {
+        "imagery": {
+          "alt": "Tactile clay-like Mosvera tesserae under warm builder-table light.",
+          "blend": "normal",
+          "contrast": "0.96",
+          "saturation": "1.12",
+          "src": "/assets/aesthetics/hero-claymation-playful-builder.webp",
+          "treatment": "tabletop_model"
+        },
+        "layout": {
+          "density": "roomy",
+          "max_width": "1160px",
+          "radius": "8px",
+          "shadow": "0 18px 0 rgba(96, 63, 39, 0.26)"
+        },
+        "motion": {
+          "duration": "260ms",
+          "pace": "bouncy"
+        },
+        "palette": {
+          "accent": "#d45f3f",
+          "accent_2": "#2f8f9d",
+          "background": "#f6e7cc",
+          "border": "#c99a68",
+          "code_bg": "#2b2119",
+          "code_ink": "#ffe3bc",
+          "ink": "#2a2118",
+          "muted": "#695946",
+          "surface": "#fff3dc",
+          "surface_alt": "#ead2ad"
+        },
+        "typography": {
+          "body": "Hanken Grotesk",
+          "display": "Fraunces",
+          "mono": "IBM Plex Mono",
+          "scale": "friendly"
+        },
+        "voice": {
+          "body": "This mode keeps the spec serious while the surface becomes handmade, constructive, and a little mischievous.",
+          "eyebrow": "Tactile builder mode",
+          "headline": "Same architecture, built out of warm clay and shop light."
+        }
+      },
+      "emission": {
+        "payload": {
+          "instances": [
+            {
+              "prompt": "Wire fixture prompt.\n\nMosvera aesthetic direction: context label: Tactile builder mode, headline intent: Same architecture, built out of warm clay and shop light., delivery tone: This mode keeps the spec serious while the surface becomes handmade, constructive, and a little mischievous., background color #f6e7cc, surface color #fff3dc, accent color #d45f3f, secondary accent #2f8f9d, text color #2a2118, imagery treatment: tabletop model, scene reference: Tactile clay-like Mosvera tesserae under warm builder-table light., layout density: roomy, surface radius: 8px, bouncy camera and body movement, motion timing: 260ms"
+            }
+          ],
+          "model": "veo-3.1-generate-preview",
+          "parameters": {
+            "aspectRatio": "16:9",
+            "resolution": "720p"
+          }
+        },
+        "prompt": "context label: Tactile builder mode, headline intent: Same architecture, built out of warm clay and shop light., delivery tone: This mode keeps the spec serious while the surface becomes handmade, constructive, and a little mischievous., background color #f6e7cc, surface color #fff3dc, accent color #d45f3f, secondary accent #2f8f9d, text color #2a2118, imagery treatment: tabletop model, scene reference: Tactile clay-like Mosvera tesserae under warm builder-table light., layout density: roomy, surface radius: 8px, bouncy camera and body movement, motion timing: 260ms",
+        "warnings": [
+          {
+            "construct": "imagery.alt",
+            "action": "approximate"
+          },
+          {
+            "construct": "imagery.blend",
+            "action": "unsupported"
+          },
+          {
+            "construct": "imagery.contrast",
+            "action": "unsupported"
+          },
+          {
+            "construct": "imagery.saturation",
+            "action": "unsupported"
+          },
+          {
+            "construct": "imagery.src",
+            "action": "unsupported"
+          },
+          {
+            "construct": "imagery.treatment",
+            "action": "approximate"
+          },
+          {
+            "construct": "layout.density",
+            "action": "approximate"
+          },
+          {
+            "construct": "layout.max_width",
+            "action": "unsupported"
+          },
+          {
+            "construct": "layout.radius",
+            "action": "approximate"
+          },
+          {
+            "construct": "layout.shadow",
+            "action": "unsupported"
+          },
+          {
+            "construct": "motion.duration",
+            "action": "approximate"
+          },
+          {
+            "construct": "motion.pace",
+            "action": "approximate"
+          },
+          {
+            "construct": "palette.accent",
+            "action": "approximate"
+          },
+          {
+            "construct": "palette.accent_2",
+            "action": "approximate"
+          },
+          {
+            "construct": "palette.background",
+            "action": "approximate"
+          },
+          {
+            "construct": "palette.border",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.code_bg",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.code_ink",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.ink",
+            "action": "approximate"
+          },
+          {
+            "construct": "palette.muted",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.surface",
+            "action": "approximate"
+          },
+          {
+            "construct": "palette.surface_alt",
+            "action": "unsupported"
+          },
+          {
+            "construct": "typography",
+            "action": "unsupported"
+          },
+          {
+            "construct": "voice.body",
+            "action": "approximate"
+          },
+          {
+            "construct": "voice.eyebrow",
+            "action": "approximate"
+          },
+          {
+            "construct": "voice.headline",
+            "action": "approximate"
+          }
+        ],
+        "provenance": {
+          "prompt.0": {
+            "canonical_construct": "voice.eyebrow",
+            "lowering_action": "approximate",
+            "source_value": "Tactile builder mode"
+          },
+          "prompt.1": {
+            "canonical_construct": "voice.headline",
+            "lowering_action": "approximate",
+            "source_value": "Same architecture, built out of warm clay and shop light."
+          },
+          "prompt.10": {
+            "canonical_construct": "layout.density",
+            "lowering_action": "approximate",
+            "source_value": "roomy"
+          },
+          "prompt.11": {
+            "canonical_construct": "layout.radius",
+            "lowering_action": "approximate",
+            "source_value": "8px"
+          },
+          "prompt.12": {
+            "canonical_construct": "motion.pace",
+            "lowering_action": "approximate",
+            "source_value": "bouncy"
+          },
+          "prompt.13": {
+            "canonical_construct": "motion.duration",
+            "lowering_action": "approximate",
+            "source_value": "260ms"
+          },
+          "prompt.2": {
+            "canonical_construct": "voice.body",
+            "lowering_action": "approximate",
+            "source_value": "This mode keeps the spec serious while the surface becomes handmade, constructive, and a little mischievous."
+          },
+          "prompt.3": {
+            "canonical_construct": "palette.background",
+            "lowering_action": "approximate",
+            "source_value": "#f6e7cc"
+          },
+          "prompt.4": {
+            "canonical_construct": "palette.surface",
+            "lowering_action": "approximate",
+            "source_value": "#fff3dc"
+          },
+          "prompt.5": {
+            "canonical_construct": "palette.accent",
+            "lowering_action": "approximate",
+            "source_value": "#d45f3f"
+          },
+          "prompt.6": {
+            "canonical_construct": "palette.accent_2",
+            "lowering_action": "approximate",
+            "source_value": "#2f8f9d"
+          },
+          "prompt.7": {
+            "canonical_construct": "palette.ink",
+            "lowering_action": "approximate",
+            "source_value": "#2a2118"
+          },
+          "prompt.8": {
+            "canonical_construct": "imagery.treatment",
+            "lowering_action": "approximate",
+            "source_value": "tabletop_model"
+          },
+          "prompt.9": {
+            "canonical_construct": "imagery.alt",
+            "lowering_action": "approximate",
+            "source_value": "Tactile clay-like Mosvera tesserae under warm builder-table light."
+          }
+        }
+      }
+    }
+  },
+  "runway-gen4-image": {
+    "isError": false,
+    "structuredContent": {
+      "ok": true,
+      "message": "Compiled deterministic provider payload for \"runway-gen4-image\".\nPrompt: headline intent: Same architecture, built out of warm clay and shop light., background color #f6e7cc, accent color #d45f3f, imagery treatment: tabletop model, scene reference: Tactile clay-like Mosvera tesserae under warm builder-table light., layout density: roomy\nWarnings (25):\n- imagery.alt: approximate\n- imagery.blend: unsupported\n- imagery.contrast: unsupported\n- imagery.saturation: unsupported\n- imagery.src: unsupported\n- imagery.treatment: approximate\n- layout.density: approximate\n- layout.max_width: unsupported\n- layout.radius: unsupported\n- layout.shadow: unsupported\n- motion: unsupported\n- palette.accent: approximate\n...and 13 more warnings.\nPayload JSON:\n```json\n{\n  \"model\": \"gen4_image\",\n  \"promptText\": \"headline intent: Same architecture, built out of warm clay and shop light., background color #f6e7cc, accent color #d45f3f, imagery treatment: tabletop model, scene reference: Tactile clay-like Mosvera tesserae under warm builder-table light., layout density: roomy\",\n  \"ratio\": \"1920:1080\"\n}\n```",
+      "status": "compiled",
+      "provider": "runway-gen4-image",
+      "warnings": [
+        {
+          "construct": "imagery.alt",
+          "action": "approximate"
+        },
+        {
+          "construct": "imagery.blend",
+          "action": "unsupported"
+        },
+        {
+          "construct": "imagery.contrast",
+          "action": "unsupported"
+        },
+        {
+          "construct": "imagery.saturation",
+          "action": "unsupported"
+        },
+        {
+          "construct": "imagery.src",
+          "action": "unsupported"
+        },
+        {
+          "construct": "imagery.treatment",
+          "action": "approximate"
+        },
+        {
+          "construct": "layout.density",
+          "action": "approximate"
+        },
+        {
+          "construct": "layout.max_width",
+          "action": "unsupported"
+        },
+        {
+          "construct": "layout.radius",
+          "action": "unsupported"
+        },
+        {
+          "construct": "layout.shadow",
+          "action": "unsupported"
+        },
+        {
+          "construct": "motion",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.accent",
+          "action": "approximate"
+        },
+        {
+          "construct": "palette.accent_2",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.background",
+          "action": "approximate"
+        },
+        {
+          "construct": "palette.border",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.code_bg",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.code_ink",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.ink",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.muted",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.surface",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.surface_alt",
+          "action": "unsupported"
+        },
+        {
+          "construct": "typography",
+          "action": "unsupported"
+        },
+        {
+          "construct": "voice.body",
+          "action": "unsupported"
+        },
+        {
+          "construct": "voice.eyebrow",
+          "action": "unsupported"
+        },
+        {
+          "construct": "voice.headline",
+          "action": "approximate"
+        }
+      ],
+      "canonical": {
+        "imagery": {
+          "alt": "Tactile clay-like Mosvera tesserae under warm builder-table light.",
+          "blend": "normal",
+          "contrast": "0.96",
+          "saturation": "1.12",
+          "src": "/assets/aesthetics/hero-claymation-playful-builder.webp",
+          "treatment": "tabletop_model"
+        },
+        "layout": {
+          "density": "roomy",
+          "max_width": "1160px",
+          "radius": "8px",
+          "shadow": "0 18px 0 rgba(96, 63, 39, 0.26)"
+        },
+        "motion": {
+          "duration": "260ms",
+          "pace": "bouncy"
+        },
+        "palette": {
+          "accent": "#d45f3f",
+          "accent_2": "#2f8f9d",
+          "background": "#f6e7cc",
+          "border": "#c99a68",
+          "code_bg": "#2b2119",
+          "code_ink": "#ffe3bc",
+          "ink": "#2a2118",
+          "muted": "#695946",
+          "surface": "#fff3dc",
+          "surface_alt": "#ead2ad"
+        },
+        "typography": {
+          "body": "Hanken Grotesk",
+          "display": "Fraunces",
+          "mono": "IBM Plex Mono",
+          "scale": "friendly"
+        },
+        "voice": {
+          "body": "This mode keeps the spec serious while the surface becomes handmade, constructive, and a little mischievous.",
+          "eyebrow": "Tactile builder mode",
+          "headline": "Same architecture, built out of warm clay and shop light."
+        }
+      },
+      "emission": {
+        "payload": {
+          "model": "gen4_image",
+          "promptText": "headline intent: Same architecture, built out of warm clay and shop light., background color #f6e7cc, accent color #d45f3f, imagery treatment: tabletop model, scene reference: Tactile clay-like Mosvera tesserae under warm builder-table light., layout density: roomy",
+          "ratio": "1920:1080"
+        },
+        "prompt": "headline intent: Same architecture, built out of warm clay and shop light., background color #f6e7cc, accent color #d45f3f, imagery treatment: tabletop model, scene reference: Tactile clay-like Mosvera tesserae under warm builder-table light., layout density: roomy",
+        "warnings": [
+          {
+            "construct": "imagery.alt",
+            "action": "approximate"
+          },
+          {
+            "construct": "imagery.blend",
+            "action": "unsupported"
+          },
+          {
+            "construct": "imagery.contrast",
+            "action": "unsupported"
+          },
+          {
+            "construct": "imagery.saturation",
+            "action": "unsupported"
+          },
+          {
+            "construct": "imagery.src",
+            "action": "unsupported"
+          },
+          {
+            "construct": "imagery.treatment",
+            "action": "approximate"
+          },
+          {
+            "construct": "layout.density",
+            "action": "approximate"
+          },
+          {
+            "construct": "layout.max_width",
+            "action": "unsupported"
+          },
+          {
+            "construct": "layout.radius",
+            "action": "unsupported"
+          },
+          {
+            "construct": "layout.shadow",
+            "action": "unsupported"
+          },
+          {
+            "construct": "motion",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.accent",
+            "action": "approximate"
+          },
+          {
+            "construct": "palette.accent_2",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.background",
+            "action": "approximate"
+          },
+          {
+            "construct": "palette.border",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.code_bg",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.code_ink",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.ink",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.muted",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.surface",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.surface_alt",
+            "action": "unsupported"
+          },
+          {
+            "construct": "typography",
+            "action": "unsupported"
+          },
+          {
+            "construct": "voice.body",
+            "action": "unsupported"
+          },
+          {
+            "construct": "voice.eyebrow",
+            "action": "unsupported"
+          },
+          {
+            "construct": "voice.headline",
+            "action": "approximate"
+          }
+        ],
+        "provenance": {
+          "prompt.0": {
+            "canonical_construct": "voice.headline",
+            "lowering_action": "approximate",
+            "source_value": "Same architecture, built out of warm clay and shop light."
+          },
+          "prompt.1": {
+            "canonical_construct": "palette.background",
+            "lowering_action": "approximate",
+            "source_value": "#f6e7cc"
+          },
+          "prompt.2": {
+            "canonical_construct": "palette.accent",
+            "lowering_action": "approximate",
+            "source_value": "#d45f3f"
+          },
+          "prompt.3": {
+            "canonical_construct": "imagery.treatment",
+            "lowering_action": "approximate",
+            "source_value": "tabletop_model"
+          },
+          "prompt.4": {
+            "canonical_construct": "imagery.alt",
+            "lowering_action": "approximate",
+            "source_value": "Tactile clay-like Mosvera tesserae under warm builder-table light."
+          },
+          "prompt.5": {
+            "canonical_construct": "layout.density",
+            "lowering_action": "approximate",
+            "source_value": "roomy"
+          }
+        }
+      }
+    }
+  },
+  "runway-gen45-video": {
+    "isError": false,
+    "structuredContent": {
+      "ok": true,
+      "message": "Compiled deterministic provider payload for \"runway-gen45-video\".\nPrompt: headline intent: Same architecture, built out of warm clay and shop light., background color #f6e7cc, accent color #d45f3f, imagery treatment: tabletop model, scene reference: Tactile clay-like Mosvera tesserae under warm builder-table light., layout density: roomy, bouncy camera movement\nWarnings (26):\n- imagery.alt: approximate\n- imagery.blend: unsupported\n- imagery.contrast: unsupported\n- imagery.saturation: unsupported\n- imagery.src: unsupported\n- imagery.treatment: approximate\n- layout.density: approximate\n- layout.max_width: unsupported\n- layout.radius: unsupported\n- layout.shadow: unsupported\n- motion.duration: unsupported\n- motion.pace: approximate\n...and 14 more warnings.\nPayload JSON:\n```json\n{\n  \"duration\": 5,\n  \"model\": \"gen4.5\",\n  \"promptText\": \"headline intent: Same architecture, built out of warm clay and shop light., background color #f6e7cc, accent color #d45f3f, imagery treatment: tabletop model, scene reference: Tactile clay-like Mosvera tesserae under warm builder-table light., layout density: roomy, bouncy camera movement\",\n  \"ratio\": \"1280:720\"\n}\n```",
+      "status": "compiled",
+      "provider": "runway-gen45-video",
+      "warnings": [
+        {
+          "construct": "imagery.alt",
+          "action": "approximate"
+        },
+        {
+          "construct": "imagery.blend",
+          "action": "unsupported"
+        },
+        {
+          "construct": "imagery.contrast",
+          "action": "unsupported"
+        },
+        {
+          "construct": "imagery.saturation",
+          "action": "unsupported"
+        },
+        {
+          "construct": "imagery.src",
+          "action": "unsupported"
+        },
+        {
+          "construct": "imagery.treatment",
+          "action": "approximate"
+        },
+        {
+          "construct": "layout.density",
+          "action": "approximate"
+        },
+        {
+          "construct": "layout.max_width",
+          "action": "unsupported"
+        },
+        {
+          "construct": "layout.radius",
+          "action": "unsupported"
+        },
+        {
+          "construct": "layout.shadow",
+          "action": "unsupported"
+        },
+        {
+          "construct": "motion.duration",
+          "action": "unsupported"
+        },
+        {
+          "construct": "motion.pace",
+          "action": "approximate"
+        },
+        {
+          "construct": "palette.accent",
+          "action": "approximate"
+        },
+        {
+          "construct": "palette.accent_2",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.background",
+          "action": "approximate"
+        },
+        {
+          "construct": "palette.border",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.code_bg",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.code_ink",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.ink",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.muted",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.surface",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.surface_alt",
+          "action": "unsupported"
+        },
+        {
+          "construct": "typography",
+          "action": "unsupported"
+        },
+        {
+          "construct": "voice.body",
+          "action": "unsupported"
+        },
+        {
+          "construct": "voice.eyebrow",
+          "action": "unsupported"
+        },
+        {
+          "construct": "voice.headline",
+          "action": "approximate"
+        }
+      ],
+      "canonical": {
+        "imagery": {
+          "alt": "Tactile clay-like Mosvera tesserae under warm builder-table light.",
+          "blend": "normal",
+          "contrast": "0.96",
+          "saturation": "1.12",
+          "src": "/assets/aesthetics/hero-claymation-playful-builder.webp",
+          "treatment": "tabletop_model"
+        },
+        "layout": {
+          "density": "roomy",
+          "max_width": "1160px",
+          "radius": "8px",
+          "shadow": "0 18px 0 rgba(96, 63, 39, 0.26)"
+        },
+        "motion": {
+          "duration": "260ms",
+          "pace": "bouncy"
+        },
+        "palette": {
+          "accent": "#d45f3f",
+          "accent_2": "#2f8f9d",
+          "background": "#f6e7cc",
+          "border": "#c99a68",
+          "code_bg": "#2b2119",
+          "code_ink": "#ffe3bc",
+          "ink": "#2a2118",
+          "muted": "#695946",
+          "surface": "#fff3dc",
+          "surface_alt": "#ead2ad"
+        },
+        "typography": {
+          "body": "Hanken Grotesk",
+          "display": "Fraunces",
+          "mono": "IBM Plex Mono",
+          "scale": "friendly"
+        },
+        "voice": {
+          "body": "This mode keeps the spec serious while the surface becomes handmade, constructive, and a little mischievous.",
+          "eyebrow": "Tactile builder mode",
+          "headline": "Same architecture, built out of warm clay and shop light."
+        }
+      },
+      "emission": {
+        "payload": {
+          "duration": 5,
+          "model": "gen4.5",
+          "promptText": "headline intent: Same architecture, built out of warm clay and shop light., background color #f6e7cc, accent color #d45f3f, imagery treatment: tabletop model, scene reference: Tactile clay-like Mosvera tesserae under warm builder-table light., layout density: roomy, bouncy camera movement",
+          "ratio": "1280:720"
+        },
+        "prompt": "headline intent: Same architecture, built out of warm clay and shop light., background color #f6e7cc, accent color #d45f3f, imagery treatment: tabletop model, scene reference: Tactile clay-like Mosvera tesserae under warm builder-table light., layout density: roomy, bouncy camera movement",
+        "warnings": [
+          {
+            "construct": "imagery.alt",
+            "action": "approximate"
+          },
+          {
+            "construct": "imagery.blend",
+            "action": "unsupported"
+          },
+          {
+            "construct": "imagery.contrast",
+            "action": "unsupported"
+          },
+          {
+            "construct": "imagery.saturation",
+            "action": "unsupported"
+          },
+          {
+            "construct": "imagery.src",
+            "action": "unsupported"
+          },
+          {
+            "construct": "imagery.treatment",
+            "action": "approximate"
+          },
+          {
+            "construct": "layout.density",
+            "action": "approximate"
+          },
+          {
+            "construct": "layout.max_width",
+            "action": "unsupported"
+          },
+          {
+            "construct": "layout.radius",
+            "action": "unsupported"
+          },
+          {
+            "construct": "layout.shadow",
+            "action": "unsupported"
+          },
+          {
+            "construct": "motion.duration",
+            "action": "unsupported"
+          },
+          {
+            "construct": "motion.pace",
+            "action": "approximate"
+          },
+          {
+            "construct": "palette.accent",
+            "action": "approximate"
+          },
+          {
+            "construct": "palette.accent_2",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.background",
+            "action": "approximate"
+          },
+          {
+            "construct": "palette.border",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.code_bg",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.code_ink",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.ink",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.muted",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.surface",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.surface_alt",
+            "action": "unsupported"
+          },
+          {
+            "construct": "typography",
+            "action": "unsupported"
+          },
+          {
+            "construct": "voice.body",
+            "action": "unsupported"
+          },
+          {
+            "construct": "voice.eyebrow",
+            "action": "unsupported"
+          },
+          {
+            "construct": "voice.headline",
+            "action": "approximate"
+          }
+        ],
+        "provenance": {
+          "prompt.0": {
+            "canonical_construct": "voice.headline",
+            "lowering_action": "approximate",
+            "source_value": "Same architecture, built out of warm clay and shop light."
+          },
+          "prompt.1": {
+            "canonical_construct": "palette.background",
+            "lowering_action": "approximate",
+            "source_value": "#f6e7cc"
+          },
+          "prompt.2": {
+            "canonical_construct": "palette.accent",
+            "lowering_action": "approximate",
+            "source_value": "#d45f3f"
+          },
+          "prompt.3": {
+            "canonical_construct": "imagery.treatment",
+            "lowering_action": "approximate",
+            "source_value": "tabletop_model"
+          },
+          "prompt.4": {
+            "canonical_construct": "imagery.alt",
+            "lowering_action": "approximate",
+            "source_value": "Tactile clay-like Mosvera tesserae under warm builder-table light."
+          },
+          "prompt.5": {
+            "canonical_construct": "layout.density",
+            "lowering_action": "approximate",
+            "source_value": "roomy"
+          },
+          "prompt.6": {
+            "canonical_construct": "motion.pace",
+            "lowering_action": "approximate",
+            "source_value": "bouncy"
+          }
+        }
+      }
+    }
+  },
+  "elevenlabs-tts": {
+    "isError": false,
+    "structuredContent": {
+      "ok": true,
+      "message": "Compiled deterministic provider payload for \"elevenlabs-tts\".\nPrompt: Tactile builder mode. Same architecture, built out of warm clay and shop light. This mode keeps the spec serious while the surface becomes handmade, constructive, and a little mischievous. Delivery should feel bouncy. Visual character: Fraunces. Accent mood: #d45f3f.\nWarnings (18):\n- imagery: unsupported\n- layout: unsupported\n- motion.duration: unsupported\n- motion.pace: approximate\n- palette.accent: approximate\n- palette.accent_2: unsupported\n- palette.background: unsupported\n- palette.border: unsupported\n- palette.code_bg: unsupported\n- palette.code_ink: unsupported\n- palette.ink: unsupported\n- palette.muted: unsupported\n...and 6 more warnings.\nPayload JSON:\n```json\n{\n  \"model_id\": \"eleven_flash_v2_5\",\n  \"output_format\": \"mp3_44100_128\",\n  \"text\": \"Wire fixture script.\",\n  \"voice_id\": \"voice-fixture\"\n}\n```",
+      "status": "compiled",
+      "provider": "elevenlabs-tts",
+      "warnings": [
+        {
+          "construct": "imagery",
+          "action": "unsupported"
+        },
+        {
+          "construct": "layout",
+          "action": "unsupported"
+        },
+        {
+          "construct": "motion.duration",
+          "action": "unsupported"
+        },
+        {
+          "construct": "motion.pace",
+          "action": "approximate"
+        },
+        {
+          "construct": "palette.accent",
+          "action": "approximate"
+        },
+        {
+          "construct": "palette.accent_2",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.background",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.border",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.code_bg",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.code_ink",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.ink",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.muted",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.surface",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.surface_alt",
+          "action": "unsupported"
+        },
+        {
+          "construct": "typography.body",
+          "action": "unsupported"
+        },
+        {
+          "construct": "typography.display",
+          "action": "approximate"
+        },
+        {
+          "construct": "typography.mono",
+          "action": "unsupported"
+        },
+        {
+          "construct": "typography.scale",
+          "action": "unsupported"
+        }
+      ],
+      "canonical": {
+        "imagery": {
+          "alt": "Tactile clay-like Mosvera tesserae under warm builder-table light.",
+          "blend": "normal",
+          "contrast": "0.96",
+          "saturation": "1.12",
+          "src": "/assets/aesthetics/hero-claymation-playful-builder.webp",
+          "treatment": "tabletop_model"
+        },
+        "layout": {
+          "density": "roomy",
+          "max_width": "1160px",
+          "radius": "8px",
+          "shadow": "0 18px 0 rgba(96, 63, 39, 0.26)"
+        },
+        "motion": {
+          "duration": "260ms",
+          "pace": "bouncy"
+        },
+        "palette": {
+          "accent": "#d45f3f",
+          "accent_2": "#2f8f9d",
+          "background": "#f6e7cc",
+          "border": "#c99a68",
+          "code_bg": "#2b2119",
+          "code_ink": "#ffe3bc",
+          "ink": "#2a2118",
+          "muted": "#695946",
+          "surface": "#fff3dc",
+          "surface_alt": "#ead2ad"
+        },
+        "typography": {
+          "body": "Hanken Grotesk",
+          "display": "Fraunces",
+          "mono": "IBM Plex Mono",
+          "scale": "friendly"
+        },
+        "voice": {
+          "body": "This mode keeps the spec serious while the surface becomes handmade, constructive, and a little mischievous.",
+          "eyebrow": "Tactile builder mode",
+          "headline": "Same architecture, built out of warm clay and shop light."
+        }
+      },
+      "emission": {
+        "payload": {
+          "model_id": "eleven_flash_v2_5",
+          "output_format": "mp3_44100_128",
+          "text": "Wire fixture script.",
+          "voice_id": "voice-fixture"
+        },
+        "prompt": "Tactile builder mode. Same architecture, built out of warm clay and shop light. This mode keeps the spec serious while the surface becomes handmade, constructive, and a little mischievous. Delivery should feel bouncy. Visual character: Fraunces. Accent mood: #d45f3f.",
+        "warnings": [
+          {
+            "construct": "imagery",
+            "action": "unsupported"
+          },
+          {
+            "construct": "layout",
+            "action": "unsupported"
+          },
+          {
+            "construct": "motion.duration",
+            "action": "unsupported"
+          },
+          {
+            "construct": "motion.pace",
+            "action": "approximate"
+          },
+          {
+            "construct": "palette.accent",
+            "action": "approximate"
+          },
+          {
+            "construct": "palette.accent_2",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.background",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.border",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.code_bg",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.code_ink",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.ink",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.muted",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.surface",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.surface_alt",
+            "action": "unsupported"
+          },
+          {
+            "construct": "typography.body",
+            "action": "unsupported"
+          },
+          {
+            "construct": "typography.display",
+            "action": "approximate"
+          },
+          {
+            "construct": "typography.mono",
+            "action": "unsupported"
+          },
+          {
+            "construct": "typography.scale",
+            "action": "unsupported"
+          }
+        ],
+        "provenance": {
+          "prompt.0": {
+            "canonical_construct": "voice.eyebrow",
+            "lowering_action": "native",
+            "source_value": "Tactile builder mode"
+          },
+          "prompt.1": {
+            "canonical_construct": "voice.headline",
+            "lowering_action": "native",
+            "source_value": "Same architecture, built out of warm clay and shop light."
+          },
+          "prompt.2": {
+            "canonical_construct": "voice.body",
+            "lowering_action": "native",
+            "source_value": "This mode keeps the spec serious while the surface becomes handmade, constructive, and a little mischievous."
+          },
+          "prompt.3": {
+            "canonical_construct": "motion.pace",
+            "lowering_action": "approximate",
+            "source_value": "bouncy"
+          },
+          "prompt.4": {
+            "canonical_construct": "typography.display",
+            "lowering_action": "approximate",
+            "source_value": "Fraunces"
+          },
+          "prompt.5": {
+            "canonical_construct": "palette.accent",
+            "lowering_action": "approximate",
+            "source_value": "#d45f3f"
+          }
+        }
+      }
+    }
+  },
+  "adobe-firefly-image": {
+    "isError": false,
+    "structuredContent": {
+      "ok": true,
+      "message": "Compiled deterministic provider payload for \"adobe-firefly-image\".\nPrompt: headline intent: Same architecture, built out of warm clay and shop light., background color #f6e7cc, accent color #d45f3f, imagery treatment: tabletop model, scene reference: Tactile clay-like Mosvera tesserae under warm builder-table light., layout density: roomy\nWarnings (25):\n- imagery.alt: approximate\n- imagery.blend: unsupported\n- imagery.contrast: unsupported\n- imagery.saturation: unsupported\n- imagery.src: unsupported\n- imagery.treatment: approximate\n- layout.density: approximate\n- layout.max_width: unsupported\n- layout.radius: unsupported\n- layout.shadow: unsupported\n- motion: unsupported\n- palette.accent: approximate\n...and 13 more warnings.\nPayload JSON:\n```json\n{\n  \"aspectRatio\": \"16:9\",\n  \"modelId\": \"firefly_image\",\n  \"numVariations\": 1,\n  \"prompt\": \"Wire fixture prompt.\\n\\nMosvera aesthetic direction: headline intent: Same architecture, built out of warm clay and shop light., background color #f6e7cc, accent color #d45f3f, imagery treatment: tabletop model, scene reference: Tactile clay-like Mosvera tesserae under warm builder-table light., layout density: roomy\",\n  \"referenceBlobs\": []\n}\n```",
+      "status": "compiled",
+      "provider": "adobe-firefly-image",
+      "warnings": [
+        {
+          "construct": "imagery.alt",
+          "action": "approximate"
+        },
+        {
+          "construct": "imagery.blend",
+          "action": "unsupported"
+        },
+        {
+          "construct": "imagery.contrast",
+          "action": "unsupported"
+        },
+        {
+          "construct": "imagery.saturation",
+          "action": "unsupported"
+        },
+        {
+          "construct": "imagery.src",
+          "action": "unsupported"
+        },
+        {
+          "construct": "imagery.treatment",
+          "action": "approximate"
+        },
+        {
+          "construct": "layout.density",
+          "action": "approximate"
+        },
+        {
+          "construct": "layout.max_width",
+          "action": "unsupported"
+        },
+        {
+          "construct": "layout.radius",
+          "action": "unsupported"
+        },
+        {
+          "construct": "layout.shadow",
+          "action": "unsupported"
+        },
+        {
+          "construct": "motion",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.accent",
+          "action": "approximate"
+        },
+        {
+          "construct": "palette.accent_2",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.background",
+          "action": "approximate"
+        },
+        {
+          "construct": "palette.border",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.code_bg",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.code_ink",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.ink",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.muted",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.surface",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.surface_alt",
+          "action": "unsupported"
+        },
+        {
+          "construct": "typography",
+          "action": "unsupported"
+        },
+        {
+          "construct": "voice.body",
+          "action": "unsupported"
+        },
+        {
+          "construct": "voice.eyebrow",
+          "action": "unsupported"
+        },
+        {
+          "construct": "voice.headline",
+          "action": "approximate"
+        }
+      ],
+      "canonical": {
+        "imagery": {
+          "alt": "Tactile clay-like Mosvera tesserae under warm builder-table light.",
+          "blend": "normal",
+          "contrast": "0.96",
+          "saturation": "1.12",
+          "src": "/assets/aesthetics/hero-claymation-playful-builder.webp",
+          "treatment": "tabletop_model"
+        },
+        "layout": {
+          "density": "roomy",
+          "max_width": "1160px",
+          "radius": "8px",
+          "shadow": "0 18px 0 rgba(96, 63, 39, 0.26)"
+        },
+        "motion": {
+          "duration": "260ms",
+          "pace": "bouncy"
+        },
+        "palette": {
+          "accent": "#d45f3f",
+          "accent_2": "#2f8f9d",
+          "background": "#f6e7cc",
+          "border": "#c99a68",
+          "code_bg": "#2b2119",
+          "code_ink": "#ffe3bc",
+          "ink": "#2a2118",
+          "muted": "#695946",
+          "surface": "#fff3dc",
+          "surface_alt": "#ead2ad"
+        },
+        "typography": {
+          "body": "Hanken Grotesk",
+          "display": "Fraunces",
+          "mono": "IBM Plex Mono",
+          "scale": "friendly"
+        },
+        "voice": {
+          "body": "This mode keeps the spec serious while the surface becomes handmade, constructive, and a little mischievous.",
+          "eyebrow": "Tactile builder mode",
+          "headline": "Same architecture, built out of warm clay and shop light."
+        }
+      },
+      "emission": {
+        "payload": {
+          "aspectRatio": "16:9",
+          "modelId": "firefly_image",
+          "numVariations": 1,
+          "prompt": "Wire fixture prompt.\n\nMosvera aesthetic direction: headline intent: Same architecture, built out of warm clay and shop light., background color #f6e7cc, accent color #d45f3f, imagery treatment: tabletop model, scene reference: Tactile clay-like Mosvera tesserae under warm builder-table light., layout density: roomy",
+          "referenceBlobs": []
+        },
+        "prompt": "headline intent: Same architecture, built out of warm clay and shop light., background color #f6e7cc, accent color #d45f3f, imagery treatment: tabletop model, scene reference: Tactile clay-like Mosvera tesserae under warm builder-table light., layout density: roomy",
+        "warnings": [
+          {
+            "construct": "imagery.alt",
+            "action": "approximate"
+          },
+          {
+            "construct": "imagery.blend",
+            "action": "unsupported"
+          },
+          {
+            "construct": "imagery.contrast",
+            "action": "unsupported"
+          },
+          {
+            "construct": "imagery.saturation",
+            "action": "unsupported"
+          },
+          {
+            "construct": "imagery.src",
+            "action": "unsupported"
+          },
+          {
+            "construct": "imagery.treatment",
+            "action": "approximate"
+          },
+          {
+            "construct": "layout.density",
+            "action": "approximate"
+          },
+          {
+            "construct": "layout.max_width",
+            "action": "unsupported"
+          },
+          {
+            "construct": "layout.radius",
+            "action": "unsupported"
+          },
+          {
+            "construct": "layout.shadow",
+            "action": "unsupported"
+          },
+          {
+            "construct": "motion",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.accent",
+            "action": "approximate"
+          },
+          {
+            "construct": "palette.accent_2",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.background",
+            "action": "approximate"
+          },
+          {
+            "construct": "palette.border",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.code_bg",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.code_ink",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.ink",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.muted",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.surface",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.surface_alt",
+            "action": "unsupported"
+          },
+          {
+            "construct": "typography",
+            "action": "unsupported"
+          },
+          {
+            "construct": "voice.body",
+            "action": "unsupported"
+          },
+          {
+            "construct": "voice.eyebrow",
+            "action": "unsupported"
+          },
+          {
+            "construct": "voice.headline",
+            "action": "approximate"
+          }
+        ],
+        "provenance": {
+          "prompt.0": {
+            "canonical_construct": "voice.headline",
+            "lowering_action": "approximate",
+            "source_value": "Same architecture, built out of warm clay and shop light."
+          },
+          "prompt.1": {
+            "canonical_construct": "palette.background",
+            "lowering_action": "approximate",
+            "source_value": "#f6e7cc"
+          },
+          "prompt.2": {
+            "canonical_construct": "palette.accent",
+            "lowering_action": "approximate",
+            "source_value": "#d45f3f"
+          },
+          "prompt.3": {
+            "canonical_construct": "imagery.treatment",
+            "lowering_action": "approximate",
+            "source_value": "tabletop_model"
+          },
+          "prompt.4": {
+            "canonical_construct": "imagery.alt",
+            "lowering_action": "approximate",
+            "source_value": "Tactile clay-like Mosvera tesserae under warm builder-table light."
+          },
+          "prompt.5": {
+            "canonical_construct": "layout.density",
+            "lowering_action": "approximate",
+            "source_value": "roomy"
+          }
+        }
+      }
+    }
+  },
+  "meshy-text-to-3d": {
+    "isError": false,
+    "structuredContent": {
+      "ok": true,
+      "message": "Compiled deterministic provider payload for \"meshy-text-to-3d\".\nPrompt: background color #f6e7cc, accent material color #d45f3f, secondary material color #2f8f9d, tabletop model tactile treatment, asset reference: Tactile clay-like Mosvera tesserae under warm builder-table light., roomy object complexity\nWarnings (23):\n- imagery.alt: approximate\n- imagery.blend: unsupported\n- imagery.contrast: unsupported\n- imagery.saturation: unsupported\n- imagery.src: unsupported\n- imagery.treatment: approximate\n- layout.density: approximate\n- layout.max_width: unsupported\n- layout.radius: unsupported\n- layout.shadow: unsupported\n- motion: unsupported\n- palette.accent: approximate\n...and 11 more warnings.\nPayload JSON:\n```json\n{\n  \"art_style\": \"realistic\",\n  \"mode\": \"preview\",\n  \"prompt\": \"Wire fixture prompt.\\n\\nMosvera aesthetic direction: background color #f6e7cc, accent material color #d45f3f, secondary material color #2f8f9d, tabletop model tactile treatment, asset reference: Tactile clay-like Mosvera tesserae under warm builder-table light., roomy object complexity\",\n  \"target_formats\": [\n    \"glb\"\n  ]\n}\n```",
+      "status": "compiled",
+      "provider": "meshy-text-to-3d",
+      "warnings": [
+        {
+          "construct": "imagery.alt",
+          "action": "approximate"
+        },
+        {
+          "construct": "imagery.blend",
+          "action": "unsupported"
+        },
+        {
+          "construct": "imagery.contrast",
+          "action": "unsupported"
+        },
+        {
+          "construct": "imagery.saturation",
+          "action": "unsupported"
+        },
+        {
+          "construct": "imagery.src",
+          "action": "unsupported"
+        },
+        {
+          "construct": "imagery.treatment",
+          "action": "approximate"
+        },
+        {
+          "construct": "layout.density",
+          "action": "approximate"
+        },
+        {
+          "construct": "layout.max_width",
+          "action": "unsupported"
+        },
+        {
+          "construct": "layout.radius",
+          "action": "unsupported"
+        },
+        {
+          "construct": "layout.shadow",
+          "action": "unsupported"
+        },
+        {
+          "construct": "motion",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.accent",
+          "action": "approximate"
+        },
+        {
+          "construct": "palette.accent_2",
+          "action": "approximate"
+        },
+        {
+          "construct": "palette.background",
+          "action": "approximate"
+        },
+        {
+          "construct": "palette.border",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.code_bg",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.code_ink",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.ink",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.muted",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.surface",
+          "action": "unsupported"
+        },
+        {
+          "construct": "palette.surface_alt",
+          "action": "unsupported"
+        },
+        {
+          "construct": "typography",
+          "action": "unsupported"
+        },
+        {
+          "construct": "voice",
+          "action": "unsupported"
+        }
+      ],
+      "canonical": {
+        "imagery": {
+          "alt": "Tactile clay-like Mosvera tesserae under warm builder-table light.",
+          "blend": "normal",
+          "contrast": "0.96",
+          "saturation": "1.12",
+          "src": "/assets/aesthetics/hero-claymation-playful-builder.webp",
+          "treatment": "tabletop_model"
+        },
+        "layout": {
+          "density": "roomy",
+          "max_width": "1160px",
+          "radius": "8px",
+          "shadow": "0 18px 0 rgba(96, 63, 39, 0.26)"
+        },
+        "motion": {
+          "duration": "260ms",
+          "pace": "bouncy"
+        },
+        "palette": {
+          "accent": "#d45f3f",
+          "accent_2": "#2f8f9d",
+          "background": "#f6e7cc",
+          "border": "#c99a68",
+          "code_bg": "#2b2119",
+          "code_ink": "#ffe3bc",
+          "ink": "#2a2118",
+          "muted": "#695946",
+          "surface": "#fff3dc",
+          "surface_alt": "#ead2ad"
+        },
+        "typography": {
+          "body": "Hanken Grotesk",
+          "display": "Fraunces",
+          "mono": "IBM Plex Mono",
+          "scale": "friendly"
+        },
+        "voice": {
+          "body": "This mode keeps the spec serious while the surface becomes handmade, constructive, and a little mischievous.",
+          "eyebrow": "Tactile builder mode",
+          "headline": "Same architecture, built out of warm clay and shop light."
+        }
+      },
+      "emission": {
+        "payload": {
+          "art_style": "realistic",
+          "mode": "preview",
+          "prompt": "Wire fixture prompt.\n\nMosvera aesthetic direction: background color #f6e7cc, accent material color #d45f3f, secondary material color #2f8f9d, tabletop model tactile treatment, asset reference: Tactile clay-like Mosvera tesserae under warm builder-table light., roomy object complexity",
+          "target_formats": [
+            "glb"
+          ]
+        },
+        "prompt": "background color #f6e7cc, accent material color #d45f3f, secondary material color #2f8f9d, tabletop model tactile treatment, asset reference: Tactile clay-like Mosvera tesserae under warm builder-table light., roomy object complexity",
+        "warnings": [
+          {
+            "construct": "imagery.alt",
+            "action": "approximate"
+          },
+          {
+            "construct": "imagery.blend",
+            "action": "unsupported"
+          },
+          {
+            "construct": "imagery.contrast",
+            "action": "unsupported"
+          },
+          {
+            "construct": "imagery.saturation",
+            "action": "unsupported"
+          },
+          {
+            "construct": "imagery.src",
+            "action": "unsupported"
+          },
+          {
+            "construct": "imagery.treatment",
+            "action": "approximate"
+          },
+          {
+            "construct": "layout.density",
+            "action": "approximate"
+          },
+          {
+            "construct": "layout.max_width",
+            "action": "unsupported"
+          },
+          {
+            "construct": "layout.radius",
+            "action": "unsupported"
+          },
+          {
+            "construct": "layout.shadow",
+            "action": "unsupported"
+          },
+          {
+            "construct": "motion",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.accent",
+            "action": "approximate"
+          },
+          {
+            "construct": "palette.accent_2",
+            "action": "approximate"
+          },
+          {
+            "construct": "palette.background",
+            "action": "approximate"
+          },
+          {
+            "construct": "palette.border",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.code_bg",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.code_ink",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.ink",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.muted",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.surface",
+            "action": "unsupported"
+          },
+          {
+            "construct": "palette.surface_alt",
+            "action": "unsupported"
+          },
+          {
+            "construct": "typography",
+            "action": "unsupported"
+          },
+          {
+            "construct": "voice",
+            "action": "unsupported"
+          }
+        ],
+        "provenance": {
+          "prompt.0": {
+            "canonical_construct": "palette.background",
+            "lowering_action": "approximate",
+            "source_value": "#f6e7cc"
+          },
+          "prompt.1": {
+            "canonical_construct": "palette.accent",
+            "lowering_action": "approximate",
+            "source_value": "#d45f3f"
+          },
+          "prompt.2": {
+            "canonical_construct": "palette.accent_2",
+            "lowering_action": "approximate",
+            "source_value": "#2f8f9d"
+          },
+          "prompt.3": {
+            "canonical_construct": "imagery.treatment",
+            "lowering_action": "approximate",
+            "source_value": "tabletop_model"
+          },
+          "prompt.4": {
+            "canonical_construct": "imagery.alt",
+            "lowering_action": "approximate",
+            "source_value": "Tactile clay-like Mosvera tesserae under warm builder-table light."
+          },
+          "prompt.5": {
+            "canonical_construct": "layout.density",
+            "lowering_action": "approximate",
+            "source_value": "roomy"
+          }
+        }
+      }
+    }
+  }
+}
